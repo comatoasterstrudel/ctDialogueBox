@@ -1,4 +1,4 @@
-package textbox.effects;
+package ctDialogueBox.textbox.effects;
 
 import flixel.util.FlxColor;
 

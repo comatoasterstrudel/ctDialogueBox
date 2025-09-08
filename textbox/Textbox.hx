@@ -1,9 +1,9 @@
-package textbox;
+package ctDialogueBox.textbox;
 
-import textbox.CommandValues;
-import textbox.Text;
-import textbox.TextboxLine;
-import textbox.TextPool;
+import ctDialogueBox.textbox.CommandValues;
+import ctDialogueBox.textbox.Text;
+import ctDialogueBox.textbox.TextPool;
+import ctDialogueBox.textbox.TextboxLine;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.typeLimit.OneOfTwo;

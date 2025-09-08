@@ -1,4 +1,4 @@
-package textbox;
+package ctDialogueBox.textbox;
 
 typedef CommandValues =
 {

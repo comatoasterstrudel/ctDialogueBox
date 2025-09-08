@@ -1,5 +1,6 @@
-package textbox;
-import textbox.effects.*;
+package ctDialogueBox.textbox;
+
+import ctDialogueBox.textbox.effects.*;
 
 /**
  *  Contains an array of used effects. Their index will be their effect index, so an effect token @00[...]

@@ -1,9 +1,9 @@
-package textbox.effects;
+package ctDialogueBox.textbox.effects;
 
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxTween.FlxTweenType;
+import ctDialogueBox.textbox.Text;
 import flixel.tweens.FlxEase;
-import textbox.Text;
+import flixel.tweens.FlxTween.FlxTweenType;
+import flixel.tweens.FlxTween;
 
 class WaveEffect implements IEffect
 {

@@ -1,7 +1,7 @@
-package textbox;
+package ctDialogueBox.textbox;
 
-import flixel.util.FlxColor;
 import flixel.system.FlxAssets;
+import flixel.util.FlxColor;
 
 @:structInit
 class Settings

@@ -1,5 +1,6 @@
-package textbox.effects;
-import textbox.Text;
+package ctDialogueBox.textbox.effects;
+
+import ctDialogueBox.textbox.Text;
 
 interface IEffect
 {

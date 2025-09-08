@@ -1,6 +1,7 @@
-package textbox;
+package ctDialogueBox.textbox;
+
+import ctDialogueBox.textbox.effects.IEffect;
 import flixel.text.FlxText;
-import textbox.effects.IEffect;
 
 class Text extends FlxText {
     public var effects:Array<IEffect>;

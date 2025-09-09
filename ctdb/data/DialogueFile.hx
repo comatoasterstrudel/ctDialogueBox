@@ -34,6 +34,7 @@ class DialogueFile
 			
 			dialogueLines.push({
 				dialogue: "Placeholder Dialogue. Check " + path + "?",
+				actor: "",
 				speed: 0.03,
 				diaSound: "",
 				characterName: "",
@@ -52,6 +53,7 @@ class DialogueFile
 		{
 			return {
 				dialogue: item.dialogue ?? '',
+				actor: item.actor ?? '',
 				speed: item.speed ?? 0.03,
 				diaSound: item.diaSound ?? 'Default',
 				characterName: item.characterName ?? 'Default',

@@ -42,7 +42,7 @@ class CtDialogueBoxSettings{
     public var textOffset:FlxPoint;
     
     /**
-     * the color the text will become. this will overwrite actor text colors if set.
+     * the color the text will become. this will be overwritten by actor colors.
      * eg: FlxColor.WHITE
      */
     public var textColor:FlxColor;
@@ -92,7 +92,7 @@ class CtDialogueBoxSettings{
         dialogueImagePath:String = null,
         pressedAcceptFunction:Void->Bool = null,
         pressedSkipFunction:Void->Bool = null,
-        onComplete:Void->Void = null,
+        onComplete:Void->Void = null, 
         onLineAdvance:DialogueData->Void = null
     )
     {

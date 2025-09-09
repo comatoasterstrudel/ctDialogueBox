@@ -10,6 +10,11 @@ typedef DialogueData =
 	 */
 	var dialogue:String;
 
+    /**
+     * the actor to be used for this dialogue
+     */
+    var actor:String;
+    
 	/**
 	 * the speed of the dialogue. in reality, its the delay between each letter.
 	 */

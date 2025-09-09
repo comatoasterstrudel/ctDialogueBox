@@ -155,8 +155,20 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         var dialogueData = dialogueFiles[curDialogueFile].dialogueLines[curLine];
         
+        var jsonPath:String = (settings.dialogueDataPath + 'actors/actor_' + dialogueData.actor + '.json');
+        var actorData = new ActorData(jsonPath);
+        
+        //set the text
         textbox.setText(dialogueData.dialogue);
+        
+        //set the proper text speed
         textbox.settings.charactersPerSecond = (1 / dialogueData.speed);
+        
+        //set the proper text color
+        var theColor:FlxColor = (actorData.exists ? actorData.textColor : settings.textColor);
+        textbox.settings.color = theColor;
+        
+        //start typing!!
         textbox.bring();
         
         if(settings.onLineAdvance != null) settings.onLineAdvance(dialogueData);

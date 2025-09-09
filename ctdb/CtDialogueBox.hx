@@ -2,6 +2,7 @@ package ctDialogueBox.ctdb;
 
 import ctDialogueBox.*;
 import ctDialogueBox.textbox.*;
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxColor;
@@ -32,12 +33,14 @@ class CtDialogueBox extends FlxSpriteGroup{
         if(settings.boxImgPath == null){ //create a white box, since no image was provided
             dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
         } else { //load desired image
-            if(FileSystem.exists(settings.boxImgPath)){
-                dialogueBox.loadGraphic(settings.boxImgPath);                
+            var boxPath:String = (settings.dialogueImagePath + settings.boxImgPath + '.png');
+            
+            if(FileSystem.exists(boxPath)){
+                dialogueBox.loadGraphic(boxPath);                
 			}
 			else
 			{
-				trace('Can\'t find Dialogue Box Image: ' + settings.boxImgPath); 
+                FlxG.log.warn('[CTDB] Can\'t find Dialogue Box Image: $boxPath, loading default box.');
                 dialogueBox.makeGraphic(800, 300, FlxColor.WHITE);
             }
         }

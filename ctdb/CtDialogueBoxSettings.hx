@@ -22,8 +22,8 @@ class CtDialogueBoxSettings{
     public var fontSize:Int;
     
     /**
-     * the path to the image for your dialogue box. if left null, will make a 800x300 white box.
-     * eg: assets/images/dialogueBox.png
+     * the name of your dialogue box image. if left null, will make a 800x300 white box.
+     * eg: dialogueBox
      */
     public var boxImgPath:String;
     
@@ -45,20 +45,36 @@ class CtDialogueBoxSettings{
      */
     public var textColor:FlxColor;
     
+    /**
+     * the folder in your assets folder where your dialogue files are located
+     * default: assets/data/dialogue/
+     */
+    public var dialogueDataPath:String;
+    
+    /**
+     * the folder in your assets folder where your dialogue images are located
+     * default: assets/images/dialogue/
+     */
+    public var dialogueImagePath:String;
+    
     public function new(
         font:String = null,
-        fontSize:Int = 15,
+        fontSize:Int = null,
         boxImgPath:String = null,
         boxPosition:FlxPoint = null,
 	    textOffset:FlxPoint = null,
-        textColor:FlxColor = null
+        textColor:FlxColor = null,
+        dialogueDataPath:String = null,
+        dialogueImagePath:String = null
     )
     {
         this.font = font;
-        this.fontSize = fontSize;
+        this.fontSize = fontSize ?? 15;
         this.boxImgPath = boxImgPath;
-		this.boxPosition = boxPosition ?? null;
+		this.boxPosition = boxPosition;
         this.textOffset = textOffset ?? new FlxPoint(0, 0);
         this.textColor = textColor;
+        this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';
+        this.dialogueImagePath = dialogueImagePath ?? 'assets/images/dialogue/';
     }
 }

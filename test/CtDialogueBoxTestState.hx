@@ -13,7 +13,7 @@ class CtDialogueTestState extends FlxState
 		super.create();
 		
 		var textbox = new CtDialogueBox({
-			boxImgPath: "assets/images/dialogueBox.png", 
+			boxImgPath: "dialogueBox", 
 			textColor: FlxColor.WHITE, 
 			fontSize: 46, 
 			font: 'assets/fonts/andy.ttf',

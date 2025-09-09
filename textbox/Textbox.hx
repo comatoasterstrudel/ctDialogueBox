@@ -186,7 +186,7 @@ class Textbox extends FlxSpriteGroup {
     /**
      *  Resets the available effects' state/parameters.
      */
-    function resetTextEffects()
+    public function resetTextEffects()
     {
         for (effect in effects)
         {
@@ -413,6 +413,14 @@ class Textbox extends FlxSpriteGroup {
 
     }
 
+    public function skipLine():Void{
+        while(status != DONE && status != FULL){
+            advanceCharacter();
+        }
+    }
+    
+     public var lastWord:String = '';
+    
     /**
      *  This function is called when the textbox has to write down a new character.
      *  Does *a bit* of process (like word wrapping or newline support) but makes
@@ -447,27 +455,22 @@ class Textbox extends FlxSpriteGroup {
                         return;
                     }
                 // If current character is a space, let's calculate how long the next word will be.
-                else if (currentCharacterChar.isSpace(0))
+                else if (currentCharacterChar.isSpace(0) || lastWord == '')
                 {
                     var nextWord:String = getNextWord(currentCharacterIndex);
-                    // TODO : please don't make words too long.
-                    // SO, if we're going over the limit, just go to the next line.
-                    if(lines[currentLineIndex].projectWidth(nextWord) > settings.textFieldWidth)
-                    {
-                        goToNextLine();
-                        // As we wrapped the line on this character, let's skip it.
-                        currentCharacterIndex++;
-                        return;
-                    }
-                }
-                
-                // Character-wrap. Shouldn't be really useful but it's still a guard.
-                else if(lines[currentLineIndex].projectWidth(currentCharacterChar) > settings.textFieldWidth)
-                {
-                    goToNextLine();
-                    if (status == FULL)
-                    {
-                        return;
+                    
+                    if(nextWord != lastWord){
+						// TODO : please don't make words too long.
+						// SO, if we're going over the limit, just go to the next line.
+						if (lines[currentLineIndex].projectWidth(nextWord) > settings.textFieldWidth)
+						{
+							goToNextLine();
+							// As we wrapped the line on this character, let's skip it.
+							if(currentCharacterChar.isSpace(0)) currentCharacterIndex++;
+							return;
+						}   
+                        
+                        lastWord = nextWord;
                     }
                 }
 
@@ -484,8 +487,10 @@ class Textbox extends FlxSpriteGroup {
                 timerBeforeNewCharacter += timePerCharacter;
             }
         }
+        
+        //firstLetter = false;
     }
-
+    
     // THis function is only called when having to continue spitting out characters after going FULL
     function moveTextUp()
     {
@@ -514,9 +519,9 @@ class Textbox extends FlxSpriteGroup {
     public var statusChangeCallbacks(default, null): Array<StatusChangeCallback> = [];
 
     // Variable members
-    var status(default, set):Status;
+    public var status(default, set):Status;
 
-    var settings:Settings;
+    public var settings:Settings;
 
 
     // internal

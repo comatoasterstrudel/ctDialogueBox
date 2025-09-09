@@ -1,13 +1,17 @@
 package ctDialogueBox.ctdb;
 
 import ctDialogueBox.*;
+import ctDialogueBox.ctdb.data.*;
 import ctDialogueBox.textbox.*;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxColor;
-import sys.FileSystem;
+import openfl.Assets;
 
+/**
+ * this is the actual dialogue box object!! 9/8/25
+ */
 class CtDialogueBox extends FlxSpriteGroup{
     /**
      * the sprite for the actual box
@@ -24,9 +28,31 @@ class CtDialogueBox extends FlxSpriteGroup{
      */
     var settings:CtDialogueBoxSettings;
     
+    /**
+     * the array of the dialogue files to play here
+     */
+    var dialogueFiles:Array<DialogueFile> = [];
+    
+    /**
+     * which dialogue file youre on. 
+     */
+    var curDialogueFile:Int = 0;
+    
+    /**
+     * which line of the current dialogue file youre on
+     */
+    var curLine:Int = 0;
+    
+    /**
+     * if this is true, you won't be able to advance dialogue
+     */
+    var busy:Bool = true;
+    
     public function new(settings:CtDialogueBoxSettings):Void{
         super();
         
+        this.settings = settings;
+                
         dialogueBox = new FlxSprite();
         add(dialogueBox);
         
@@ -35,12 +61,12 @@ class CtDialogueBox extends FlxSpriteGroup{
         } else { //load desired image
             var boxPath:String = (settings.dialogueImagePath + settings.boxImgPath + '.png');
             
-            if(FileSystem.exists(boxPath)){
+            if(Assets.exists(boxPath)){
                 dialogueBox.loadGraphic(boxPath);                
 			}
 			else
 			{
-                FlxG.log.warn('[CTDB] Can\'t find Dialogue Box Image: $boxPath, loading default box.');
+                FlxG.log.warn('[CTDB] Can\'t find Dialogue Box Image: "$boxPath", loading default box.');
                 dialogueBox.makeGraphic(800, 300, FlxColor.WHITE);
             }
         }
@@ -60,5 +86,95 @@ class CtDialogueBox extends FlxSpriteGroup{
         textbox.setText('testing testing 123');
         textbox.bring();
         add(textbox);
+        
+        antialiasing = true;
+    }
+    
+    override function update(elapsed:Float):Void{
+        super.update(elapsed);
+        
+        if(busy) return;
+        
+        if(settings.pressedAcceptFunction()){
+            advanceLine(1);
+        }
+    }
+    
+    /**
+     * call this to open the dialogue box and play its opening animation
+     */
+    public function openBox():Void{
+        //busy = true;  
+        
+        busy = false;
+        playDialogue();
+    }
+    
+    /**
+     * call this to close the dialogue box and play its closing animation
+     */
+    public function closeBox():Void{
+        busy = true;    
+        
+        if(settings.onComplete != null) settings.onComplete();
+        
+        destroy();
+    }
+    
+    /**
+     * call this to start playing the dialogue
+     */
+    public function playDialogue():Void{
+        if(dialogueFiles == null || dialogueFiles.length <= 0){
+            FlxG.log.warn('[CTDB] There aren\'t any dialogue files loaded! Use loadDialogueFiles() first!');
+            return;
+        }
+        
+        advanceLine(0);
+    }
+    
+    function advanceLine(amount:Int):Void{
+        if(amount > 0 && textbox.status == WRITING){
+            textbox.skipLine();
+            return;
+        }
+        
+        curLine += amount;
+        
+        if(curLine >= dialogueFiles[curDialogueFile].dialogueLines.length){ //end of dialogue
+            curDialogueFile ++;
+            if(curDialogueFile >= dialogueFiles.length){ //end of files
+                closeBox();
+            } else {
+                curLine = 0;
+                advanceLine(0);
+            }
+            
+            return;
+        }        
+        
+        var dialogueData = dialogueFiles[curDialogueFile].dialogueLines[curLine];
+        
+        textbox.setText(dialogueData.dialogue);
+        textbox.settings.charactersPerSecond = (1 / dialogueData.speed);
+        textbox.bring();
+        
+        if(settings.onLineAdvance != null) settings.onLineAdvance(dialogueData);
+    }
+    
+    /**
+     * call this to load which json files to play on this dialogue box.
+     * @param dialogueNames the names of the json files to play. eg: ['dia_one', 'subfolder/dia_two']
+     */
+    public function loadDialogueFiles(dialogueNames:Array<String>):Void{
+        dialogueFiles = [];
+        
+        for(i in dialogueNames){
+            var jsonPath:String = (settings.dialogueDataPath + 'content/' + i + '.json');
+            
+            var data = new DialogueFile(jsonPath);
+            if(data.dialogueLines == null) continue;
+            dialogueFiles.push(data);
+        }
     }
 }

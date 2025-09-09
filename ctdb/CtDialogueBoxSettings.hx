@@ -1,5 +1,7 @@
 package ctDialogueBox.ctdb;
 
+import ctDialogueBox.ctdb.data.*;
+import flixel.FlxG;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 
@@ -57,6 +59,28 @@ class CtDialogueBoxSettings{
      */
     public var dialogueImagePath:String;
     
+    /**
+     * this is the function to check if youve pressed the enter button, or however you want the dialogue to progress
+     * default: FlxG.keys.justPressed.ENTER
+     */
+    public var pressedAcceptFunction:Void->Bool;
+    
+    /**
+     * this is the function to check if youre holding down the ctrl key, or however you want the dialogue to be able to be skipped
+     * default: FlxG.keys.pressed.CONTROL
+     */
+    public var pressedSkipFunction:Void->Bool;
+    
+    /**
+     * the function that should happen when the dialogue is finished.
+     */
+    public var onComplete:Void->Void;
+    
+    /**
+     * the function that should happen when you advance a dialogue line. this gives back the data for that line
+     */
+    public var onLineAdvance:DialogueData->Void;
+    
     public function new(
         font:String = null,
         fontSize:Int = null,
@@ -65,7 +89,11 @@ class CtDialogueBoxSettings{
 	    textOffset:FlxPoint = null,
         textColor:FlxColor = null,
         dialogueDataPath:String = null,
-        dialogueImagePath:String = null
+        dialogueImagePath:String = null,
+        pressedAcceptFunction:Void->Bool = null,
+        pressedSkipFunction:Void->Bool = null,
+        onComplete:Void->Void = null,
+        onLineAdvance:DialogueData->Void = null
     )
     {
         this.font = font;
@@ -76,5 +104,9 @@ class CtDialogueBoxSettings{
         this.textColor = textColor;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';
         this.dialogueImagePath = dialogueImagePath ?? 'assets/images/dialogue/';
+        this.pressedAcceptFunction = pressedAcceptFunction ?? function():Bool{return(FlxG.keys.justPressed.ENTER);};
+        this.pressedSkipFunction = pressedSkipFunction ?? function():Bool{return(FlxG.keys.pressed.CONTROL);};
+        this.onComplete = onComplete;
+        this.onLineAdvance = onLineAdvance;
     }
 }

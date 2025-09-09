@@ -1,6 +1,7 @@
 package ctDialogueBox.ctdb;
 
 import flixel.math.FlxPoint;
+import flixel.util.FlxColor;
 
 @:structInit
 
@@ -14,6 +15,12 @@ class CtDialogueBoxSettings{
      */
     public var font:String;
 
+    /**
+     * the size the text should be
+     * eg: 10
+     */
+    public var fontSize:Int;
+    
     /**
      * the path to the image for your dialogue box. if left null, will make a 800x300 white box.
      * eg: assets/images/dialogueBox.png
@@ -32,16 +39,26 @@ class CtDialogueBoxSettings{
      */
     public var textOffset:FlxPoint;
     
+    /**
+     * the color the text will become. this will overwrite actor text colors if set.
+     * eg: FlxColor.WHITE
+     */
+    public var textColor:FlxColor;
+    
     public function new(
         font:String = null,
+        fontSize:Int = 15,
         boxImgPath:String = null,
         boxPosition:FlxPoint = null,
-        textOffset:FlxPoint = null
+	    textOffset:FlxPoint = null,
+        textColor:FlxColor = null
     )
     {
         this.font = font;
+        this.fontSize = fontSize;
         this.boxImgPath = boxImgPath;
-        this.boxPosition = boxPosition ?? new FlxPoint(0, 0);
+		this.boxPosition = boxPosition ?? null;
         this.textOffset = textOffset ?? new FlxPoint(0, 0);
+        this.textColor = textColor;
     }
 }

@@ -34,8 +34,10 @@ class CtDialogueBox extends FlxSpriteGroup{
         } else { //load desired image
             if(FileSystem.exists(settings.boxImgPath)){
                 dialogueBox.loadGraphic(settings.boxImgPath);                
-            } else {
-                trace('Can\'t find Dialogue Box Image: ' + settings.boxImgPath);
+			}
+			else
+			{
+				trace('Can\'t find Dialogue Box Image: ' + settings.boxImgPath); 
                 dialogueBox.makeGraphic(800, 300, FlxColor.WHITE);
             }
         }
@@ -46,7 +48,12 @@ class CtDialogueBox extends FlxSpriteGroup{
             dialogueBox.setPosition(settings.boxPosition.x, settings.boxPosition.y);
         }
         
-        textbox = new Textbox(dialogueBox.x + settings.textOffset.x, dialogueBox.y + settings.textOffset.x, {color: FlxColor.BLACK, font: settings.font});
+		textbox = new Textbox(dialogueBox.x + settings.textOffset.x, dialogueBox.y + settings.textOffset.x, {
+			color: settings.textColor ?? FlxColor.BLACK,
+			font: settings.font,
+            fontSize: settings.fontSize,
+			textFieldWidth: dialogueBox.width
+		});
         textbox.setText('testing testing 123');
         textbox.bring();
         add(textbox);

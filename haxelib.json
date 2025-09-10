@@ -1,0 +1,12 @@
+{
+	"name": "ctDialogueBox",
+	"url" : "https://github.com/comatoasterstrudel/ctDialogueBox",
+	"license": "Apache",
+	"tags": ["lalala"],
+	"description": "A Fully Customizable Dialogue Box for HaxeFlixel!! ",
+	"version": "1.0.0",
+	"releasenote": "",
+	"contributors": ["comatoasterstrudel", "Eiyeron"],
+	"dependencies": {},
+	"classPath": "ctDialogueBox/"
+}

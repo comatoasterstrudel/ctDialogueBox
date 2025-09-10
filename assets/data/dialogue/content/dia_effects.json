@@ -1,0 +1,18 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "ctDialogueBox is capable of using the text effects from Eiyeron's Textbox library!"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "Example: @03331640AWaving@030"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "Example: @011001500Rainbow@010"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "Example: @02231220ARotating@020"
+	}
+]

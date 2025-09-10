@@ -1,0 +1,10 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "Hello! Welcome to ctDialogueBox!"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "I hope this library can be of use to you!"
+	}
+]

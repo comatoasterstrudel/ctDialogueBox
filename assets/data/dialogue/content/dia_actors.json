@@ -1,0 +1,17 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "ctDialogueBox uses a system called Actors!",
+		"actor": "test"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "They can be used for when different charactesr are talking.",
+		"actor": "test"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "Different actors can have different names, text colors, sounds, or even text effects!",
+		"actor": "test"
+	}
+]

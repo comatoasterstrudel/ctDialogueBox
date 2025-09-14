@@ -8,5 +8,5 @@
 	"releasenote": "",
 	"contributors": ["comatoasterstrudel", "Eiyeron"],
 	"dependencies": {},
-	"classPath": "source/"
+	"classPath": "ctDialogueBox/"
 }

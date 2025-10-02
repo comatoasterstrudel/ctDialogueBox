@@ -515,7 +515,7 @@ class Textbox extends FlxSpriteGroup {
     }
 
     // callbacks
-    public var characterDisplayCallbacks(default, null): Array<CharacterDisplayCallback> = [];
+    public var characterDisplayCallbacks:Array<CharacterDisplayCallback> = [];
     public var statusChangeCallbacks(default, null): Array<StatusChangeCallback> = [];
 
     // Variable members

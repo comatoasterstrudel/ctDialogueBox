@@ -55,8 +55,14 @@ class CtDialogueBox extends FlxSpriteGroup{
      */
     var currentSoundMode:CurrentSoundMode;
     
+    /**
+     * the flxsound object for the voiceLine when used
+     */
     var voiceLineSound:FlxSound;
     
+    /**
+     * the array of text sounds that can be played
+     */
     var textSounds:Array<FlxSound> = [];
     
     /**
@@ -252,8 +258,36 @@ class CtDialogueBox extends FlxSpriteGroup{
                     FlxG.log.warn('[CTDB] Can\'t find Voice Line: "$sndPath".');
                     currentSoundMode = None;
                 }
-            case TextSound:
+            case TextSound:                                
+                var sndPath:String = settings.dialogueSoundPath + 'textSounds/' + actorData.textSound;
+
+                if (Assets.exists(sndPath + '1' + sndExtension)){ //multiple sounds
+                    var counter:Int = 1;
+                    
+                    while(Assets.exists(sndPath + Std.string(counter) + sndExtension)){
+                        textSounds.push(FlxG.sound.load(sndPath + Std.string(counter) + sndExtension, 1));
+                        counter++;
+                    }			
+                } else if (Assets.exists(sndPath + sndExtension)){
+                    textSounds.push(FlxG.sound.load(sndPath + sndExtension, 1));
+                }
                 
+                if(textSounds.length < 1){
+                    FlxG.log.warn('[CTDB] Can\'t find Text Sounds: "' + (sndPath + sndExtension) + '".');
+                    currentSoundMode = None;
+                }
+                
+                textbox.characterDisplayCallbacks = [];
+                
+                textbox.characterDisplayCallbacks.push(function(character:Text)
+                {
+                    if(currentSoundMode == TextSound){
+                        for(i in textSounds){
+                            if(i.playing) i.stop();
+                        }
+                        FlxG.random.getObject(textSounds).play(true);                        
+                    }
+                });
             case None:
                 // do nothing
         }

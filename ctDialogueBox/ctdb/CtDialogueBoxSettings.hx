@@ -36,6 +36,11 @@ class CtDialogueBoxSettings{
     public var boxPosition:FlxPoint;
     
     /**
+     * how long the text will go before wrapping to a new line. leaving this as 0 will set it to the width of the dialogue box.
+     */
+    public var textFieldWidth:Float;
+    
+    /**
      * the offset for where the text will be located relative to the textbox.
      * eg: new FlxPoint(0, 0) 
      */
@@ -86,6 +91,7 @@ class CtDialogueBoxSettings{
         fontSize:Int = null,
         boxImgPath:String = null,
         boxPosition:FlxPoint = null,
+        textFieldWidth:Float = null,
 	    textOffset:FlxPoint = null,
         textColor:FlxColor = null,
         dialogueDataPath:String = null,
@@ -100,6 +106,7 @@ class CtDialogueBoxSettings{
         this.fontSize = fontSize ?? 15;
         this.boxImgPath = boxImgPath;
 		this.boxPosition = boxPosition;
+        this.textFieldWidth = textFieldWidth ?? 0;
         this.textOffset = textOffset ?? new FlxPoint(0, 0);
         this.textColor = textColor;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';

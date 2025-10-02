@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option'];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width'];
 
 	var texts:Array<FlxText> = [];
 
@@ -124,6 +124,18 @@ class CtDialogueTestState extends FlxState
 						
 						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_test']);
+						textbox.openBox();
+						add(textbox); 
+					case 'Text Field Width':
+						var textbox = new CtDialogueBox({
+							textFieldWidth: 100,
+							onComplete: function():Void{
+								new FlxTimer().start(0.1, function(tmr):Void{				
+									busy = false; 
+								});
+							}
+						});
+						textbox.loadDialogueFiles(['dia_shortwrap']);
 						textbox.openBox();
 						add(textbox); 
 				}

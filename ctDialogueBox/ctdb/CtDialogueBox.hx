@@ -92,7 +92,7 @@ class CtDialogueBox extends FlxSpriteGroup{
 			color: settings.textColor ?? FlxColor.BLACK,
 			font: settings.font,
             fontSize: settings.fontSize,
-			textFieldWidth: dialogueBox.width
+			textFieldWidth: settings.textFieldWidth == 0 ? dialogueBox.width : settings.textFieldWidth
 		});
         textbox.setText('testing testing 123');
         textbox.bring();

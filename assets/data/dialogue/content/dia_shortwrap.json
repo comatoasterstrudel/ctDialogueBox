@@ -1,0 +1,7 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "this text should wrap and be short",
+		"actor": "test"
+	}
+]

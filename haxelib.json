@@ -6,7 +6,6 @@
 	"description": "A Fully Customizable Dialogue Box for HaxeFlixel!! ",
 	"version": "1.0.0",
 	"releasenote": "",
-	"contributors": ["comatoasterstrudel", "Eiyeron"],
-	"dependencies": {},
-	"classPath": "ctDialogueBox/"
+	"contributors": ["comatoasterstrudel", "Eiyeron", "Sphis"],
+	"dependencies": {}
 }

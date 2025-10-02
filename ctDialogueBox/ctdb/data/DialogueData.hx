@@ -49,4 +49,9 @@ typedef DialogueData =
      * if this isnt 0, sets the pitch of the dialogue sfx
      */
     var diaPitch:Float;
+    
+    /**
+     * the name of the voice line that should be played on this line. if left blank it plays nothing
+     */
+    var voiceLine:String;
 }

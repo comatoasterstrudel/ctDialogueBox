@@ -32,8 +32,16 @@ class ActorData
 	 */
 	public var vanityName:String = '';
     
+    /**
+     * the color the text should be for this character
+     */
     public var textColor:FlxColor;
     
+	/**
+	 * the name of the text sound this character should play. if blank, wont play anything
+	 */
+	public var textSound:String = '';
+	
 	public function new(path:String){
 		if(!Assets.exists(path)){
 			if(!path.endsWith('actor_.json')) FlxG.log.warn('[CTDB] Can\'t find Actor File: "$path".');
@@ -45,8 +53,9 @@ class ActorData
         
 		data = Json.parse(Assets.getText(path));
 
-		name = data.name;
-        
-        textColor = FlxColor.fromRGB(data.textColor[0], data.textColor[1], data.textColor[2], 255);
+		name = data.name ?? '';
+        vanityName = data.vanityName ?? '';
+        textColor = FlxColor.fromRGB(data.textColor[0] ?? 255, data.textColor[1] ?? 255, data.textColor[2] ?? 255, 255);
+		textSound = textSound ?? '';
     }
 }

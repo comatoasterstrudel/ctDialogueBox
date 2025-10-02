@@ -72,6 +72,12 @@ class CtDialogueBoxSettings{
     public var dialogueImagePath:String;
     
     /**
+     * the folder in your assets folder where your dialogue sounds are located
+     * default: assets/sounds/dialogue/
+     */
+    public var dialogueSoundPath:String;
+    
+    /**
      * this is the function to check if youve pressed the enter button, or however you want the dialogue to progress
      * default: FlxG.keys.justPressed.ENTER
      */
@@ -104,6 +110,7 @@ class CtDialogueBoxSettings{
         textColor:FlxColor = null,
         dialogueDataPath:String = null,
         dialogueImagePath:String = null,
+        dialogueSoundPath:String = null,
         pressedAcceptFunction:Void->Bool = null,
         pressedSkipFunction:Void->Bool = null,
         onComplete:Void->Void = null, 
@@ -120,6 +127,7 @@ class CtDialogueBoxSettings{
         this.textColor = textColor;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';
         this.dialogueImagePath = dialogueImagePath ?? 'assets/images/dialogue/';
+        this.dialogueSoundPath = dialogueSoundPath ?? 'assets/sounds/dialogue/';
         this.pressedAcceptFunction = pressedAcceptFunction ?? function():Bool{return(FlxG.keys.justPressed.ENTER);};
         this.pressedSkipFunction = pressedSkipFunction ?? function():Bool{return(FlxG.keys.pressed.CONTROL);};
         this.onComplete = onComplete;

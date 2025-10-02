@@ -1,0 +1,17 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "fortnite",
+		"voiceLine": "fortnite"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "im pregnant",
+		"voiceLine": "im pregnant"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "its raining meatballs!",
+		"voiceLine": "its raining meatballs"
+	}
+]

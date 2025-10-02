@@ -2,10 +2,12 @@ package ctDialogueBox.ctdb;
 
 import ctDialogueBox.*;
 import ctDialogueBox.ctdb.data.*;
+import ctDialogueBox.ctdb.sound.*;
 import ctDialogueBox.textbox.*;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
+import flixel.sound.FlxSound;
 import flixel.util.FlxColor;
 import openfl.Assets;
 
@@ -47,6 +49,15 @@ class CtDialogueBox extends FlxSpriteGroup{
      * if this is true, you won't be able to advance dialogue
      */
     var busy:Bool = true;
+    
+    /**
+     * the current type of sound this box should be playing on this line
+     */
+    var currentSoundMode:CurrentSoundMode;
+    
+    var voiceLineSound:FlxSound;
+    
+    var textSounds:Array<FlxSound> = [];
     
     /**
      * you can set these settings globally, and they will be applied when not passing arguments into CtDialogueBox!!
@@ -128,6 +139,8 @@ class CtDialogueBox extends FlxSpriteGroup{
     public function closeBox():Void{
         busy = true;    
         
+        clearSounds();
+        
         if(settings.onComplete != null) settings.onComplete();
         
         destroy();
@@ -145,6 +158,10 @@ class CtDialogueBox extends FlxSpriteGroup{
         advanceLine(0);
     }
     
+    /**
+     * call this to advance the dialogue box!!
+     * @param amount the amount of lines to jump forward
+     */
     function advanceLine(amount:Int):Void{
         if(amount > 0 && textbox.status == WRITING){
             textbox.skipLine();
@@ -180,10 +197,66 @@ class CtDialogueBox extends FlxSpriteGroup{
         var theColor:FlxColor = (actorData.exists ? actorData.textColor : settings.textColor);
         textbox.settings.color = theColor;
         
+        //set the current sound mode
+        if(dialogueData.voiceLine != ''){
+            currentSoundMode = VoiceLine;
+        } else if(actorData.exists && actorData.textSound != ''){
+            currentSoundMode = TextSound;
+        } else {
+            currentSoundMode = None;
+        }
+        
+        //clear the sound from the previous lines, then set the new sounds
+        clearSounds();
+        setSounds(dialogueData, actorData);
+        
         //start typing!!
         textbox.bring();
         
         if(settings.onLineAdvance != null) settings.onLineAdvance(dialogueData);
+    }
+    
+    /**
+     * call this to clear the sounds used previously
+     */
+    function clearSounds():Void{
+        if(voiceLineSound != null){
+            voiceLineSound.stop();
+            voiceLineSound.destroy();
+            voiceLineSound = null;
+        }
+        for(i in textSounds){
+            if(i != null){
+                i.stop();
+                i.destroy();
+            }
+        }
+        textSounds = [];
+    }
+    
+    /**
+     * call this to set the sounds for this line!!
+     */
+    function setSounds(dialogueData:DialogueData, actorData:ActorData):Void{
+        var sndExtension:String = #if desktop '.ogg'; #end #if html5 '.mp3'; #end
+        
+        switch(currentSoundMode){
+            case VoiceLine:
+                var sndPath:String = settings.dialogueSoundPath + 'voiceLines/' + dialogueData.voiceLine + sndExtension;
+                
+                if(Assets.exists(sndPath)){
+                    voiceLineSound = new FlxSound().loadEmbedded(sndPath, false, true);
+                    FlxG.sound.list.add(voiceLineSound);
+                    voiceLineSound.play();
+                } else {
+                    FlxG.log.warn('[CTDB] Can\'t find Voice Line: "$sndPath".');
+                    currentSoundMode = None;
+                }
+            case TextSound:
+                
+            case None:
+                // do nothing
+        }
     }
     
     /**

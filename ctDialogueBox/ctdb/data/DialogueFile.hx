@@ -41,7 +41,8 @@ class DialogueFile
 				portrait: "",
 				autoSkip: false,
 				continueLine: false,
-				diaPitch: 0
+				diaPitch: 0,
+				voiceLine: '',
 			});
 			
 			return;
@@ -61,6 +62,8 @@ class DialogueFile
 				autoSkip: item.autoSkip ?? false,
 				continueLine: item.continueLine ?? false,
 				diaPitch: item.diaPitch ?? 0.0,
+				voiceLine: item.voiceLine ?? '',
+				
 			};
 		});
         //it works

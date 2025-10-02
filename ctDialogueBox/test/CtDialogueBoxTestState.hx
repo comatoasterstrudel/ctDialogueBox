@@ -75,7 +75,7 @@ class CtDialogueTestState extends FlxState
 							boxImgPath: "dialogueBox", 
 							textColor: FlxColor.WHITE, 
 							fontSize: 46, 
-							font: 'assets/fonts/andy.ttf',
+							font: 'ctDialogueBox/fonts/andy.ttf',
 							textOffset: new FlxPoint(30, 30),
 							onComplete: function():Void{
 								new FlxTimer().start(0.1, function(tmr):Void{				

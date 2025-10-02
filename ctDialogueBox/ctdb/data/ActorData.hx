@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.util.FlxColor;
 import haxe.Json;
 import openfl.Assets;
-
 using StringTools;
 
 /**
@@ -35,6 +34,10 @@ class ActorData
     public var textColor:FlxColor;
     
 	public function new(path:String){
+		
+		if(!Assets.exists(path) && Assets.exists(path.replace('assets/', 'ctDialogueBox/')))
+			path = path.replace('assets/', 'ctDialogueBox/');
+
 		if(!Assets.exists(path)){
 			if(!path.endsWith('actor_.json')) FlxG.log.warn('[CTDB] Can\'t find Actor File: "$path".');
             

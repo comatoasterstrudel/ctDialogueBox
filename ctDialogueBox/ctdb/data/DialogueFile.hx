@@ -4,6 +4,7 @@ import ctDialogueBox.ctdb.data.*;
 import flixel.FlxG;
 import haxe.Json;
 import openfl.Assets;
+using StringTools;
 
 /**
  * a class that holds all the data from a dialogue json file.
@@ -27,6 +28,9 @@ class DialogueFile
 	
 	public function new(path:String)
 	{
+		if(!Assets.exists(path) && Assets.exists(path.replace('assets/', 'ctDialogueBox/')))
+			path = path.replace('assets/', 'ctDialogueBox/');
+
 		this.path = path;
 		
 		if(!Assets.exists(path)){

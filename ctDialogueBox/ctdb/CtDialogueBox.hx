@@ -8,6 +8,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxColor;
 import openfl.Assets;
+using StringTools;
 
 /**
  * this is the actual dialogue box object!! 9/8/25
@@ -60,9 +61,13 @@ class CtDialogueBox extends FlxSpriteGroup{
             dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
         } else { //load desired image
             var boxPath:String = (settings.dialogueImagePath + settings.boxImgPath + '.png');
+            var cdb = boxPath.replace('assets/', 'ctDialogueBox/');
             
             if(Assets.exists(boxPath)){
                 dialogueBox.loadGraphic(boxPath);                
+			}
+			else if(Assets.exists(cdb)){
+                dialogueBox.loadGraphic(cdb);                
 			}
 			else
 			{

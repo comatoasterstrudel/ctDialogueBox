@@ -48,8 +48,19 @@ class CtDialogueBox extends FlxSpriteGroup{
      */
     var busy:Bool = true;
     
-    public function new(settings:CtDialogueBoxSettings):Void{
+    /**
+     * you can set these settings globally, and they will be applied when not passing arguments into CtDialogueBox!!
+     */
+    public static var defaultSettings:CtDialogueBoxSettings = null;
+    
+    public function new(?settings:CtDialogueBoxSettings = null):Void{
         super();
+        
+        if(defaultSettings != null && settings == null){
+            settings = defaultSettings;    
+        } else if(settings == null){
+            settings = {};
+        }
         
         this.settings = settings;
                 

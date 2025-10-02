@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors'];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option'];
 
 	var texts:Array<FlxText> = [];
 
@@ -106,6 +106,24 @@ class CtDialogueTestState extends FlxState
 							}
 						});
 						textbox.loadDialogueFiles(['dia_actors']);
+						textbox.openBox();
+						add(textbox); 
+					case 'Test Default Settings Option':
+						CtDialogueBox.defaultSettings = {
+							boxImgPath: "dialogueBox", 
+							textColor: FlxColor.WHITE, 
+							fontSize: 46, 
+							font: 'assets/fonts/andy.ttf',
+							textOffset: new FlxPoint(30, 30),
+							onComplete: function():Void{
+								new FlxTimer().start(0.1, function(tmr):Void{				
+									busy = false; 
+								});
+							}
+						};
+						
+						var textbox = new CtDialogueBox();
+						textbox.loadDialogueFiles(['dia_test']);
 						textbox.openBox();
 						add(textbox); 
 				}

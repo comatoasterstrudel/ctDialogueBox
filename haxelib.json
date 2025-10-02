@@ -7,8 +7,4 @@
 	"version": "1.0.0",
 	"releasenote": "",
 	"contributors": ["comatoasterstrudel", "Eiyeron", "Sphis"],
-	"dependencies": {
-		"flixel": "",
-		"openfl": ""
-	}
 }

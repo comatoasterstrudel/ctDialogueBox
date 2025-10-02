@@ -37,8 +37,15 @@ class CtDialogueBoxSettings{
     
     /**
      * how long the text will go before wrapping to a new line. leaving this as 0 will set it to the width of the dialogue box.
+     * eg: 200
      */
     public var textFieldWidth:Float;
+    
+    /**
+     * how many vertical rows of text there can be. this is 4 by default
+     * eg: 4
+     */
+    public var textRows:Int;
     
     /**
      * the offset for where the text will be located relative to the textbox.
@@ -92,6 +99,7 @@ class CtDialogueBoxSettings{
         boxImgPath:String = null,
         boxPosition:FlxPoint = null,
         textFieldWidth:Float = null,
+        textRows:Int = null,
 	    textOffset:FlxPoint = null,
         textColor:FlxColor = null,
         dialogueDataPath:String = null,
@@ -107,6 +115,7 @@ class CtDialogueBoxSettings{
         this.boxImgPath = boxImgPath;
 		this.boxPosition = boxPosition;
         this.textFieldWidth = textFieldWidth ?? 0;
+        this.textRows = textRows ?? 4;
         this.textOffset = textOffset ?? new FlxPoint(0, 0);
         this.textColor = textColor;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';

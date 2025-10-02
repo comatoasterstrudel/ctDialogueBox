@@ -88,7 +88,7 @@ class CtDialogueBox extends FlxSpriteGroup{
             dialogueBox.setPosition(settings.boxPosition.x, settings.boxPosition.y);
         }
         
-		textbox = new Textbox(dialogueBox.x + settings.textOffset.x, dialogueBox.y + settings.textOffset.x, {
+		textbox = new Textbox(dialogueBox.x + settings.textOffset.x, dialogueBox.y + settings.textOffset.y, {
 			color: settings.textColor ?? FlxColor.BLACK,
 			font: settings.font,
             fontSize: settings.fontSize,

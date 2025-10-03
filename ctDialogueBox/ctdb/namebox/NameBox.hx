@@ -144,7 +144,7 @@ class NameBox extends FlxSpriteGroup
      */
     function alignSprites():Void{
         if(nameBoxLeftEnd != null) nameBoxLeftEnd.setPosition(nameBoxSpr.x - nameBoxLeftEnd.width, nameBoxSpr.y);
-        if(nameBoxRightEnd != null) nameBoxRightEnd.setPosition(nameBoxSpr.x + nameBoxSpr.width - nameBoxRightEnd.width, nameBoxSpr.y);
+        if(nameBoxRightEnd != null) nameBoxRightEnd.setPosition(nameBoxSpr.x + nameBoxSpr.width, nameBoxSpr.y);
         nameText.setPosition(nameBoxSpr.x, nameBoxSpr.y + nameBoxSpr.height / 2 - nameText.height / 2);
     }
 }

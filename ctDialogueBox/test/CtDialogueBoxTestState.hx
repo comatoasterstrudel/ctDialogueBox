@@ -168,7 +168,7 @@ class CtDialogueTestState extends FlxState
 							nameBoxRightEndImgPath: "wideNameBoxRightEnd",
 							textOffset: new FlxPoint(30, 30),
 							boxPosition: new FlxPoint(0, 285),
-							nameBoxToPortraitPosition: true,
+							nameBoxFollowType: Match,
 							portraitOnTopOfBox: false,
 							onComplete: function():Void{
 								new FlxTimer().start(0.1, function(tmr):Void{				

@@ -115,10 +115,21 @@ class NameBox extends FlxSpriteGroup
             
             var position = settings.nameBoxPosition;
             
-            if(actorData.portraitRight && settings.nameBoxToPortraitPosition){
-                position = Right;
-            } else if(!actorData.portraitRight && settings.nameBoxToPortraitPosition){
-                position = Left;
+            switch(settings.nameBoxFollowType){
+                case Match:
+                    if(actorData.portraitRight){
+                        position = Right;
+                    } else if(!actorData.portraitRight){
+                        position = Left;
+                    }
+                case Opposite:
+                    if(actorData.portraitRight){
+                        position = Left;
+                    } else if(!actorData.portraitRight){
+                        position = Right;
+                    }
+                case None:
+                    //
             }
             
             nameBoxSpr.y = dialogueBox.y - nameBoxSpr.height;

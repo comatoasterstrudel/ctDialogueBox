@@ -103,9 +103,10 @@ class CtDialogueBoxSettings{
     public var nameBoxPosition:NameBoxPosition;
     
     /**
-     * should the name box match where the current portrait is?
+     * where the name box is located relative to the current portrait
+     * default: none
      */
-    public var nameBoxToPortraitPosition:Bool;
+    public var nameBoxFollowType:NameBoxFollowType;
     
     /**
      * how big the namebox text should be
@@ -181,7 +182,7 @@ class CtDialogueBoxSettings{
         nameBoxLeftEndImgPath:String = null,
         nameBoxRightEndImgPath:String = null,
         nameBoxPosition:NameBoxPosition = null,
-        nameBoxToPortraitPosition:Bool = null,
+        nameBoxFollowType:NameBoxFollowType = null,
         nameBoxFontSize:Int = null,
         nameBoxFont:String = null,
         nameBoxTextColor:FlxColor = null,
@@ -209,7 +210,7 @@ class CtDialogueBoxSettings{
         this.nameBoxLeftEndImgPath = nameBoxLeftEndImgPath;
         this.nameBoxRightEndImgPath = nameBoxRightEndImgPath;
         this.nameBoxPosition = nameBoxPosition ?? Left;
-        this.nameBoxToPortraitPosition = nameBoxToPortraitPosition ?? false;
+        this.nameBoxFollowType = nameBoxFollowType ?? None;
         this.nameBoxFontSize = nameBoxFontSize ?? 25;
         this.nameBoxFont = nameBoxFont;
         this.nameBoxTextColor = nameBoxTextColor;

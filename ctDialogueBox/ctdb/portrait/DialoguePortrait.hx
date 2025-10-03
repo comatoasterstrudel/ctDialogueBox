@@ -1,4 +1,4 @@
-package ctdb.portrait;
+package ctDialogueBox.ctdb.portrait;
 
 import ctDialogueBox.*;
 import ctDialogueBox.ctdb.*;

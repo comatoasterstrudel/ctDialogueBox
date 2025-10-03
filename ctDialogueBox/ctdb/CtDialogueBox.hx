@@ -2,6 +2,7 @@ package ctDialogueBox.ctdb;
 
 import ctDialogueBox.*;
 import ctDialogueBox.ctdb.data.*;
+import ctDialogueBox.ctdb.namebox.*;
 import ctDialogueBox.ctdb.portrait.*;
 import ctDialogueBox.ctdb.sound.*;
 import ctDialogueBox.textbox.*;
@@ -31,6 +32,11 @@ class CtDialogueBox extends FlxSpriteGroup{
      * the object that holds the dialogue portrait
      */
     var dialoguePortrait:DialoguePortrait;
+    
+    /**
+     * the box that displays the name of the character speaking!!
+     */
+    var nameBox:NameBox;
     
     /**
      * the array of the dialogue files to play here
@@ -90,11 +96,14 @@ class CtDialogueBox extends FlxSpriteGroup{
                 
         dialogueBox = new FlxSprite();
         
+        nameBox = new NameBox(settings, dialogueBox);
+        
         dialoguePortrait = new DialoguePortrait(settings);
         if(!settings.portraitOnTopOfBox) add(dialoguePortrait);
         
         add(dialogueBox);
-
+        add(nameBox);
+        
         if(settings.portraitOnTopOfBox) add(dialoguePortrait);
 
         if(settings.boxImgPath == null){ //create a white box, since no image was provided
@@ -108,7 +117,7 @@ class CtDialogueBox extends FlxSpriteGroup{
 			else
 			{
                 FlxG.log.warn('[CTDB] Can\'t find Dialogue Box Image: "$boxPath", loading default box.');
-                dialogueBox.makeGraphic(800, 300, FlxColor.WHITE);
+                dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
             }
         }
         
@@ -230,6 +239,9 @@ class CtDialogueBox extends FlxSpriteGroup{
         //update the dialogue portrait
         dialoguePortrait.updatePortrait(dialogueData, actorData);
         
+        //update the name box
+        nameBox.updateName(actorData);
+
         //start typing!!
         textbox.bring();
         

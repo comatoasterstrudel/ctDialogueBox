@@ -2,6 +2,7 @@
     "name": "man",
 	"vanityName": "Man",
 	"textColor": [255, 0, 0],
+	"nameBoxTextColor": [255, 0, 0],
 	"portraitPrefix": "man",
 	"portraitRight": true
 }

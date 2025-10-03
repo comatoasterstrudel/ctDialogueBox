@@ -36,6 +36,8 @@ class DialoguePortrait extends FlxSprite
             var portraitPath:String = (settings.dialogueImagePath + 'dialoguePortraits/' + actorData.portraitPrefix + '_' + dialogueData.portrait + '.png');
 
             if(!Assets.exists(portraitPath)){
+                visible = false;
+
                 FlxG.log.warn('[CTDB] Can\'t find Dialogue Portrait: "$portraitPath".');
             } else {
                 visible = true;
@@ -52,6 +54,8 @@ class DialoguePortrait extends FlxSprite
                 screenCenter();
                 setPosition(x + offsets.x, y + offsets.y);
             }
+        } else {
+            visible = false; 
         }
     }
 }

@@ -52,6 +52,11 @@ class ActorData
 	 */
 	public var portraitRight:Bool = true;
 	
+	 /**
+     * the color the text on the namebox should be for this character
+     */
+    public var nameBoxTextColor:FlxColor;
+	
 	public function new(path:String){
 		if(!Assets.exists(path)){
 			if(!path.endsWith('actor_.json')) FlxG.log.warn('[CTDB] Can\'t find Actor File: "$path".');
@@ -69,5 +74,6 @@ class ActorData
 		textSound = data.textSound ?? '';
 		portraitPrefix = data.portraitPrefix ?? '';
 		portraitRight = data.portraitRight ?? true;
+		nameBoxTextColor = data.nameBoxTextColor == null ? (0) : FlxColor.fromRGB(data.nameBoxTextColor[0] ?? 255, data.nameBoxTextColor[1] ?? 255, data.nameBoxTextColor[2] ?? 255, 255);
     }
 }

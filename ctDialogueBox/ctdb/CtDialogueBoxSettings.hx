@@ -1,6 +1,7 @@
 package ctDialogueBox.ctdb;
 
 import ctDialogueBox.ctdb.data.*;
+import ctDialogueBox.ctdb.namebox.*;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
@@ -78,6 +79,53 @@ class CtDialogueBoxSettings{
     public var portraitOffsetRight:FlxPoint;
     
     /**
+     * the name of your name box image. if left null, will make a small white box.
+     * eg: nameBox
+     */
+    public var nameBoxImgPath:String;
+    
+    /**
+     * the name of your name box left end image. if left null, wont use any left end.
+     * eg: nameBoxLeftEnd
+     */
+    public var nameBoxLeftEndImgPath:String;
+
+     /**
+     * the name of your name box right end image. if left null, wont use any left end.
+     * eg: nameBoxRightEnd
+     */
+    public var nameBoxRightEndImgPath:String;
+
+    /**
+     * where the name box is located by default. 
+     * default: Left
+     */
+    public var nameBoxPosition:NameBoxPosition;
+    
+    /**
+     * should the name box match where the current portrait is?
+     */
+    public var nameBoxToPortraitPosition:Bool;
+    
+    /**
+     * how big the namebox text should be
+     * default: 25
+     */
+    public var nameBoxFontSize:Int;
+
+    /**
+     * The path to the font file you want to use on the namebox. if left null, will use HaxeFlixel default font.
+     * eg: assets/font/andy.ttf
+     */
+    public var nameBoxFont:String;
+    
+    /**
+     * the color the name text is. this will be overwritten by actor colors.
+     * eg: FlxColor.WHITE
+     */
+    public var nameBoxTextColor:FlxColor;
+    
+    /**
      * the folder in your assets folder where your dialogue files are located
      * default: assets/data/dialogue/
      */
@@ -129,6 +177,14 @@ class CtDialogueBoxSettings{
         portraitOnTopOfBox:Bool = null,
         portraitOffsetLeft:FlxPoint = null,
 	    portraitOffsetRight:FlxPoint = null,
+        nameBoxImgPath:String = null,
+        nameBoxLeftEndImgPath:String = null,
+        nameBoxRightEndImgPath:String = null,
+        nameBoxPosition:NameBoxPosition = null,
+        nameBoxToPortraitPosition:Bool = null,
+        nameBoxFontSize:Int = null,
+        nameBoxFont:String = null,
+        nameBoxTextColor:FlxColor = null,
         dialogueDataPath:String = null,
         dialogueImagePath:String = null,
         dialogueSoundPath:String = null,
@@ -149,6 +205,14 @@ class CtDialogueBoxSettings{
         this.portraitOnTopOfBox = portraitOnTopOfBox ?? true;
         this.portraitOffsetLeft = portraitOffsetLeft ?? new FlxPoint(-200, 200);
         this.portraitOffsetRight = portraitOffsetRight ?? new FlxPoint(200, 200);
+        this.nameBoxImgPath = nameBoxImgPath;
+        this.nameBoxLeftEndImgPath = nameBoxLeftEndImgPath;
+        this.nameBoxRightEndImgPath = nameBoxRightEndImgPath;
+        this.nameBoxPosition = nameBoxPosition ?? Left;
+        this.nameBoxToPortraitPosition = nameBoxToPortraitPosition ?? false;
+        this.nameBoxFontSize = nameBoxFontSize ?? 25;
+        this.nameBoxFont = nameBoxFont;
+        this.nameBoxTextColor = nameBoxTextColor;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';
         this.dialogueImagePath = dialogueImagePath ?? 'assets/images/dialogue/';
         this.dialogueSoundPath = dialogueSoundPath ?? 'assets/sounds/dialogue/';

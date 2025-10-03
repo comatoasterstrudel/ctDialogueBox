@@ -163,8 +163,12 @@ class CtDialogueTestState extends FlxState
 					case 'Dialogue Portraits':
 						var textbox = new CtDialogueBox({
 							boxImgPath: "widebox", 
+							nameBoxImgPath: "wideNameBox",
+							nameBoxLeftEndImgPath: "wideNameBoxLeftEnd",
+							nameBoxRightEndImgPath: "wideNameBoxRightEnd",
 							textOffset: new FlxPoint(30, 30),
 							boxPosition: new FlxPoint(0, 285),
+							nameBoxToPortraitPosition: true,
 							portraitOnTopOfBox: false,
 							onComplete: function():Void{
 								new FlxTimer().start(0.1, function(tmr):Void{				

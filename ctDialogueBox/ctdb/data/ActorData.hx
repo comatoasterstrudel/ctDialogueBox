@@ -57,6 +57,11 @@ class ActorData
      */
     public var nameBoxTextColor:FlxColor;
 	
+	/**
+	 * the path to this characters custom name box sprite. if this is null they wont have one.
+	 */
+	public var customNameBoxImgPath:String;
+	
 	public function new(path:String){
 		if(!Assets.exists(path)){
 			if(!path.endsWith('actor_.json')) FlxG.log.warn('[CTDB] Can\'t find Actor File: "$path".');
@@ -75,5 +80,6 @@ class ActorData
 		portraitPrefix = data.portraitPrefix ?? '';
 		portraitRight = data.portraitRight ?? true;
 		nameBoxTextColor = data.nameBoxTextColor == null ? (0) : FlxColor.fromRGB(data.nameBoxTextColor[0] ?? 255, data.nameBoxTextColor[1] ?? 255, data.nameBoxTextColor[2] ?? 255, 255);
+		customNameBoxImgPath = data.customNameBoxImgPath;
     }
 }

@@ -2,8 +2,10 @@ package ctDialogueBox.ctdb;
 
 import ctDialogueBox.*;
 import ctDialogueBox.ctdb.data.*;
+import ctDialogueBox.ctdb.portrait.*;
 import ctDialogueBox.ctdb.sound.*;
 import ctDialogueBox.textbox.*;
+import ctdb.portrait.DialoguePortrait;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
@@ -26,9 +28,9 @@ class CtDialogueBox extends FlxSpriteGroup{
     var textbox:Textbox;
     
     /**
-     * the settings used to customize this dialogue box
+     * the object that holds the dialogue portrait
      */
-    var settings:CtDialogueBoxSettings;
+    var dialoguePortrait:DialoguePortrait;
     
     /**
      * the array of the dialogue files to play here
@@ -66,6 +68,11 @@ class CtDialogueBox extends FlxSpriteGroup{
     var textSounds:Array<FlxSound> = [];
     
     /**
+     * the settings used to customize this dialogue box
+     */
+    public var settings:CtDialogueBoxSettings;
+    
+    /**
      * you can set these settings globally, and they will be applied when not passing arguments into CtDialogueBox!!
      */
     public static var defaultSettings:CtDialogueBoxSettings = null;
@@ -82,12 +89,18 @@ class CtDialogueBox extends FlxSpriteGroup{
         this.settings = settings;
                 
         dialogueBox = new FlxSprite();
-        add(dialogueBox);
         
+        dialoguePortrait = new DialoguePortrait(settings);
+        if(!settings.portraitOnTopOfBox) add(dialoguePortrait);
+        
+        add(dialogueBox);
+
+        if(settings.portraitOnTopOfBox) add(dialoguePortrait);
+
         if(settings.boxImgPath == null){ //create a white box, since no image was provided
             dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
         } else { //load desired image
-            var boxPath:String = (settings.dialogueImagePath + settings.boxImgPath + '.png');
+            var boxPath:String = (settings.dialogueImagePath + 'dialogueBox/' + settings.boxImgPath + '.png');
             
             if(Assets.exists(boxPath)){
                 dialogueBox.loadGraphic(boxPath);                
@@ -99,10 +112,10 @@ class CtDialogueBox extends FlxSpriteGroup{
             }
         }
         
-        if(settings.boxPosition == null){
-            dialogueBox.screenCenter();            
-        } else {
-            dialogueBox.setPosition(settings.boxPosition.x, settings.boxPosition.y);
+        dialogueBox.screenCenter();            
+
+        if(settings.boxPosition != null){
+            dialogueBox.setPosition(dialogueBox.x + settings.boxPosition.x, dialogueBox.y + settings.boxPosition.y);
         }
         
 		textbox = new Textbox(dialogueBox.x + settings.textOffset.x, dialogueBox.y + settings.textOffset.y, {
@@ -112,8 +125,6 @@ class CtDialogueBox extends FlxSpriteGroup{
 			textFieldWidth: settings.textFieldWidth == 0 ? dialogueBox.width : settings.textFieldWidth,
             numLines: settings.textRows
 		});
-        textbox.setText('testing testing 123');
-        textbox.bring();
         add(textbox);
         
         antialiasing = true;
@@ -215,6 +226,9 @@ class CtDialogueBox extends FlxSpriteGroup{
         //clear the sound from the previous lines, then set the new sounds
         clearSounds();
         setSounds(dialogueData, actorData);
+        
+        //update the dialogue portrait
+        dialoguePortrait.updatePortrait(dialogueData, actorData);
         
         //start typing!!
         textbox.bring();

@@ -42,6 +42,16 @@ class ActorData
 	 */
 	public var textSound:String = '';
 	
+	/**
+	 * the suffix this character uses for their portraits. for example, if your portrait is called "coma_neutral", the suffix would be "coma". if blank, this character wont use portraits
+	 */
+	public var portraitPrefix:String = '';
+	
+	/**
+	 * should the portraits for this character be on the right? if blank it will just stay true
+	 */
+	public var portraitRight:Bool = true;
+	
 	public function new(path:String){
 		if(!Assets.exists(path)){
 			if(!path.endsWith('actor_.json')) FlxG.log.warn('[CTDB] Can\'t find Actor File: "$path".');
@@ -57,5 +67,7 @@ class ActorData
         vanityName = data.vanityName ?? '';
         textColor = FlxColor.fromRGB(data.textColor[0] ?? 255, data.textColor[1] ?? 255, data.textColor[2] ?? 255, 255);
 		textSound = data.textSound ?? '';
+		portraitPrefix = data.portraitPrefix ?? '';
+		portraitRight = data.portraitRight ?? true;
     }
 }

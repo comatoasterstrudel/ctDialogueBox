@@ -60,6 +60,24 @@ class CtDialogueBoxSettings{
     public var textColor:FlxColor;
     
     /**
+     * if this is true, dialogue portraits will be rendered on top of the dialogue box. 
+     * default: true
+     */
+    public var portraitOnTopOfBox:Bool;
+    
+    /**
+     * how much dialogue portraits will be offset while in the left position
+     * default: 200 to the left, 200 down.
+     */
+    public var portraitOffsetLeft:FlxPoint;
+    
+    /**
+     * how much dialogue portraits will be offset while in the right position
+     * default: 200 to the right, 200 down.
+     */
+    public var portraitOffsetRight:FlxPoint;
+    
+    /**
      * the folder in your assets folder where your dialogue files are located
      * default: assets/data/dialogue/
      */
@@ -108,6 +126,9 @@ class CtDialogueBoxSettings{
         textRows:Int = null,
 	    textOffset:FlxPoint = null,
         textColor:FlxColor = null,
+        portraitOnTopOfBox:Bool = null,
+        portraitOffsetLeft:FlxPoint = null,
+	    portraitOffsetRight:FlxPoint = null,
         dialogueDataPath:String = null,
         dialogueImagePath:String = null,
         dialogueSoundPath:String = null,
@@ -125,6 +146,9 @@ class CtDialogueBoxSettings{
         this.textRows = textRows ?? 4;
         this.textOffset = textOffset ?? new FlxPoint(0, 0);
         this.textColor = textColor;
+        this.portraitOnTopOfBox = portraitOnTopOfBox ?? true;
+        this.portraitOffsetLeft = portraitOffsetLeft ?? new FlxPoint(-200, 200);
+        this.portraitOffsetRight = portraitOffsetRight ?? new FlxPoint(200, 200);
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';
         this.dialogueImagePath = dialogueImagePath ?? 'assets/images/dialogue/';
         this.dialogueSoundPath = dialogueSoundPath ?? 'assets/sounds/dialogue/';

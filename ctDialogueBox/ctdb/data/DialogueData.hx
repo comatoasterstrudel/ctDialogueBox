@@ -31,7 +31,7 @@ typedef DialogueData =
     var characterName:String;
 
     /**
-     * the portrait this line uses. if its blank, itll use nothing
+     * the portrait this line uses. if its blank, itll use nothing. this should exclude the prefix, if your portrait is called "coma_neutral", this field would be "neutral".
      */
     var portrait:String;
 

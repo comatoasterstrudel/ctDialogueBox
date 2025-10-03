@@ -1,0 +1,44 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "hi i am a guy , a very neutral guy",
+		"actor": "guy",
+		"portrait": "neutral"
+	},
+	{
+		"speed": 0.02,
+		"dialogue": "hAHAHAHAH",
+		"actor": "guy",
+		"portrait": "laugh"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "your stupid",
+		"actor": "man",
+		"portrait": "evil"
+	},
+	{
+		"speed": 0.02,
+		"dialogue": "hAHAHAHAH",
+		"actor": "man",
+		"portrait": "laugh"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "hey waht the fuck man",
+		"actor": "guy",
+		"portrait": "sad"
+	},
+	{
+		"speed": 0.02,
+		"dialogue": "sorry lets be friends i didnt mean to be rude Ok?",
+		"actor": "man",
+		"portrait": "laugh"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "ok yay (i am neutral about these things)",
+		"actor": "guy",
+		"portrait": "neutral"
+	}
+]

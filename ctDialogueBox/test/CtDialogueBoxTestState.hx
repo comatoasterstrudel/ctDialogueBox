@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds'];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits'];
 
 	var texts:Array<FlxText> = [];
 
@@ -158,6 +158,21 @@ class CtDialogueTestState extends FlxState
 							}
 						});
 						textbox.loadDialogueFiles(['dia_textsnd']);
+						textbox.openBox();
+						add(textbox); 
+					case 'Dialogue Portraits':
+						var textbox = new CtDialogueBox({
+							boxImgPath: "widebox", 
+							textOffset: new FlxPoint(30, 30),
+							boxPosition: new FlxPoint(0, 285),
+							portraitOnTopOfBox: false,
+							onComplete: function():Void{
+								new FlxTimer().start(0.1, function(tmr):Void{				
+									busy = false; 
+								});
+							}
+						});
+						textbox.loadDialogueFiles(['dia_portraits']);
 						textbox.openBox();
 						add(textbox); 
 				}

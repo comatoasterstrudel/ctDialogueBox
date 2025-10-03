@@ -86,6 +86,8 @@ class CtDialogueBox extends FlxSpriteGroup{
     public function new(?settings:CtDialogueBoxSettings = null):Void{
         super();
         
+        visible = false;
+
         if(defaultSettings != null && settings == null){
             settings = defaultSettings;    
         } else if(settings == null){
@@ -153,7 +155,7 @@ class CtDialogueBox extends FlxSpriteGroup{
      * call this to open the dialogue box and play its opening animation
      */
     public function openBox():Void{
-        //busy = true;  
+        visible = true;
         
         busy = false;
         playDialogue();
@@ -169,7 +171,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         if(settings.onComplete != null) settings.onComplete();
         
-        destroy();
+        visible = false;
     }
     
     /**

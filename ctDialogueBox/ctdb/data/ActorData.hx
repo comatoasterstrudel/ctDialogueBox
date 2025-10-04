@@ -80,8 +80,8 @@ class ActorData
 
 		name = data.name ?? '';
         vanityName = data.vanityName ?? '';
-        textColor = FlxColor.fromRGB(data.textColor[0] ?? 255, data.textColor[1] ?? 255, data.textColor[2] ?? 255, 255);
-		portraitColor = FlxColor.fromRGB(data.portraitColor[0] ?? 255, data.portraitColor[1] ?? 255, data.portraitColor[2] ?? 255, 255);
+        textColor = (data.textColor == null) ? FlxColor.WHITE : FlxColor.fromRGB(data.textColor[0] ?? 255, data.textColor[1] ?? 255, data.textColor[2] ?? 255, 255);
+		portraitColor = (data.portraitColor == null) ? FlxColor.WHITE : FlxColor.fromRGB(data.portraitColor[0] ?? 255, data.portraitColor[1] ?? 255, data.portraitColor[2] ?? 255, 255);
 		textSound = data.textSound ?? '';
 		portraitPrefix = data.portraitPrefix ?? '';
 		portraitRight = data.portraitRight ?? true;

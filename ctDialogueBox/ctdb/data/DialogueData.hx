@@ -54,4 +54,9 @@ typedef DialogueData =
      * the name of the voice line that should be played on this line. if left blank it plays nothing
      */
     var voiceLine:String;
+    
+    /**
+     * the list of events to be called on this dialogue line!!
+     */
+    var events:Array<String>;
 }

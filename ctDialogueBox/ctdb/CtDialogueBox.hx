@@ -247,7 +247,15 @@ class CtDialogueBox extends FlxSpriteGroup{
         //start typing!!
         textbox.bring();
         
+        // call advance function!!
         if(settings.onLineAdvance != null) settings.onLineAdvance(dialogueData);
+        
+        //call events!!
+        if(settings.onEvent != null){
+            for(i in dialogueData.events){
+                settings.onEvent(i);
+            }   
+        }
     }
     
     /**

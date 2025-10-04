@@ -166,6 +166,11 @@ class CtDialogueBoxSettings{
      */
     public var onLineAdvance:DialogueData->Void;
     
+    /**
+     * this is the function that process events on each dialogue line!!
+     */
+    public var onEvent:String->Void;
+    
     public function new(
         font:String = null,
         fontSize:Int = null,
@@ -192,7 +197,8 @@ class CtDialogueBoxSettings{
         pressedAcceptFunction:Void->Bool = null,
         pressedSkipFunction:Void->Bool = null,
         onComplete:Void->Void = null, 
-        onLineAdvance:DialogueData->Void = null
+        onLineAdvance:DialogueData->Void = null,
+        onEvent:String->Void = null
     )
     {
         this.font = font;
@@ -221,5 +227,6 @@ class CtDialogueBoxSettings{
         this.pressedSkipFunction = pressedSkipFunction ?? function():Bool{return(FlxG.keys.pressed.CONTROL);};
         this.onComplete = onComplete;
         this.onLineAdvance = onLineAdvance;
+        this.onEvent = onEvent;
     }
 }

@@ -43,6 +43,7 @@ class DialogueFile
 				continueLine: false,
 				diaPitch: 0,
 				voiceLine: '',
+				events: []
 			});
 			
 			return;
@@ -63,7 +64,7 @@ class DialogueFile
 				continueLine: item.continueLine ?? false,
 				diaPitch: item.diaPitch ?? 0.0,
 				voiceLine: item.voiceLine ?? '',
-				
+				events: item.events ?? []
 			};
 		});
         //it works

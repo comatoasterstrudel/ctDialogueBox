@@ -38,6 +38,11 @@ class ActorData
     public var textColor:FlxColor;
     
 	/**
+	 * the color that the portraits of this character will become. its white be default.
+	 */
+	public var portraitColor:FlxColor;
+	
+	/**
 	 * the name of the text sound this character should play. if blank, wont play anything
 	 */
 	public var textSound:String = '';
@@ -76,6 +81,7 @@ class ActorData
 		name = data.name ?? '';
         vanityName = data.vanityName ?? '';
         textColor = FlxColor.fromRGB(data.textColor[0] ?? 255, data.textColor[1] ?? 255, data.textColor[2] ?? 255, 255);
+		portraitColor = FlxColor.fromRGB(data.portraitColor[0] ?? 255, data.portraitColor[1] ?? 255, data.portraitColor[2] ?? 255, 255);
 		textSound = data.textSound ?? '';
 		portraitPrefix = data.portraitPrefix ?? '';
 		portraitRight = data.portraitRight ?? true;

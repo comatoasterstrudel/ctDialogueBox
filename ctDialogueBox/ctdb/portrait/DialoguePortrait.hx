@@ -43,6 +43,8 @@ class DialoguePortrait extends FlxSprite
                 visible = true;
                 loadGraphic(portraitPath);
                 
+                color = actorData.portraitColor;
+                
                 var offsets:FlxPoint;
                 
                 if(actorData.portraitRight){

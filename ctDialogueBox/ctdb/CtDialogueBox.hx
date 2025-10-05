@@ -62,10 +62,13 @@ class CtDialogueBox extends FlxSpriteGroup{
     var continuing:Bool = false;
     
     /**
-     * the text from the previous line
+     * the text from the previous line.
      */
     var lastText:String = '';
     
+    /**
+     * the text for the line currently playing.
+     */
     var currentText:String = '';
     
     /**

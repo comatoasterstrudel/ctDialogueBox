@@ -9,8 +9,10 @@ import ctDialogueBox.ctdb.sound.*;
 import ctDialogueBox.textbox.*;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.graphics.FlxGraphic;
 import flixel.group.FlxSpriteGroup;
 import flixel.sound.FlxSound;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import openfl.Assets;
 
@@ -343,5 +345,46 @@ class CtDialogueBox extends FlxSpriteGroup{
             if(data.dialogueLines == null) continue;
             dialogueFiles.push(data);
         }
+    }
+    
+    /**
+     * the list of fonts that have been preloaded
+     */
+    public static var preloadedFonts:Map<String, Bool> = [];
+    
+    /**
+     * call this to preload the letters of a font. if you dont, your program might stutter when loading long dialogues. sorry this system is really jank D:
+     * this is recommended to be called at the start of your program
+     * @param font the path to your font
+     * @param size the size of your font
+     */
+    public static function preloadFont(font:String, size:Int):Void{
+        if(!Assets.exists(font)){
+            FlxG.log.warn('[CTDB] Can\'t find Font file: "$font".');
+            return;
+        }
+        if(preloadedFonts.get(font + '_' + size)){
+            FlxG.log.warn('[CTDB] Already preloaded font: "' + font + '_' + size + '".');
+            return;
+        }
+        
+        for (i in [
+			" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b",
+			"c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "!", "@", "#", "$", "%",
+			"^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", ";", ":", "'", "\"", ",", ".", "<", ">", "/", "?", "`", "~", "0", "1", "2",
+			"3", "4", "5", "6", "7", "8", "9"
+		])
+		{
+			var testBitmapText = new FlxText();
+			testBitmapText.fieldWidth = 0;
+			testBitmapText.text = i;
+			testBitmapText.setFormat(font, size, FlxColor.WHITE, LEFT);
+			testBitmapText.draw(); // regenerate its graphic
+
+			var graphic:FlxGraphic = FlxGraphic.fromBitmapData(testBitmapText.pixels, true, font + '_' + size + '_' + i, true);
+			graphic.persist = true;
+		}
+        
+        preloadedFonts.set(font + '_' + size, true);
     }
 }

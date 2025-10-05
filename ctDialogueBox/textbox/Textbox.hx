@@ -369,10 +369,11 @@ class Textbox extends FlxSpriteGroup {
         // Get a new character from the pool
         var newCharacter:Text = characterPool.get();
         // Preparing it for the default style.
-        newCharacter.autoSize = true;
+        //newCharacter.autoSize = true;
         newCharacter.font = settings.font;
         newCharacter.size = settings.fontSize;
         newCharacter.text = characterToAdd;
+        newCharacter.loadLetter(this);
         newCharacter.color = settings.color;
         newCharacter.y = currentLineIndex * newCharacter.height;
         newCharacter.x = lines[currentLineIndex].textWidth;

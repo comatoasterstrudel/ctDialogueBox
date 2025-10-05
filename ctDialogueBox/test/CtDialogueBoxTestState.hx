@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate'];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading'];
 
 	var texts:Array<FlxText> = [];
 
@@ -60,10 +60,13 @@ class CtDialogueTestState extends FlxState
 			new FlxTimer().start(0.1, function(tmr):Void{				
 				switch(menuOptions[curSelected]){
 					case 'Base Box':
-						var textbox = new CtDialogueBox({
+						var textbox:CtDialogueBox;
+						
+						textbox = new CtDialogueBox({
 							onComplete: function():Void{
 								new FlxTimer().start(0.1, function(tmr):Void{				
 									busy = false; 
+									textbox.destroy();
 								});
 							}
 						});
@@ -188,6 +191,24 @@ class CtDialogueTestState extends FlxState
 							}
 						});
 						textbox.loadDialogueFiles(['dia_nameplate']);
+						textbox.openBox();
+						add(textbox); 
+					case 'Test Preloading':
+						CtDialogueBox.preloadFont('assets/fonts/andy.ttf', 46);
+						
+						var textbox = new CtDialogueBox({
+							boxImgPath: "dialogueBox", 
+							textColor: FlxColor.WHITE, 
+							fontSize: 46, 
+							font: 'assets/fonts/andy.ttf',
+							textOffset: new FlxPoint(30, 30),
+							onComplete: function():Void{
+								new FlxTimer().start(0.1, function(tmr):Void{				
+									busy = false; 
+								});
+							}
+						});
+						textbox.loadDialogueFiles(['dia_test']);
 						textbox.openBox();
 						add(textbox); 
 				}

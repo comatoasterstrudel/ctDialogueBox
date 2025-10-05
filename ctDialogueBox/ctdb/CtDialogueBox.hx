@@ -12,6 +12,7 @@ import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.group.FlxSpriteGroup;
 import flixel.sound.FlxSound;
+import flixel.system.FlxAssets;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import openfl.Assets;
@@ -129,6 +130,12 @@ class CtDialogueBox extends FlxSpriteGroup{
 
         if(settings.boxPosition != null){
             dialogueBox.setPosition(dialogueBox.x + settings.boxPosition.x, dialogueBox.y + settings.boxPosition.y);
+        }
+        
+        if(!preloadedFonts.get(settings.font + '_' + settings.fontSize)){
+            if(settings.autoPreloadFont){
+                preloadFont(settings.font, settings.fontSize);
+            } else FlxG.log.warn('[CTDB] Your font and size combo (' + settings.font + '_' + settings.fontSize + ') isnt preloaded, which means your game may stutter while typing text. try using CtDialogueBox.preloadFont() or set autoPreloadFont to true while initializing your dialogue box.');  
         }
         
 		textbox = new Textbox(dialogueBox.x + settings.textOffset.x, dialogueBox.y + settings.textOffset.y, {
@@ -358,11 +365,14 @@ class CtDialogueBox extends FlxSpriteGroup{
      * @param font the path to your font
      * @param size the size of your font
      */
-    public static function preloadFont(font:String, size:Int):Void{
-        if(!Assets.exists(font)){
-            FlxG.log.warn('[CTDB] Can\'t find Font file: "$font".');
-            return;
+    public static function preloadFont(font:String = null, size:Int = 15):Void{
+        if(font == null) font = FlxAssets.FONT_DEFAULT; else {
+           if(!Assets.exists(font)){
+                FlxG.log.warn('[CTDB] Can\'t find Font file: "$font".');
+                return;
+            }    
         }
+        
         if(preloadedFonts.get(font + '_' + size)){
             FlxG.log.warn('[CTDB] Already preloaded font: "' + font + '_' + size + '".');
             return;

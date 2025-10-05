@@ -4,6 +4,7 @@ import ctDialogueBox.ctdb.data.*;
 import ctDialogueBox.ctdb.namebox.*;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
+import flixel.system.FlxAssets;
 import flixel.util.FlxColor;
 
 @:structInit
@@ -23,6 +24,11 @@ class CtDialogueBoxSettings{
      * eg: 10
      */
     public var fontSize:Int;
+    
+    /**
+     * should the game preload the font youre using automatically? may stutter once you initially load your dialogue box if you use this method instead of preloading at the start of your program.
+     */
+    public var autoPreloadFont:Bool;
     
     /**
      * the name of your dialogue box image. if left null, will make a 800x300 white box.
@@ -174,6 +180,7 @@ class CtDialogueBoxSettings{
     public function new(
         font:String = null,
         fontSize:Int = null,
+        autoPreloadFont:Bool = null,
         boxImgPath:String = null,
         boxPosition:FlxPoint = null,
         textFieldWidth:Float = null,
@@ -201,8 +208,9 @@ class CtDialogueBoxSettings{
         onEvent:String->Void = null
     )
     {
-        this.font = font;
+        this.font = font ?? FlxAssets.FONT_DEFAULT;
         this.fontSize = fontSize ?? 15;
+        this.autoPreloadFont = autoPreloadFont ?? false;
         this.boxImgPath = boxImgPath;
 		this.boxPosition = boxPosition;
         this.textFieldWidth = textFieldWidth ?? 0;

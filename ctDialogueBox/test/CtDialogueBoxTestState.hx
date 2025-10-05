@@ -60,6 +60,8 @@ class CtDialogueTestState extends FlxState
 			new FlxTimer().start(0.1, function(tmr):Void{				
 				switch(menuOptions[curSelected]){
 					case 'Base Box':
+						CtDialogueBox.preloadFont();
+						
 						var textbox:CtDialogueBox;
 						
 						textbox = new CtDialogueBox({

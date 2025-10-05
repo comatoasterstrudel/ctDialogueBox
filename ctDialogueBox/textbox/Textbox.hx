@@ -247,7 +247,7 @@ class Textbox extends FlxSpriteGroup {
      *  Parses the set string and fill the character array with the possible characters and commands.
      *  TODO : this could be moved into a static function with a context class to help splitting code.
      */
-    function prepareString(text:String)
+    public function prepareString(text:String)
     {
         characters = [];
         var isParsingACommand = false;
@@ -530,7 +530,7 @@ class Textbox extends FlxSpriteGroup {
     var characters:Array<CharacterType>;
     var timePerCharacter(get, never):Float;
     // The position among the whole character array.
-    var currentCharacterIndex:Int;
+    public var currentCharacterIndex:Int;
     // The timer before adding a new character
     var timerBeforeNewCharacter:Float;
 
@@ -541,7 +541,7 @@ class Textbox extends FlxSpriteGroup {
     // The line array, contains the data structures to store and manage the characters.
     var lines:Array<TextBoxLine>;
     // The text line's index.
-    var currentLineIndex:Int;
+    public var currentLineIndex:Int;
     // Just a small internal boolean to notice when a FULL textbox can continue.
     var willResume:Bool;
 

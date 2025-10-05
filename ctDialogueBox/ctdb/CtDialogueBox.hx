@@ -57,6 +57,18 @@ class CtDialogueBox extends FlxSpriteGroup{
     var curLine:Int = 0;
     
     /**
+     * is this line continuing off of a previous line?
+     */
+    var continuing:Bool = false;
+    
+    /**
+     * the text from the previous line
+     */
+    var lastText:String = '';
+    
+    var currentText:String = '';
+    
+    /**
      * if this is true, you won't be able to advance dialogue
      */
     var busy:Bool = true;
@@ -224,8 +236,21 @@ class CtDialogueBox extends FlxSpriteGroup{
         var jsonPath:String = (settings.dialogueDataPath + 'actors/actor_' + dialogueData.actor + '.json');
         var actorData = new ActorData(jsonPath);
         
+        //set continuing before anything else
+        continuing = dialogueData.continueLine;
+        
         //set the text
-        textbox.setText(dialogueData.dialogue);
+        if(continuing){
+            lastText = currentText;
+            currentText = lastText + dialogueData.dialogue;
+            
+            textbox.prepareString(currentText);
+        } else {
+            lastText = currentText;
+            currentText = dialogueData.dialogue;
+            
+            textbox.setText(currentText);            
+        }
         
         //set the proper text speed
         textbox.settings.charactersPerSecond = (1 / dialogueData.speed);
@@ -253,8 +278,20 @@ class CtDialogueBox extends FlxSpriteGroup{
         //update the name box
         nameBox.updateName(actorData);
 
+        
         //start typing!!
-        textbox.bring();
+        if(continuing){
+            var previousLine:Int = textbox.currentLineIndex;
+            var previousCharacter:Int = textbox.currentCharacterIndex;
+            
+            textbox.bring();            
+
+            textbox.currentLineIndex = previousLine;
+            textbox.currentCharacterIndex = previousCharacter;
+        } else {
+            textbox.lastWord = 'THISISNTAREALWORD';
+            textbox.bring();            
+        }
         
         // call advance function!!
         if(settings.onLineAdvance != null) settings.onLineAdvance(dialogueData);
@@ -363,7 +400,7 @@ class CtDialogueBox extends FlxSpriteGroup{
      * call this to preload the letters of a font. if you dont, your program might stutter when loading long dialogues. sorry this system is really jank D:
      * this is recommended to be called at the start of your program
      * @param font the path to your font
-     * @param size the size of your font
+     * @param size the size of your font 
      */
     public static function preloadFont(font:String = null, size:Int = 15):Void{
         if(font == null) font = FlxAssets.FONT_DEFAULT; else {

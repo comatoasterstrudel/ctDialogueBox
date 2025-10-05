@@ -1,0 +1,16 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "did you know"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": " i can continueLine = true?",
+		"continueLine": true
+	},
+	{
+		"speed": 0.03,
+		"dialogue": " even on CtDialogueBox2@??!?!!?!??!!?!?!?!",
+		"continueLine": true
+	}
+]

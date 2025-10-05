@@ -367,7 +367,7 @@ class CtDialogueBox extends FlxSpriteGroup{
      */
     public static function preloadFont(font:String = null, size:Int = 15):Void{
         if(font == null) font = FlxAssets.FONT_DEFAULT; else {
-           if(!Assets.exists(font)){
+           if(!Assets.exists(font) && font != FlxAssets.FONT_DEFAULT && font != FlxAssets.FONT_DEBUGGER){
                 FlxG.log.warn('[CTDB] Can\'t find Font file: "$font".');
                 return;
             }    

@@ -57,6 +57,11 @@ class CtDialogueBox extends FlxSpriteGroup{
     var curLine:Int = 0;
     
     /**
+     * if this line is going to autoskip or not
+     */
+    var autoSkipping:Bool = false;
+    
+    /**
      * is this line continuing off of a previous line?
      */
     var continuing:Bool = false;
@@ -170,6 +175,13 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         if(busy) return;
         
+        if(autoSkipping){
+            if(textbox.status != WRITING){
+                advanceLine();
+            }
+            return;
+        }
+        
         if(settings.pressedAcceptFunction()){
             advanceLine(1);
         }
@@ -281,6 +293,8 @@ class CtDialogueBox extends FlxSpriteGroup{
         //update the name box
         nameBox.updateName(actorData);
 
+        // auto skip ?  ok
+        autoSkipping = dialogueData.autoSkip;
         
         //start typing!!
         if(continuing){

@@ -177,7 +177,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         if(autoSkipping){
             if(textbox.status != WRITING){
-                advanceLine();
+                advanceLine(1);
             }
             return;
         }

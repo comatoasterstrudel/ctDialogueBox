@@ -196,6 +196,9 @@ class CtDialogueBox extends FlxSpriteGroup{
      * call this to open the dialogue box and play its opening animation
      */
     public function openBox():Void{
+        curLine = 0;
+        curDialogueFile = 0;
+        
         open = true;
         
         visible = true;

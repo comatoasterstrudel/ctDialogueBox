@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine'];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box'];
 
 	var texts:Array<FlxText> = [];
 
@@ -19,10 +19,21 @@ class CtDialogueTestState extends FlxState
 
 	var busy:Bool = false;
 	
+	var testmetextbox:CtDialogueBox;
+
 	override public function create()
 	{
 		trace(menuOptions);
 
+		testmetextbox = new CtDialogueBox({
+			onComplete: function():Void{
+				new FlxTimer().start(0.1, function(tmr):Void{				
+					busy = false; 
+				});
+			}
+		});
+		add(testmetextbox);
+		
 		for (i in 0...menuOptions.length)
 		{
 			var text = new FlxText(10, 30 * i, 0, menuOptions[i], 20);
@@ -224,6 +235,10 @@ class CtDialogueTestState extends FlxState
 						textbox.loadDialogueFiles(['dia_continue']);
 						textbox.openBox();
 						add(textbox); 
+					case 'Test Reuse Box':
+						busy = true;
+						testmetextbox.loadDialogueFiles(['dia_test']);
+						testmetextbox.openBox();
 				}
 			});
 		}

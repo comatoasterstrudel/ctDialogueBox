@@ -106,6 +106,11 @@ class CtDialogueBox extends FlxSpriteGroup{
      */
     public static var defaultSettings:CtDialogueBoxSettings = null;
     
+    /**
+     * is this dialogue box open now?
+     */
+    public var open:Bool = false;
+    
     public function new(?settings:CtDialogueBoxSettings = null):Void{
         super();
         
@@ -191,6 +196,8 @@ class CtDialogueBox extends FlxSpriteGroup{
      * call this to open the dialogue box and play its opening animation
      */
     public function openBox():Void{
+        open = true;
+        
         visible = true;
         
         busy = false;
@@ -201,6 +208,8 @@ class CtDialogueBox extends FlxSpriteGroup{
      * call this to close the dialogue box and play its closing animation
      */
     public function closeBox():Void{
+        open = false;
+
         busy = true;    
         
         clearSounds();

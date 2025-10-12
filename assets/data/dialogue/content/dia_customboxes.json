@@ -1,0 +1,32 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "hello i will test custom dialogue boxe",
+		"actor": "box1"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "do i have a cool custom box now?",
+		"actor": "box2"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "is it gone ? ew",
+		"actor": "box1"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "ideally this shouldnt make it reload the boxx",
+		"actor": "box1"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "it should now",
+		"actor": "box2"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "not now",
+		"actor": "box2"
+	}
+]

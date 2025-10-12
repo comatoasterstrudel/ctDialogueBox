@@ -1,6 +1,7 @@
 package ctDialogueBox.ctdb;
 
 import ctDialogueBox.*;
+import ctDialogueBox.ctdb.box.*;
 import ctDialogueBox.ctdb.data.*;
 import ctDialogueBox.ctdb.namebox.*;
 import ctDialogueBox.ctdb.portrait.*;
@@ -97,6 +98,21 @@ class CtDialogueBox extends FlxSpriteGroup{
     var textSounds:Array<FlxSound> = [];
     
     /**
+     * the last type of graphic the dialogue box used. this is saved so the box isnt reloading its graphic every line for no reason.
+     */
+    var lastCurDialogueBoxGraphicType:DialogueBoxGraphicType;
+
+    /**
+     * the current type of graphic the dialogue box is using. this is saved so the box isnt reloading its graphic every line for no reason.
+     */
+    var curDialogueBoxGraphicType:DialogueBoxGraphicType;
+    
+    /**
+     * the last image path used. this is saved so the box isnt reloading its graphic every line for no reason.
+     */
+    var curDialogueBoxImgPath:String = '';
+    
+    /**
      * the settings used to customize this dialogue box
      */
     public var settings:CtDialogueBoxSettings;
@@ -135,35 +151,14 @@ class CtDialogueBox extends FlxSpriteGroup{
         add(nameBox);
         
         if(settings.portraitOnTopOfBox) add(dialoguePortrait);
-
-        if(settings.boxImgPath == null){ //create a white box, since no image was provided
-            dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
-        } else { //load desired image
-            var boxPath:String = (settings.dialogueImagePath + 'dialogueBox/' + settings.boxImgPath + '.png');
-            
-            if(Assets.exists(boxPath)){
-                dialogueBox.loadGraphic(boxPath);                
-			}
-			else
-			{
-                FlxG.log.warn('[CTDB] Can\'t find Dialogue Box Image: "$boxPath", loading default box.');
-                dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
-            }
-        }
-        
-        dialogueBox.screenCenter();            
-
-        if(settings.boxPosition != null){
-            dialogueBox.setPosition(dialogueBox.x + settings.boxPosition.x, dialogueBox.y + settings.boxPosition.y);
-        }
-        
+                
         if(!preloadedFonts.get(settings.font + '_' + settings.fontSize)){
             if(settings.autoPreloadFont){
                 preloadFont(settings.font, settings.fontSize);
             } else FlxG.log.warn('[CTDB] Your font and size combo (' + settings.font + '_' + settings.fontSize + ') isnt preloaded, which means your game may stutter while typing text. try using CtDialogueBox.preloadFont() or set autoPreloadFont to true while initializing your dialogue box.');  
         }
         
-		textbox = new Textbox(dialogueBox.x + settings.textOffset.x, dialogueBox.y + settings.textOffset.y, {
+		textbox = new Textbox(0, 0, {
 			color: settings.textColor ?? FlxColor.BLACK,
 			font: settings.font,
             fontSize: settings.fontSize,
@@ -172,7 +167,7 @@ class CtDialogueBox extends FlxSpriteGroup{
 		});
         add(textbox);
         
-        antialiasing = true;
+        loadDialogueBoxGraphic();        
     }
     
     override function update(elapsed:Float):Void{
@@ -190,6 +185,66 @@ class CtDialogueBox extends FlxSpriteGroup{
         if(settings.pressedAcceptFunction()){
             advanceLine(1);
         }
+    }
+    
+    /**
+     * call this to load the graphic for this dialogue box!! this is a function so that actors can have their own dialogue box images.
+     * @param dialogueData the data for a dialogue line. can be null.
+     * @param actorData the data for the current actor. can be null.
+     */
+    public function loadDialogueBoxGraphic(?dialogueData:DialogueData, ?actorData:ActorData):Void{
+        lastCurDialogueBoxGraphicType = curDialogueBoxGraphicType;
+        
+        var useCustomBox:Bool = false;
+        
+        useCustomBox = (settings.boxImgPath != null || actorData != null && actorData.exists && actorData.customDialogueBoxImgPath != null);
+        
+        if(!useCustomBox){ //create a white box, since no image was provided
+            curDialogueBoxGraphicType = Default;
+            
+            if(curDialogueBoxGraphicType == lastCurDialogueBoxGraphicType) return;
+            
+            dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
+        } else { //load desired image
+            var boxName:String = settings.boxImgPath;
+            
+            if(actorData != null && actorData.exists && actorData.customDialogueBoxImgPath != null){
+                curDialogueBoxGraphicType = CustomActor;
+
+                boxName = actorData.customDialogueBoxImgPath;               
+            } else {
+                curDialogueBoxGraphicType = Custom;
+
+                boxName = settings.boxImgPath;
+            }
+                        
+            var boxPath:String = (settings.dialogueImagePath + 'dialogueBox/' + boxName + '.png');
+            
+            if(curDialogueBoxGraphicType == lastCurDialogueBoxGraphicType && curDialogueBoxImgPath == boxPath) return;
+
+            curDialogueBoxImgPath = boxPath;
+            
+            if(Assets.exists(boxPath)){
+                dialogueBox.loadGraphic(boxPath);                
+			}
+			else
+			{
+                FlxG.log.warn('[CTDB] Can\'t find Dialogue Box Image: "$boxPath", loading default box.');
+                dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
+            }
+        }
+        
+        dialogueBox.screenCenter();            
+
+        if(settings.boxPosition != null){
+            dialogueBox.setPosition(dialogueBox.x + settings.boxPosition.x, dialogueBox.y + settings.boxPosition.y);
+        }  
+        
+        if(textbox != null){
+            textbox.x = dialogueBox.x + settings.textOffset.x;
+            textbox.y = dialogueBox.y + settings.textOffset.y;
+            textbox.settings.textFieldWidth = settings.textFieldWidth == 0 ? dialogueBox.width : settings.textFieldWidth;
+        }        
     }
     
     /**
@@ -265,6 +320,9 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         //set continuing before anything else
         continuing = dialogueData.continueLine;
+        
+        //set the correct dialogue box
+        loadDialogueBoxGraphic(dialogueData, actorData);
         
         //set the text
         if(continuing){

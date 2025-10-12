@@ -57,6 +57,11 @@ class ActorData
 	 */
 	public var portraitRight:Bool = true;
 	
+	/**
+	 * the path to this characters custom dialogue box sprite box sprite. if this is null itll default to the normal sprite
+	 */
+	public var customDialogueBoxImgPath:String;
+	
 	 /**
      * the color the text on the namebox should be for this character
      */
@@ -85,6 +90,7 @@ class ActorData
 		textSound = data.textSound ?? '';
 		portraitPrefix = data.portraitPrefix ?? '';
 		portraitRight = data.portraitRight ?? true;
+		customDialogueBoxImgPath = data.customDialogueBoxImgPath;
 		nameBoxTextColor = data.nameBoxTextColor == null ? (0) : FlxColor.fromRGB(data.nameBoxTextColor[0] ?? 255, data.nameBoxTextColor[1] ?? 255, data.nameBoxTextColor[2] ?? 255, 255);
 		customNameBoxImgPath = data.customNameBoxImgPath;
     }

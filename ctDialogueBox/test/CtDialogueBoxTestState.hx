@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box'];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes'];
 
 	var texts:Array<FlxText> = [];
 
@@ -23,6 +23,8 @@ class CtDialogueTestState extends FlxState
 
 	override public function create()
 	{
+		CtDialogueBox.preloadFont();
+		
 		trace(menuOptions);
 
 		testmetextbox = new CtDialogueBox({
@@ -239,6 +241,17 @@ class CtDialogueTestState extends FlxState
 						busy = true;
 						testmetextbox.loadDialogueFiles(['dia_test']);
 						testmetextbox.openBox();
+					case 'Test CustomBoxes':
+						var textbox = new CtDialogueBox({
+							onComplete: function():Void{
+								new FlxTimer().start(0.1, function(tmr):Void{				
+									busy = false; 
+								});
+							}
+						});
+						textbox.loadDialogueFiles(['dia_customboxes']);
+						textbox.openBox();
+						add(textbox); 
 				}
 			});
 		}

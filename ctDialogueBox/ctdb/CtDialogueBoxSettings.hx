@@ -133,6 +133,11 @@ class CtDialogueBoxSettings{
     public var nameBoxTextColor:FlxColor;
     
     /**
+     * a list of characters that wont play text sounds
+     */
+    public var excludedTextSoundCharacters:Array<String> = [];
+    
+    /**
      * the folder in your assets folder where your dialogue files are located
      * default: assets/data/dialogue/
      */
@@ -198,6 +203,7 @@ class CtDialogueBoxSettings{
         nameBoxFontSize:Int = null,
         nameBoxFont:String = null,
         nameBoxTextColor:FlxColor = null,
+        excludedTextSoundCharacters:Array<String> = null,
         dialogueDataPath:String = null,
         dialogueImagePath:String = null,
         dialogueSoundPath:String = null,
@@ -228,6 +234,7 @@ class CtDialogueBoxSettings{
         this.nameBoxFontSize = nameBoxFontSize ?? 25;
         this.nameBoxFont = nameBoxFont;
         this.nameBoxTextColor = nameBoxTextColor;
+        this.excludedTextSoundCharacters = excludedTextSoundCharacters ?? [];
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';
         this.dialogueImagePath = dialogueImagePath ?? 'assets/images/dialogue/';
         this.dialogueSoundPath = dialogueSoundPath ?? 'assets/sounds/dialogue/';

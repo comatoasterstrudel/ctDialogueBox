@@ -458,7 +458,7 @@ class CtDialogueBox extends FlxSpriteGroup{
                 
                 textbox.characterDisplayCallbacks.push(function(character:Text)
                 {
-                    if(currentSoundMode == TextSound){
+                    if(currentSoundMode == TextSound && !settings.excludedTextSoundCharacters.contains(character.text)){
                         for(i in textSounds){
                             if(i.playing) i.stop();
                         }

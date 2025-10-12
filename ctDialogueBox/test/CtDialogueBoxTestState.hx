@@ -92,16 +92,25 @@ class CtDialogueTestState extends FlxState
 						var textbox = new CtDialogueBox({
 							boxImgPath: "dialogueBox", 
 							textColor: FlxColor.WHITE, 
+							nameBoxPosition: Left,
+							nameBoxImgPath: 'nameBox',
+							nameBoxLeftEndImgPath: 'nameBoxEndLeft',
+							nameBoxRightEndImgPath: 'nameBoxEndRight',
 							fontSize: 46, 
+							nameBoxFontSize: 45,
 							font: 'assets/fonts/andy.ttf',
-							textOffset: new FlxPoint(30, 30),
+							nameBoxFont: 'assets/fonts/andy.ttf',
+							textOffset: new FlxPoint(20, 30),
 							onComplete: function():Void{
 								new FlxTimer().start(0.1, function(tmr):Void{				
 									busy = false; 
 								});
-							}
+							},
+							autoPreloadFont: true,
+							excludedTextSoundCharacters: [' ', '!', '?', ':', ';', ','],
+							//sentencePauseLength: .02,
 						});
-						textbox.loadDialogueFiles(['dia_test']);
+						textbox.loadDialogueFiles(['dia_textsnd']);
 						textbox.openBox();
 						add(textbox); 
 					case 'Text Effects':

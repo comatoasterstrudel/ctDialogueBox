@@ -2,5 +2,6 @@
     "name": "coma",
 	"vanityName": "Coma",
 	"textColor": [255, 197, 239],
+	"nameBoxTextColor": [255, 197, 239],
 	"textSound": "textComa"
 }

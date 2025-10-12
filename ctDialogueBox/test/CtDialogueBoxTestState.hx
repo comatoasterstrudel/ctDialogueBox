@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes'];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch"];
 
 	var texts:Array<FlxText> = [];
 
@@ -250,6 +250,17 @@ class CtDialogueTestState extends FlxState
 							}
 						});
 						textbox.loadDialogueFiles(['dia_customboxes']);
+						textbox.openBox();
+						add(textbox); 
+					case 'Test Pitch':
+						var textbox = new CtDialogueBox({
+							onComplete: function():Void{
+								new FlxTimer().start(0.1, function(tmr):Void{				
+									busy = false; 
+								});
+							}
+						});
+						textbox.loadDialogueFiles(['dia_pitch']);
 						textbox.openBox();
 						add(textbox); 
 				}

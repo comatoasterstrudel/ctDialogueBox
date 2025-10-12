@@ -1,0 +1,62 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "hello!! i am boss coma , this should be playing a normal text sound",
+		"actor": "comaboss",
+		"diaPitch": 0.5
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "hello!! i am coma , this should be playing multiple text sounds",
+		"actor": "coma",
+		"diaPitch": 0.5
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "fortnite",
+		"voiceLine": "fortnite",
+		"diaPitch": 0.5
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "im pregnant",
+		"voiceLine": "im pregnant",
+		"diaPitch": 0.5
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "its raining meatballs!",
+		"voiceLine": "its raining meatballs",
+		"diaPitch": 0.5
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "hello!! i am boss coma , this should be playing a normal text sound",
+		"actor": "comaboss",
+		"diaPitch": 2
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "hello!! i am coma , this should be playing multiple text sounds",
+		"actor": "coma",
+		"diaPitch": 2
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "fortnite",
+		"voiceLine": "fortnite",
+		"diaPitch": 2
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "im pregnant",
+		"voiceLine": "im pregnant",
+		"diaPitch": 2
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "its raining meatballs!",
+		"voiceLine": "its raining meatballs",
+		"diaPitch": 2
+	}
+]

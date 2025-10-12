@@ -423,6 +423,8 @@ class CtDialogueBox extends FlxSpriteGroup{
                     voiceLineSound = new FlxSound().loadEmbedded(sndPath, false, true);
                     FlxG.sound.list.add(voiceLineSound);
                     voiceLineSound.play();
+                    
+                    if(dialogueData.diaPitch > 0) voiceLineSound.pitch = dialogueData.diaPitch;
                 } else {
                     FlxG.log.warn('[CTDB] Can\'t find Voice Line: "$sndPath".');
                     currentSoundMode = None;
@@ -444,6 +446,12 @@ class CtDialogueBox extends FlxSpriteGroup{
                 if(textSounds.length < 1){
                     FlxG.log.warn('[CTDB] Can\'t find Text Sounds: "' + (sndPath + sndExtension) + '".');
                     currentSoundMode = None;
+                } else {
+                    if(dialogueData.diaPitch > 0) {
+                        for(textSnd in textSounds){
+                            textSnd.pitch = dialogueData.diaPitch;                            
+                        }
+                    }
                 }
                 
                 textbox.characterDisplayCallbacks = [];

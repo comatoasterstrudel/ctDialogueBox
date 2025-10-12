@@ -21,16 +21,6 @@ typedef DialogueData =
 	var speed:Float;
 
     /**
-     * which sounds to load for the dialogue. you can also input a voice line name and itll load that
-     */
-    var diaSound:String;
-
-    /**
-     * the name of the character who this dialogue is for
-     */
-    var characterName:String;
-
-    /**
      * the portrait this line uses. if its blank, itll use nothing. this should exclude the prefix, if your portrait is called "coma_neutral", this field would be "neutral".
      */
     var portrait:String;

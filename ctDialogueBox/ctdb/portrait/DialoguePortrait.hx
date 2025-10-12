@@ -18,6 +18,16 @@ class DialoguePortrait extends FlxSprite
      */
     var settings:CtDialogueBoxSettings;
     
+    /**
+     * if this portrait is on the right currently
+     */
+    public var curRight:Bool = false;
+    
+    /**
+     * is this portrait on the box currently?
+     */
+    public var onScreen:Bool = false;
+    
     public function new(settings:CtDialogueBoxSettings){
         super();
         
@@ -39,6 +49,8 @@ class DialoguePortrait extends FlxSprite
                 visible = false;
 
                 FlxG.log.warn('[CTDB] Can\'t find Dialogue Portrait: "$portraitPath".');
+                
+                onScreen = false;
             } else {
                 visible = true;
                 loadGraphic(portraitPath);
@@ -49,15 +61,21 @@ class DialoguePortrait extends FlxSprite
                 
                 if(actorData.portraitRight){
                     offsets = settings.portraitOffsetRight;
+                    curRight = true;
                 } else {
                     offsets = settings.portraitOffsetLeft;
+                    curRight = false;
                 }
                 
                 screenCenter();
                 setPosition(x + offsets.x, y + offsets.y);
+                
+                onScreen = true;
             }
         } else {
             visible = false; 
+            
+            onScreen = false;
         }
     }
 }

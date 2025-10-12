@@ -1,0 +1,14 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "hello!! i am boss coma , this should be playing a normal text sound",
+		"actor": "comaboss",
+		"portrait": "eye"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "hello!! i am coma , this should be playing multiple text sounds",
+		"actor": "coma",
+		"portrait": "neutral"
+	}
+]

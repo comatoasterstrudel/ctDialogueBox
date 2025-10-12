@@ -164,7 +164,7 @@ class CtDialogueBox extends FlxSpriteGroup{
             fontSize: settings.fontSize,
 			textFieldWidth: settings.textFieldWidth == 0 ? dialogueBox.width : settings.textFieldWidth,
             numLines: settings.textRows
-		});
+		}, settings);
         add(textbox);
         
         loadDialogueBoxGraphic();        
@@ -359,6 +359,15 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         //update the dialogue portrait
         dialoguePortrait.updatePortrait(dialogueData, actorData);
+        
+        //update the field width to account for portraits
+        if(dialoguePortrait.onScreen){
+            if(dialoguePortrait.curRight && settings.portraitFieldWidthRight != 0){
+                textbox.settings.textFieldWidth = settings.portraitFieldWidthRight;
+            } else if(settings.portraitFieldWidthLeft != 0){
+                textbox.settings.textFieldWidth = settings.portraitFieldWidthLeft;
+            }
+        }
         
         //update the name box
         nameBox.updateName(actorData);

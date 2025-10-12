@@ -3,5 +3,8 @@
 	"vanityName": "Coma (Boss)",
 	"textColor": [255, 197, 239],
 	"nameBoxTextColor": [255, 197, 239],
-	"textSound": "textBossComa"
+	"portraitColor": [255, 197, 239],
+	"textSound": "textBossComa",
+	"portraitPrefix": "comaboss",
+	"portraitRight": true
 }

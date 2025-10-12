@@ -85,6 +85,16 @@ class CtDialogueBoxSettings{
     public var portraitOffsetRight:FlxPoint;
     
     /**
+     * the field widht that will be used if you have a portrait on the left
+     */
+    public var portraitFieldWidthLeft:Float;
+    
+    /**
+     * the field widht that will be used if you have a portrait on the left
+     */
+    public var portraitFieldWidthRight:Float;
+    
+    /**
      * the name of your name box image. if left null, will make a small white box.
      * eg: nameBox
      */
@@ -136,6 +146,11 @@ class CtDialogueBoxSettings{
      * a list of characters that wont play text sounds
      */
     public var excludedTextSoundCharacters:Array<String> = [];
+    
+    /**
+     * how long the typing will pause for between sentences.
+     */
+    public var sentencePauseLength:Float;
     
     /**
      * the folder in your assets folder where your dialogue files are located
@@ -195,6 +210,8 @@ class CtDialogueBoxSettings{
         portraitOnTopOfBox:Bool = null,
         portraitOffsetLeft:FlxPoint = null,
 	    portraitOffsetRight:FlxPoint = null,
+        portraitFieldWidthLeft:Float = null,
+        portraitFieldWidthRight:Float = null,
         nameBoxImgPath:String = null,
         nameBoxLeftEndImgPath:String = null,
         nameBoxRightEndImgPath:String = null,
@@ -204,6 +221,7 @@ class CtDialogueBoxSettings{
         nameBoxFont:String = null,
         nameBoxTextColor:FlxColor = null,
         excludedTextSoundCharacters:Array<String> = null,
+        sentencePauseLength:Float = null,
         dialogueDataPath:String = null,
         dialogueImagePath:String = null,
         dialogueSoundPath:String = null,
@@ -226,6 +244,8 @@ class CtDialogueBoxSettings{
         this.portraitOnTopOfBox = portraitOnTopOfBox ?? true;
         this.portraitOffsetLeft = portraitOffsetLeft ?? new FlxPoint(-200, 200);
         this.portraitOffsetRight = portraitOffsetRight ?? new FlxPoint(200, 200);
+        this.portraitFieldWidthLeft = portraitFieldWidthLeft ?? textFieldWidth;
+        this.portraitFieldWidthRight = portraitFieldWidthRight ?? textFieldWidth;
         this.nameBoxImgPath = nameBoxImgPath;
         this.nameBoxLeftEndImgPath = nameBoxLeftEndImgPath;
         this.nameBoxRightEndImgPath = nameBoxRightEndImgPath;
@@ -235,6 +255,7 @@ class CtDialogueBoxSettings{
         this.nameBoxFont = nameBoxFont;
         this.nameBoxTextColor = nameBoxTextColor;
         this.excludedTextSoundCharacters = excludedTextSoundCharacters ?? [];
+        this.sentencePauseLength = sentencePauseLength ?? 0;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';
         this.dialogueImagePath = dialogueImagePath ?? 'assets/images/dialogue/';
         this.dialogueSoundPath = dialogueSoundPath ?? 'assets/sounds/dialogue/';

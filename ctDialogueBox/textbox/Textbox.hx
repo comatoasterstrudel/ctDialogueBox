@@ -1,5 +1,6 @@
 package ctDialogueBox.textbox;
 
+import ctDialogueBox.ctdb.*;
 import ctDialogueBox.textbox.CommandValues;
 import ctDialogueBox.textbox.Text;
 import ctDialogueBox.textbox.TextPool;
@@ -45,11 +46,14 @@ class Textbox extends FlxSpriteGroup {
 
     private static inline var hexadecimalCharacters = "0123456789abcdefABCDEF";
 
-    public function new(X:Float, Y:Float, settings:Settings)
+    var ctSettings:CtDialogueBoxSettings;
+    
+    public function new(X:Float, Y:Float, settings:Settings, ctSettings:CtDialogueBoxSettings)
     {
         super(X, Y);
         this.settings = settings;
-
+        this.ctSettings = ctSettings;
+        
         status = DONE;
 
         currentCharacterIndex = 0;
@@ -99,13 +103,43 @@ class Textbox extends FlxSpriteGroup {
         else if(status != PAUSED && status != DONE)
         {
             timerBeforeNewCharacter += elapsed;
-            while(timerBeforeNewCharacter > timePerCharacter)
-            {
-                if(status == WRITING)
-                {
-                    advanceCharacter();
+            
+            if(true){
+                var realTimePerCharacter = timePerCharacter;
+                
+                if(currentCharacterIndex + 2 < characters.length && currentCharacterIndex > 0 && !firstLetter && ctSettings.sentencePauseLength > 0){
+                    var previousLetter:Bool = false;
+                    
+                    switch characters[currentCharacterIndex]{
+                        case Character(currentCharacterChar):
+                            if(currentCharacterChar.isSpace(0)){
+                                previousLetter = true;
+                            }
+                        default:
+                            //
+                    }
+                    
+                    if(previousLetter){
+                        switch characters[currentCharacterIndex - 1]{
+                            case Character(currentCharacterChar):
+                                var pauseThese:Array<String> = [',', '-', '.', '!', '?'];
+                                if (pauseThese.contains(currentCharacterChar)){
+                                    realTimePerCharacter = ctSettings.sentencePauseLength;
+                                }
+                            default:
+                                //
+                        }   
+                    }   
                 }
-                timerBeforeNewCharacter -= timePerCharacter;
+                
+				while (timerBeforeNewCharacter > realTimePerCharacter)
+				{
+					if (status == WRITING)
+					{
+						advanceCharacter();
+					}
+					timerBeforeNewCharacter -= realTimePerCharacter;
+				}   
             }
         }
         super.update(elapsed);
@@ -124,12 +158,15 @@ class Textbox extends FlxSpriteGroup {
         active = false;
     }
 
+    var firstLetter = false;
+
     /**
      *  When called, the textbox will come on and activates itself into the scene.
      *  It also starts writing the parsed text, so it should be called after `setText`.
      */
     public function bring()
     {
+        firstLetter = true;
         startWriting();
         visible = true;
         active = true;
@@ -489,7 +526,7 @@ class Textbox extends FlxSpriteGroup {
             }
         }
         
-        //firstLetter = false;
+        firstLetter = false;
     }
     
     // THis function is only called when having to continue spitting out characters after going FULL

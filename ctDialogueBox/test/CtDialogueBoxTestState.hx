@@ -98,9 +98,12 @@ class CtDialogueTestState extends FlxState
 							nameBoxRightEndImgPath: 'nameBoxEndRight',
 							fontSize: 46, 
 							nameBoxFontSize: 45,
+							portraitOffsetRight: new FlxPoint(350, 180),
+							portraitFieldWidthRight: 810,
 							font: 'assets/fonts/andy.ttf',
 							nameBoxFont: 'assets/fonts/andy.ttf',
 							textOffset: new FlxPoint(20, 30),
+							boxPosition: new FlxPoint(0, 180),
 							onComplete: function():Void{
 								new FlxTimer().start(0.1, function(tmr):Void{				
 									busy = false; 
@@ -108,9 +111,9 @@ class CtDialogueTestState extends FlxState
 							},
 							autoPreloadFont: true,
 							excludedTextSoundCharacters: [' ', '!', '?', ':', ';', ','],
-							//sentencePauseLength: .02,
+							sentencePauseLength: .18,
 						});
-						textbox.loadDialogueFiles(['dia_textsnd']);
+						textbox.loadDialogueFiles(['dia_ocrpg']);
 						textbox.openBox();
 						add(textbox); 
 					case 'Text Effects':

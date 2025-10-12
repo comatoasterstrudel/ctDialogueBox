@@ -90,9 +90,19 @@ class CtDialogueBoxSettings{
     public var portraitFieldWidthLeft:Float;
     
     /**
-     * the field widht that will be used if you have a portrait on the left
+     * the field widht that will be used if you have a portrait on the right
      */
     public var portraitFieldWidthRight:Float;
+        
+    /**
+     * the offset to the box that will be used if you have a portrait on the left
+     */
+    public var portraitBoxOffsetLeft:Float;
+    
+    /**
+     * the offset to the box that will be used if you have a portrait on the right
+     */
+    public var portraitBoxOffsetRight:Float;
     
     /**
      * the name of your name box image. if left null, will make a small white box.
@@ -212,6 +222,8 @@ class CtDialogueBoxSettings{
 	    portraitOffsetRight:FlxPoint = null,
         portraitFieldWidthLeft:Float = null,
         portraitFieldWidthRight:Float = null,
+        portraitBoxOffsetLeft:Float = null,
+        portraitBoxOffsetRight:Float = null,
         nameBoxImgPath:String = null,
         nameBoxLeftEndImgPath:String = null,
         nameBoxRightEndImgPath:String = null,
@@ -246,6 +258,8 @@ class CtDialogueBoxSettings{
         this.portraitOffsetRight = portraitOffsetRight ?? new FlxPoint(200, 200);
         this.portraitFieldWidthLeft = portraitFieldWidthLeft ?? textFieldWidth;
         this.portraitFieldWidthRight = portraitFieldWidthRight ?? textFieldWidth;
+        this.portraitBoxOffsetLeft = portraitBoxOffsetLeft ?? 0;
+        this.portraitBoxOffsetRight = portraitBoxOffsetRight ?? 0;
         this.nameBoxImgPath = nameBoxImgPath;
         this.nameBoxLeftEndImgPath = nameBoxLeftEndImgPath;
         this.nameBoxRightEndImgPath = nameBoxRightEndImgPath;

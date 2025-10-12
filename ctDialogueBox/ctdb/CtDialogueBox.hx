@@ -25,22 +25,22 @@ class CtDialogueBox extends FlxSpriteGroup{
     /**
      * the sprite for the actual box
      */
-    var dialogueBox:FlxSprite;
+    public var dialogueBox:FlxSprite;
     
     /**
      * This is the textbox object that actually displays the letters.
      */
-    var textbox:Textbox;
+    public var textbox:Textbox;
     
     /**
      * the object that holds the dialogue portrait
      */
-    var dialoguePortrait:DialoguePortrait;
+    public var dialoguePortrait:DialoguePortrait;
     
     /**
      * the box that displays the name of the character speaking!!
      */
-    var nameBox:NameBox;
+    public var nameBox:NameBox;
     
     /**
      * the array of the dialogue files to play here
@@ -202,7 +202,10 @@ class CtDialogueBox extends FlxSpriteGroup{
         if(!useCustomBox){ //create a white box, since no image was provided
             curDialogueBoxGraphicType = Default;
             
-            if(curDialogueBoxGraphicType == lastCurDialogueBoxGraphicType) return;
+            if(curDialogueBoxGraphicType == lastCurDialogueBoxGraphicType) {
+                positionBox();      
+                return;
+            }
             
             dialogueBox.makeGraphic(300, 100, FlxColor.WHITE);
         } else { //load desired image
@@ -220,8 +223,11 @@ class CtDialogueBox extends FlxSpriteGroup{
                         
             var boxPath:String = (settings.dialogueImagePath + 'dialogueBox/' + boxName + '.png');
             
-            if(curDialogueBoxGraphicType == lastCurDialogueBoxGraphicType && curDialogueBoxImgPath == boxPath) return;
-
+            if(curDialogueBoxGraphicType == lastCurDialogueBoxGraphicType && curDialogueBoxImgPath == boxPath) {
+                positionBox();      
+                return;
+            }
+            
             curDialogueBoxImgPath = boxPath;
             
             if(Assets.exists(boxPath)){
@@ -234,7 +240,14 @@ class CtDialogueBox extends FlxSpriteGroup{
             }
         }
         
-        dialogueBox.screenCenter();            
+        positionBox();      
+    }
+    
+    /**
+     * call this to position the box and text properly
+     */
+    public function positionBox():Void{
+         dialogueBox.screenCenter();            
 
         if(settings.boxPosition != null){
             dialogueBox.setPosition(dialogueBox.x + settings.boxPosition.x, dialogueBox.y + settings.boxPosition.y);
@@ -244,7 +257,7 @@ class CtDialogueBox extends FlxSpriteGroup{
             textbox.x = dialogueBox.x + settings.textOffset.x;
             textbox.y = dialogueBox.y + settings.textOffset.y;
             textbox.settings.textFieldWidth = settings.textFieldWidth == 0 ? dialogueBox.width : settings.textFieldWidth;
-        }        
+        }   
     }
     
     /**
@@ -359,6 +372,15 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         //update the dialogue portrait
         dialoguePortrait.updatePortrait(dialogueData, actorData);
+        
+        //update the textbox position to account for portraits
+        if(dialoguePortrait.onScreen){
+            if(dialoguePortrait.curRight){
+                textbox.x += settings.portraitBoxOffsetRight;
+            } else {
+                textbox.x += settings.portraitBoxOffsetLeft;
+            }
+        }
         
         //update the field width to account for portraits
         if(dialoguePortrait.onScreen){

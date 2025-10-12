@@ -1,0 +1,30 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "* This is a DELTARUNE textbox!!",
+		"actor": "drNarrator"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "* Hi, I'm Susie from DELTARUNE!!",
+		"actor": "drSusie",
+		"portrait": "smile"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "* I can't offset the text to the right after the asterisks sorry..!",
+		"actor": "drNarrator"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "* WHAT..!! THAT IS AWFUL!!! (is mad)",
+		"actor": "drSusie",
+		"portrait": "mad"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "* Hi im Ralsei also im in Chapter 1",
+		"actor": "drRalsei",
+		"portrait": "neutral"
+	}
+]

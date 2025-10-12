@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch"];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch", "Deltarune Recreation"];
 
 	var texts:Array<FlxText> = [];
 
@@ -273,6 +273,29 @@ class CtDialogueTestState extends FlxState
 							}
 						});
 						textbox.loadDialogueFiles(['dia_pitch']);
+						textbox.openBox();
+						add(textbox); 
+					case 'Deltarune Recreation':
+						var textbox = new CtDialogueBox({
+							autoPreloadFont: true,
+							font: 'assets/fonts/deltarune.otf',
+							textColor: FlxColor.WHITE,
+							boxPosition: new FlxPoint(0, 120),
+							textOffset: new FlxPoint(50, 50),
+							fontSize: 40,
+							textFieldWidth: 950,
+							portraitBoxOffsetLeft: 230,
+							portraitFieldWidthLeft: 800,
+							portraitOffsetLeft: new FlxPoint(-430, 115),
+							boxImgPath: "deltarune",
+							onComplete: function():Void{
+								new FlxTimer().start(0.1, function(tmr):Void{				
+									busy = false; 
+								});
+							}
+						});
+						textbox.textbox.antialiasing = false;
+						textbox.loadDialogueFiles(['dia_dr']);
 						textbox.openBox();
 						add(textbox); 
 				}

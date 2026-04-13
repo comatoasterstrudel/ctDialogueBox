@@ -1,14 +1,5 @@
 package ctDialogueBox.test;
 
-import ctDialogueBox.*;
-import ctDialogueBox.ctdb.*;
-import flixel.FlxG;
-import flixel.FlxState;
-import flixel.math.FlxPoint;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
-
 class CtDialogueTestState extends FlxState
 {	
 	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch", "Deltarune Recreation"];
@@ -66,7 +57,7 @@ class CtDialogueTestState extends FlxState
 			changeSelection(1);
 		}
 
-		if (FlxG.keys.justPressed.ENTER)
+		if (FlxG.keys.justPressed.Z)
 		{
 			busy = true;
 			

@@ -1,8 +1,5 @@
 package ctDialogueBox.textbox;
 
-import flixel.text.FlxText;
-
-using StringTools;
 class TextBoxLine
 {
     public function new()

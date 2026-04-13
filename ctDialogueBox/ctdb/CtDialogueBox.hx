@@ -1,23 +1,5 @@
 package ctDialogueBox.ctdb;
 
-import ctDialogueBox.*;
-import ctDialogueBox.ctdb.box.*;
-import ctDialogueBox.ctdb.data.*;
-import ctDialogueBox.ctdb.namebox.*;
-import ctDialogueBox.ctdb.portrait.*;
-import ctDialogueBox.ctdb.portrait.*;
-import ctDialogueBox.ctdb.sound.*;
-import ctDialogueBox.textbox.*;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.graphics.FlxGraphic;
-import flixel.group.FlxSpriteGroup;
-import flixel.sound.FlxSound;
-import flixel.system.FlxAssets;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
-import openfl.Assets;
-
 /**
  * this is the actual dialogue box object!! 9/8/25
  */

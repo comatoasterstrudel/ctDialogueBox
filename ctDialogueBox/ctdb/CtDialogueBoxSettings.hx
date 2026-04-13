@@ -1,12 +1,5 @@
 package ctDialogueBox.ctdb;
 
-import ctDialogueBox.ctdb.data.*;
-import ctDialogueBox.ctdb.namebox.*;
-import flixel.FlxG;
-import flixel.math.FlxPoint;
-import flixel.system.FlxAssets;
-import flixel.util.FlxColor;
-
 @:structInit
 
 /**

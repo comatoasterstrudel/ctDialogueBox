@@ -1,13 +1,5 @@
 package ctDialogueBox.ctdb.portrait;
 
-import ctDialogueBox.*;
-import ctDialogueBox.ctdb.*;
-import ctDialogueBox.ctdb.data.*;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.math.FlxPoint;
-import openfl.Assets;
-
 /**
  * this is the class that holds dialogue portraits!! yayy
  */

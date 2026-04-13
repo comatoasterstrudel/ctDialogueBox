@@ -1,7 +1,4 @@
 export/
 .vscode/
 .haxelib/
-Project.xml
-hmm.json
-ctDialogueBox/Main.hx
 dump/

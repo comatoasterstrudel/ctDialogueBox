@@ -1,11 +1,5 @@
 package ctDialogueBox.textbox;
 
-import ctDialogueBox.ctdb.CtDialogueBox;
-import ctDialogueBox.textbox.effects.IEffect;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.text.FlxText;
-
 class Text extends FlxSprite {
     public var effects:Array<IEffect>;
 

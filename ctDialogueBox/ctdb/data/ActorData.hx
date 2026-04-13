@@ -1,12 +1,5 @@
 package ctDialogueBox.ctdb.data;
 
-import flixel.FlxG;
-import flixel.util.FlxColor;
-import haxe.Json;
-import openfl.Assets;
-
-using StringTools;
-
 /**
  * data for the actors during dialogue.
  */

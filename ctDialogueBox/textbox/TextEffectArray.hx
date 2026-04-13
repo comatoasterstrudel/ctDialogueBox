@@ -1,7 +1,5 @@
 package ctDialogueBox.textbox;
 
-import ctDialogueBox.textbox.effects.*;
-
 /**
  *  Contains an array of used effects. Their index will be their effect index, so an effect token @00[...]
  *  will interact with the first class in the list.

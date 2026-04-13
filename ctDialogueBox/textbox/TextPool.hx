@@ -1,7 +1,5 @@
 package ctDialogueBox.textbox;
 
-import flixel.util.FlxDestroyUtil;
-
 class TextPool implements IFlxPool<Text>
 {
 

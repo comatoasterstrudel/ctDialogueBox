@@ -1,10 +1,5 @@
 package ctDialogueBox.ctdb.data;
 
-import ctDialogueBox.ctdb.data.*;
-import flixel.FlxG;
-import haxe.Json;
-import openfl.Assets;
-
 /**
  * a class that holds all the data from a dialogue json file.
  */

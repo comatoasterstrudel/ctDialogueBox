@@ -1,15 +1,5 @@
 package ctDialogueBox.textbox;
 
-import ctDialogueBox.ctdb.*;
-import ctDialogueBox.textbox.CommandValues;
-import ctDialogueBox.textbox.Text;
-import ctDialogueBox.textbox.TextPool;
-import ctDialogueBox.textbox.TextboxLine;
-import flixel.group.FlxGroup;
-import flixel.group.FlxSpriteGroup;
-import flixel.util.typeLimit.OneOfTwo;
-import haxe.Utf8;
-
 using StringTools;
 
 enum Status

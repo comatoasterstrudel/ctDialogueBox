@@ -156,17 +156,24 @@ class NameBox extends FlxSpriteGroup
         }
         
         nameBoxSpr.y = dialogueBox.y - nameBoxSpr.height;
+        var offset:FlxPoint = null;
         switch(position){
             case Left:
                 nameBoxSpr.x = dialogueBox.x;
                 if(nameBoxLeftEnd != null && !usingCustomNameBoxSprite) nameBoxSpr.x += nameBoxLeftEnd.width;
+                offset = settings.nameBoxOffsetLeft;
             case Right:
                 nameBoxSpr.x = dialogueBox.x + dialogueBox.width - nameBoxSpr.width;
                 if(nameBoxRightEnd != null && !usingCustomNameBoxSprite) nameBoxSpr.x -= nameBoxRightEnd.width;
+                offset = settings.nameBoxOffsetRight;
             case Center:
                 nameBoxSpr.x = dialogueBox.x + dialogueBox.width / 2 - nameBoxSpr.width / 2;
+                offset = settings.nameBoxOffsetCenter;
         }
-            
+        if(offset != null){
+            nameBoxSpr.x += offset.x;
+            nameBoxSpr.y += offset.y;
+        }
         if(nameBoxLeftEnd != null && !usingCustomNameBoxSprite) nameBoxLeftEnd.setPosition(nameBoxSpr.x - nameBoxLeftEnd.width, nameBoxSpr.y);
         if(nameBoxRightEnd != null && !usingCustomNameBoxSprite) nameBoxRightEnd.setPosition(nameBoxSpr.x + nameBoxSpr.width, nameBoxSpr.y);
         nameText.setPosition(nameBoxSpr.x, nameBoxSpr.y + nameBoxSpr.height / 2 - nameText.height / 2);

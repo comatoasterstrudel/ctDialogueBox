@@ -146,6 +146,21 @@ class CtDialogueBoxSettings{
     public var nameBoxTextColor:FlxColor;
     
     /**
+     * the offset to the box that will be used if you have the box on the left
+     */
+    public var nameBoxOffsetLeft:FlxPoint;
+    
+    /**
+     * the offset to the box that will be used if you have the box on the right
+     */
+    public var nameBoxOffsetRight:FlxPoint;
+    
+    /**
+     * the offset to the box that will be used if you have the box in the center
+     */
+    public var nameBoxOffsetCenter:FlxPoint;
+    
+    /**
      * a list of characters that wont play text sounds
      */
     public var excludedTextSoundCharacters:Array<String> = [];
@@ -225,6 +240,9 @@ class CtDialogueBoxSettings{
         nameBoxFontSize:Int = null,
         nameBoxFont:String = null,
         nameBoxTextColor:FlxColor = null,
+        nameBoxOffsetLeft:FlxPoint = null,
+        nameBoxOffsetRight:FlxPoint = null,
+        nameBoxOffsetCenter:FlxPoint = null,
         excludedTextSoundCharacters:Array<String> = null,
         sentencePauseLength:Float = null,
         dialogueDataPath:String = null,
@@ -261,6 +279,9 @@ class CtDialogueBoxSettings{
         this.nameBoxFontSize = nameBoxFontSize ?? 25;
         this.nameBoxFont = nameBoxFont;
         this.nameBoxTextColor = nameBoxTextColor;
+        this.nameBoxOffsetLeft = nameBoxOffsetLeft ?? new FlxPoint(0,0);
+        this.nameBoxOffsetRight = nameBoxOffsetRight ?? new FlxPoint(0,0);
+        this.nameBoxOffsetCenter = nameBoxOffsetCenter ?? new FlxPoint(0,0);
         this.excludedTextSoundCharacters = excludedTextSoundCharacters ?? [];
         this.sentencePauseLength = sentencePauseLength ?? 0;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';

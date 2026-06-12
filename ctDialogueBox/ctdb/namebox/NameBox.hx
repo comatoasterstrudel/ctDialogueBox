@@ -98,6 +98,7 @@ class NameBox extends FlxSpriteGroup
             usingCustomNameBoxSprite = true;
             nameBoxSpr.loadGraphic(customNameBoxPath);
             nameBoxSpr.scale.set(1,1);
+            nameBoxSpr.updateHitbox();
             
             visible = true;
             nameText.visible = false;

@@ -1,4 +1,4 @@
-package ctdb.choicer;
+package ctDialogueBox.ctdb.choicer;
 
 class Choicer extends FlxSpriteGroup
 {

@@ -6,7 +6,7 @@ class Choicer extends FlxSpriteGroup
     
     var menuManager:CtMenuManager;
     
-    var textOptions:FlxSpriteGroup;
+    var textOptions:Array<FlxSprite> = [];
     
     var cursor:CtSprite;
     
@@ -33,9 +33,6 @@ class Choicer extends FlxSpriteGroup
         
         this.settings = settings;
         this.dialogueBox = dialogueBox;
-        
-        textOptions = new FlxSpriteGroup();
-        add(textOptions);
         
         menuManager = new CtMenuManager(settings.choicerPressedUpFunction, settings.choicerPressedDownFunction, settings.choicerPressedAcceptFunction);
         menuManager.disable();
@@ -64,7 +61,8 @@ class Choicer extends FlxSpriteGroup
         
         this.onComplete = function(choicerOption:ChoicerOptionData):Void{
             closeChoicer();
-            onComplete(choicerOption);    
+            onComplete(choicerOption);
+            clearOptions();    
         };
         
         clearOptions();
@@ -90,7 +88,7 @@ class Choicer extends FlxSpriteGroup
         }
         
         for(text in destroyThese){
-            textOptions.remove(text, true);
+            textOptions.remove(text);
             text.destroy();
         }
         
@@ -130,6 +128,8 @@ class Choicer extends FlxSpriteGroup
                 readyToFinish = true;
                 finishedOption = choicerOption;
             }, cursorDirection: (settings.choicerPosition == Right ? RIGHT : LEFT)});
+            
+            textOptions.push(text);
         }
         
         menuManager.setMenuOptions(menuOptions, true);

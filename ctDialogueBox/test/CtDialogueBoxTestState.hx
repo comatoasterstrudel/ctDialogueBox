@@ -2,7 +2,7 @@ package ctDialogueBox.test;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch", "Deltarune Recreation", "Test Choicer"];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch", "Deltarune Recreation", "Test Choicer", "Test Reuse Box Choicer"];
 
 	var texts:Array<FlxText> = [];
 
@@ -301,6 +301,10 @@ class CtDialogueTestState extends FlxState
 						textbox.loadDialogueFiles(['dia_choicer']);
 						textbox.openBox();
 						add(textbox); 
+					case 'Test Reuse Box Choicer':
+						busy = true;
+						testmetextbox.loadDialogueFiles(['dia_choicer']);
+						testmetextbox.openBox();
 				}
 			});
 		}

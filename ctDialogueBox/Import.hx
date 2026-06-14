@@ -17,6 +17,7 @@ import ctUtil.CtUtil;
 import ctUtil.extensions.CtSprite;
 import ctUtil.menu.*;
 import ctdb.choicer.*;
+import ctdb.choicer.Choicer;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;

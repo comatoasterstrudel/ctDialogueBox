@@ -2,7 +2,7 @@ package ctDialogueBox.test;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch", "Deltarune Recreation"];
+	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch", "Deltarune Recreation", "Test Choicer"];
 
 	var texts:Array<FlxText> = [];
 
@@ -57,7 +57,7 @@ class CtDialogueTestState extends FlxState
 			changeSelection(1);
 		}
 
-		if (FlxG.keys.justPressed.Z)
+		if (FlxG.keys.justPressed.ENTER)
 		{
 			busy = true;
 			
@@ -287,6 +287,18 @@ class CtDialogueTestState extends FlxState
 						});
 						textbox.textbox.antialiasing = false;
 						textbox.loadDialogueFiles(['dia_dr']);
+						textbox.openBox();
+						add(textbox); 
+					case 'Test Choicer':
+						var textbox = new CtDialogueBox({
+							onComplete: function():Void{
+								new FlxTimer().start(0.1, function(tmr):Void{				
+									busy = false; 
+								});
+							},
+							choicerCursorPath: "cursor"
+						});
+						textbox.loadDialogueFiles(['dia_choicer']);
 						textbox.openBox();
 						add(textbox); 
 				}

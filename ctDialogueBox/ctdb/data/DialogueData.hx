@@ -49,4 +49,9 @@ typedef DialogueData =
      * the list of events to be called on this dialogue line!!
      */
     var events:Array<String>;
+    
+    /**
+     * The list of choices to be brought up after this line. If empty, wont use any
+     */
+    var choicerOptions:Array<ChoicerOptionData>;
 }

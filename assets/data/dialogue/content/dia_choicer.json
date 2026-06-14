@@ -1,0 +1,26 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "well"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": " which do you prefer?",
+		"continueLine": true,
+		"choicerOptions": [
+			{
+				"text": "poop",
+				"continueDialogue": true
+			},
+			{
+				"text": "pee",
+				"dialogue": ["dia_choicer_pee"],
+				"continueDialogue": false
+			}
+		]
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "oh.."
+	}
+]

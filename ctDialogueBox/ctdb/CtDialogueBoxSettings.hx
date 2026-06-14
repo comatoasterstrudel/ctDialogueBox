@@ -1,5 +1,7 @@
 package ctDialogueBox.ctdb;
 
+import ctDialogueBox.ctdb.choicer.ChoicerPosition;
+
 @:structInit
 
 /**
@@ -161,6 +163,61 @@ class CtDialogueBoxSettings{
     public var nameBoxOffsetCenter:FlxPoint;
     
     /**
+     * the size of the font for the choicer
+     */
+    public var choicerFontSize:Int;
+    
+    /**
+     * The font for the choicer
+     */
+    public var choicerFont:String;
+    
+    /**
+     * Should the choice texts be on the Left, Right or Center of the dialogue box?
+     */
+    public var choicerPosition:ChoicerPosition;
+
+    /**
+     * How much you want to offset the choice texts by
+     */
+    public var choicerOffset:FlxPoint;
+    
+    /**
+     * How much space you want between choice texts
+     */
+    public var choicerSpacing:Float;
+    
+    /**
+     * How transparent a choicer text should be while selected
+     */
+    public var choicerSelectedAlpha:Float;
+    
+    /**
+     * How transparent a choicer text should be while not selected
+     */
+    public var choicerNonSelectedAlpha:Float;
+    
+    /**
+     * The color a choicer text should be while selected
+     */
+    public var choicerSelectedColor:FlxColor;
+    
+     /**
+     * The color a choicer text should be while not selected
+     */
+    public var choicerNonSelectedColor:FlxColor;
+        
+    /**
+     * path to the cursor you want to use for the choicer. if blank, wont use a cursor
+     */
+    public var choicerCursorPath:String;
+    
+    /**
+     * How far you want the cursor to be from the text object
+     */
+    public var choicerCursorSpacing:Float;
+    
+    /**
      * a list of characters that wont play text sounds
      */
     public var excludedTextSoundCharacters:Array<String> = [];
@@ -201,6 +258,24 @@ class CtDialogueBoxSettings{
     public var pressedSkipFunction:Void->Bool;
     
     /**
+     * this is the function to check if youve pressed the up button, or however you want to handle the choicer controls
+     * default: FlxG.keys.justPressed.UP
+     */
+    public var choicerPressedUpFunction:Void->Bool;
+    
+    /**
+     * this is the function to check if youve pressed the down button, or however you want to handle the choicer controls
+     * default: FlxG.keys.justPressed.DOWN
+     */
+    public var choicerPressedDownFunction:Void->Bool;
+    
+    /**
+     * this is the function to check if youve pressed the enter button, or however you want to handle the choicer controls
+     * default: FlxG.keys.justPressed.ENTER
+     */
+    public var choicerPressedAcceptFunction:Void->Bool;
+    
+    /**
      * the function that should happen when the dialogue is finished.
      */
     public var onComplete:Void->Void;
@@ -214,6 +289,11 @@ class CtDialogueBoxSettings{
      * this is the function that process events on each dialogue line!!
      */
     public var onEvent:String->Void;
+    
+    /**
+     * this is the function that triggers when a choicer option is selected.
+     */
+    public var onChoicerSelected:String->Void;
     
     public function new(
         font:String = null,
@@ -243,6 +323,17 @@ class CtDialogueBoxSettings{
         nameBoxOffsetLeft:FlxPoint = null,
         nameBoxOffsetRight:FlxPoint = null,
         nameBoxOffsetCenter:FlxPoint = null,
+        choicerFontSize:Int = null,
+        choicerFont:String = null,
+        choicerPosition:ChoicerPosition = null,
+        choicerOffset:FlxPoint = null,
+        choicerSpacing:Float = null,
+        choicerSelectedAlpha:Float = null,
+        choicerNonSelectedAlpha:Float = null,
+        choicerSelectedColor:FlxColor = null,
+        choicerNonSelectedColor:FlxColor = null,
+        choicerCursorPath:String = null,
+        choicerCursorSpacing:Float = null,
         excludedTextSoundCharacters:Array<String> = null,
         sentencePauseLength:Float = null,
         dialogueDataPath:String = null,
@@ -250,9 +341,13 @@ class CtDialogueBoxSettings{
         dialogueSoundPath:String = null,
         pressedAcceptFunction:Void->Bool = null,
         pressedSkipFunction:Void->Bool = null,
+        choicerPressedUpFunction:Void->Bool = null,
+        choicerPressedDownFunction:Void->Bool = null,
+        choicerPressedAcceptFunction:Void->Bool = null,
         onComplete:Void->Void = null, 
         onLineAdvance:DialogueData->Void = null,
-        onEvent:String->Void = null
+        onEvent:String->Void = null,
+        onChoicerSelected:String->Void = null,
     )
     {
         this.font = font ?? FlxAssets.FONT_DEFAULT;
@@ -282,6 +377,17 @@ class CtDialogueBoxSettings{
         this.nameBoxOffsetLeft = nameBoxOffsetLeft ?? new FlxPoint(0,0);
         this.nameBoxOffsetRight = nameBoxOffsetRight ?? new FlxPoint(0,0);
         this.nameBoxOffsetCenter = nameBoxOffsetCenter ?? new FlxPoint(0,0);
+        this.choicerFontSize = choicerFontSize ?? 15;
+        this.choicerFont = choicerFont ?? FlxAssets.FONT_DEFAULT;
+        this.choicerPosition = choicerPosition ?? Left;
+        this.choicerOffset = choicerOffset ?? new FlxPoint(0, 0);
+        this.choicerSpacing = choicerSpacing ?? 50;
+        this.choicerSelectedAlpha = choicerSelectedAlpha ?? 1;
+        this.choicerNonSelectedAlpha = choicerNonSelectedAlpha ?? .5;
+        this.choicerSelectedColor = choicerSelectedColor ?? FlxColor.BLACK;
+        this.choicerNonSelectedColor = choicerNonSelectedColor ?? FlxColor.BLACK;
+        this.choicerCursorPath = choicerCursorPath ?? "";
+        this.choicerCursorSpacing = choicerCursorSpacing ?? 15;
         this.excludedTextSoundCharacters = excludedTextSoundCharacters ?? [];
         this.sentencePauseLength = sentencePauseLength ?? 0;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';
@@ -289,8 +395,12 @@ class CtDialogueBoxSettings{
         this.dialogueSoundPath = dialogueSoundPath ?? 'assets/sounds/dialogue/';
         this.pressedAcceptFunction = pressedAcceptFunction ?? function():Bool{return(FlxG.keys.justPressed.ENTER);};
         this.pressedSkipFunction = pressedSkipFunction ?? function():Bool{return(FlxG.keys.pressed.CONTROL);};
+        this.choicerPressedUpFunction = choicerPressedUpFunction ?? function():Bool{return(FlxG.keys.justPressed.UP);};
+        this.choicerPressedDownFunction = choicerPressedDownFunction ?? function():Bool{return(FlxG.keys.justPressed.DOWN);};
+        this.choicerPressedAcceptFunction = choicerPressedAcceptFunction ?? function():Bool{return(FlxG.keys.justPressed.ENTER);};
         this.onComplete = onComplete;
         this.onLineAdvance = onLineAdvance;
         this.onEvent = onEvent;
+        this.onChoicerSelected = onChoicerSelected;
     }
 }

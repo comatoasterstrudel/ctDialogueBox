@@ -36,7 +36,8 @@ class DialogueFile
 				continueLine: false,
 				diaPitch: 0,
 				voiceLine: '',
-				events: []
+				events: [],
+				choicerOptions: []
 			});
 			
 			return;
@@ -46,6 +47,21 @@ class DialogueFile
 		
 		dialogueLines = data.map(function(item)
 		{
+			var choicerOptions:Array<ChoicerOptionData> = []; // my bad this is sort of jank
+			
+			if(item.choicerOptions != null){
+				for(i in 0...item.choicerOptions.length){
+					var choicerOption = item.choicerOptions[i];
+					
+					choicerOptions.push({
+						text: choicerOption.text ?? "",
+						continueDialogue: choicerOption.continueDialogue ?? false,
+						dialogue: choicerOption.dialogue ?? [],
+						tag: choicerOption.tag ?? ""
+					});
+				}
+			}
+			
 			return {
 				dialogue: item.dialogue ?? '',
 				actor: item.actor ?? '',
@@ -55,9 +71,11 @@ class DialogueFile
 				continueLine: item.continueLine ?? false,
 				diaPitch: item.diaPitch ?? 0.0,
 				voiceLine: item.voiceLine ?? '',
-				events: item.events ?? []
+				events: item.events ?? [],
+				choicerOptions: choicerOptions,
 			};
 		});
+				
         //it works
 	}
 }

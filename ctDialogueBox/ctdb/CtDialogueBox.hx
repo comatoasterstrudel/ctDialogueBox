@@ -25,6 +25,11 @@ class CtDialogueBox extends FlxSpriteGroup{
     public var nameBox:NameBox;
     
     /**
+     * the object that holds the choicer options!!
+     */
+    public var choicer:Choicer;
+    
+    /**
      * the array of the dialogue files to play here
      */
     var dialogueFiles:Array<DialogueFile> = [];
@@ -95,6 +100,11 @@ class CtDialogueBox extends FlxSpriteGroup{
     var curDialogueBoxImgPath:String = '';
     
     /**
+     * If a choicer has been played for this line or not
+     */
+    var choicerPlayed:Bool = false;
+    
+    /**
      * the settings used to customize this dialogue box
      */
     public var settings:CtDialogueBoxSettings;
@@ -134,6 +144,9 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         if(settings.portraitOnTopOfBox) add(dialoguePortrait);
                 
+        choicer = new Choicer(settings, dialogueBox);
+        add(choicer);
+        
         if(!preloadedFonts.get(settings.font + '_' + settings.fontSize)){
             if(settings.autoPreloadFont){
                 preloadFont(settings.font, settings.fontSize);
@@ -164,7 +177,7 @@ class CtDialogueBox extends FlxSpriteGroup{
             return;
         }
         
-        if(settings.pressedAcceptFunction()){
+        if(settings.pressedAcceptFunction() && !choicer.playing){
             advanceLine(1);
         }
     }
@@ -294,6 +307,14 @@ class CtDialogueBox extends FlxSpriteGroup{
             return;
         }
         
+        var currentLine = dialogueFiles[curDialogueFile].dialogueLines[curLine];
+        
+        if(amount > 0 && currentLine.choicerOptions.length > 0 && !choicerPlayed){ // do choicer!!
+            openChoicer(currentLine.choicerOptions);
+            choicerPlayed = true;
+            return;
+        }
+                        
         curLine += amount;
         
         if(curLine >= dialogueFiles[curDialogueFile].dialogueLines.length){ //end of dialogue
@@ -379,6 +400,9 @@ class CtDialogueBox extends FlxSpriteGroup{
         // auto skip ?  ok
         autoSkipping = dialogueData.autoSkip;
         
+        // reset the choicer
+        choicerPlayed = false;
+
         //start typing!!
         if(continuing){
             var previousLine:Int = textbox.currentLineIndex;
@@ -484,6 +508,36 @@ class CtDialogueBox extends FlxSpriteGroup{
     }
     
     /**
+     * Call this to open the choicer box and hide the text options
+     * @param choicerOptions the list of options to display
+     */
+    function openChoicer(choicerOptions:Array<ChoicerOptionData>):Void{
+        textbox.visible = false;
+        nameBox.visible = false;
+        dialoguePortrait.visible = false;
+        
+        choicer.openChoicer(choicerOptions, function(choicerOption:ChoicerOptionData):Void{
+            if(!choicerOption.continueDialogue){
+                dialogueFiles[curDialogueFile].dialogueLines.resize(curLine + 1);    
+            }
+            
+            for(dialogueFile in choicerOption.dialogue){
+                addDialogueFile(dialogueFile);
+            }
+            
+            if(settings.onChoicerSelected != null){
+                settings.onChoicerSelected(choicerOption.tag);
+            }    
+            
+            textbox.visible = true;
+            nameBox.visible = true;
+            dialoguePortrait.visible = true;
+        
+            advanceLine(1); 
+        });
+    }
+    
+    /**
      * call this to load which json files to play on this dialogue box.
      * @param dialogueNames the names of the json files to play. eg: ['dia_one', 'subfolder/dia_two']
      */
@@ -491,12 +545,16 @@ class CtDialogueBox extends FlxSpriteGroup{
         dialogueFiles = [];
         
         for(i in dialogueNames){
-            var jsonPath:String = (settings.dialogueDataPath + 'content/' + i + '.json');
-            
-            var data = new DialogueFile(jsonPath);
-            if(data.dialogueLines == null) continue;
-            dialogueFiles.push(data);
+            addDialogueFile(i);
         }
+    }
+    
+    public function addDialogueFile(dialogueName:String):Void{
+        var jsonPath:String = (settings.dialogueDataPath + 'content/' + dialogueName + '.json');
+            
+        var data = new DialogueFile(jsonPath);
+        if(data.dialogueLines == null) return;
+        dialogueFiles.push(data);
     }
     
     /**

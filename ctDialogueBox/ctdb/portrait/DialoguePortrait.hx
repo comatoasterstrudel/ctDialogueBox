@@ -46,6 +46,7 @@ class DialoguePortrait extends FlxSprite
             } else {
                 visible = true;
                 loadGraphic(portraitPath);
+                updateHitbox();
                 
                 color = actorData.portraitColor;
                 
@@ -60,7 +61,9 @@ class DialoguePortrait extends FlxSprite
                 }
                 
                 screenCenter();
-                setPosition(x + offsets.x, (y + offsets.y) - (settings.positionPortraitFromBottom ? height : 0));
+                if(settings.positionPortraitFromBottom) y = (FlxG.height / 2) - (height);
+                
+                setPosition(x + offsets.x, (y + offsets.y));
                 
                 onScreen = true;
             }

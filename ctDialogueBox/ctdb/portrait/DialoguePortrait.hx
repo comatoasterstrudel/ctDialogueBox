@@ -60,7 +60,7 @@ class DialoguePortrait extends FlxSprite
                 }
                 
                 screenCenter();
-                setPosition(x + offsets.x, y + offsets.y);
+                setPosition(x + offsets.x, (y + offsets.y) - (settings.positionPortraitFromBottom ? height : 0));
                 
                 onScreen = true;
             }

@@ -100,6 +100,11 @@ class CtDialogueBoxSettings{
     public var portraitBoxOffsetRight:Float;
     
     /**
+     * Should dialogue portraits be positioned from their bottoms?
+     */
+    public var positionPortraitFromBottom:Bool;
+    
+    /**
      * the name of your name box image. if left null, will make a small white box.
      * eg: nameBox
      */
@@ -292,6 +297,7 @@ class CtDialogueBoxSettings{
         portraitFieldWidthRight:Float = null,
         portraitBoxOffsetLeft:Float = null,
         portraitBoxOffsetRight:Float = null,
+        positionPortraitFromBottom:Bool = null,
         nameBoxImgPath:String = null,
         nameBoxLeftEndImgPath:String = null,
         nameBoxRightEndImgPath:String = null,
@@ -342,6 +348,7 @@ class CtDialogueBoxSettings{
         this.portraitFieldWidthRight = portraitFieldWidthRight ?? textFieldWidth;
         this.portraitBoxOffsetLeft = portraitBoxOffsetLeft ?? 0;
         this.portraitBoxOffsetRight = portraitBoxOffsetRight ?? 0;
+        this.positionPortraitFromBottom = positionPortraitFromBottom ?? false;
         this.nameBoxImgPath = nameBoxImgPath;
         this.nameBoxLeftEndImgPath = nameBoxLeftEndImgPath;
         this.nameBoxRightEndImgPath = nameBoxRightEndImgPath;

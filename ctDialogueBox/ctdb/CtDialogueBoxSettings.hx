@@ -275,26 +275,6 @@ class CtDialogueBoxSettings{
      */
     public var choicerPressedAcceptFunction:Void->Bool;
     
-    /**
-     * the function that should happen when the dialogue is finished.
-     */
-    public var onComplete:Void->Void;
-    
-    /**
-     * the function that should happen when you advance a dialogue line. this gives back the data for that line
-     */
-    public var onLineAdvance:DialogueData->Void;
-    
-    /**
-     * this is the function that process events on each dialogue line!!
-     */
-    public var onEvent:String->Void;
-    
-    /**
-     * this is the function that triggers when a choicer option is selected.
-     */
-    public var onChoicerSelected:String->Void;
-    
     public function new(
         font:String = null,
         fontSize:Int = null,
@@ -344,10 +324,6 @@ class CtDialogueBoxSettings{
         choicerPressedUpFunction:Void->Bool = null,
         choicerPressedDownFunction:Void->Bool = null,
         choicerPressedAcceptFunction:Void->Bool = null,
-        onComplete:Void->Void = null, 
-        onLineAdvance:DialogueData->Void = null,
-        onEvent:String->Void = null,
-        onChoicerSelected:String->Void = null,
     )
     {
         this.font = font ?? FlxAssets.FONT_DEFAULT;
@@ -398,9 +374,5 @@ class CtDialogueBoxSettings{
         this.choicerPressedUpFunction = choicerPressedUpFunction ?? function():Bool{return(FlxG.keys.justPressed.UP);};
         this.choicerPressedDownFunction = choicerPressedDownFunction ?? function():Bool{return(FlxG.keys.justPressed.DOWN);};
         this.choicerPressedAcceptFunction = choicerPressedAcceptFunction ?? function():Bool{return(FlxG.keys.justPressed.ENTER);};
-        this.onComplete = onComplete;
-        this.onLineAdvance = onLineAdvance;
-        this.onEvent = onEvent;
-        this.onChoicerSelected = onChoicerSelected;
     }
 }

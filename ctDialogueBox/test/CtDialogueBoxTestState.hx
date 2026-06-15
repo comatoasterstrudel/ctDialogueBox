@@ -18,14 +18,13 @@ class CtDialogueTestState extends FlxState
 		
 		trace(menuOptions);
 
-		testmetextbox = new CtDialogueBox({
-			onComplete: function():Void{
-				new FlxTimer().start(0.1, function(tmr):Void{				
-					busy = false; 
-				});
-			}
-		});
+		testmetextbox = new CtDialogueBox();
 		add(testmetextbox);
+		testmetextbox.onComplete.add(function():Void{
+			new FlxTimer().start(0.1, function(tmr):Void{				
+				busy = false; 
+			});
+		});
 		
 		for (i in 0...menuOptions.length)
 		{
@@ -68,17 +67,16 @@ class CtDialogueTestState extends FlxState
 						
 						var textbox:CtDialogueBox;
 						
-						textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-									textbox.destroy();
-								});
-							}
-						});
+						textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_test']);
 						textbox.openBox();
 						add(textbox); 
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+								textbox.destroy();
+							});
+						});
 					case 'OCRPG Recreation':
 						var textbox = new CtDialogueBox({
 							boxImgPath: "dialogueBox", 
@@ -95,92 +93,93 @@ class CtDialogueTestState extends FlxState
 							nameBoxFont: 'assets/fonts/andy.ttf',
 							textOffset: new FlxPoint(20, 30),
 							boxPosition: new FlxPoint(0, 180),
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							},
 							autoPreloadFont: true,
 							excludedTextSoundCharacters: [' ', '!', '?', ':', ';', ','],
 							sentencePauseLength: .18,
+						});
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
 						});
 						textbox.loadDialogueFiles(['dia_ocrpg']);
 						textbox.openBox();
 						add(textbox); 
 					case 'Text Effects':
-						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
-						});
+						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_effects']);
 						textbox.openBox();
 						add(textbox); 
-					case 'Actors':
-						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+						
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
 						});
+					case 'Actors':
+						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_actors']);
 						textbox.openBox();
 						add(textbox); 
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
+						});
 					case 'Test Default Settings Option':
 						CtDialogueBox.defaultSettings = {
 							boxImgPath: "dialogueBox", 
 							textColor: FlxColor.WHITE, 
 							fontSize: 46, 
 							font: 'assets/fonts/andy.ttf',
-							textOffset: new FlxPoint(30, 30),
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+							textOffset: new FlxPoint(30, 30)
 						};
 						
 						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_test']);
 						textbox.openBox();
 						add(textbox); 
+										
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
+						});
 					case 'Text Field Width':
 						var textbox = new CtDialogueBox({
 							textFieldWidth: 100,
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
 						});
 						textbox.loadDialogueFiles(['dia_shortwrap']);
 						textbox.openBox();
 						add(textbox); 
-					case 'Voice Lines':
-						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+								
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
 						});
+					case 'Voice Lines':
+						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_voiceline']);
 						textbox.openBox();
 						add(textbox); 
-					case 'Text Sounds':
-						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+										
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
 						});
+					case 'Text Sounds':
+						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_textsnd']);
 						textbox.openBox();
 						add(textbox); 
+										
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
+						});
 					case 'Dialogue Portraits':
 						var textbox = new CtDialogueBox({
 							boxImgPath: "widebox", 
@@ -190,27 +189,28 @@ class CtDialogueTestState extends FlxState
 							textOffset: new FlxPoint(30, 30),
 							boxPosition: new FlxPoint(0, 285),
 							nameBoxFollowType: Match,
-							portraitOnTopOfBox: false,
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+							portraitOnTopOfBox: false
 						});
 						textbox.loadDialogueFiles(['dia_portraits']);
 						textbox.openBox();
 						add(textbox); 
-					case 'Name Plate':
-						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+								
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
 						});
+					case 'Name Plate':
+						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_nameplate']);
 						textbox.openBox();
 						add(textbox); 
+										
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
+						});
 					case 'Test Preloading':
 						CtDialogueBox.preloadFont('assets/fonts/andy.ttf', 46);
 						
@@ -219,53 +219,54 @@ class CtDialogueTestState extends FlxState
 							textColor: FlxColor.WHITE, 
 							fontSize: 46, 
 							font: 'assets/fonts/andy.ttf',
-							textOffset: new FlxPoint(30, 30),
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+							textOffset: new FlxPoint(30, 30)
 						});
 						textbox.loadDialogueFiles(['dia_test']);
 						textbox.openBox();
 						add(textbox); 
-					case 'Test ContinueLine':
-						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+										
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
 						});
+					case 'Test ContinueLine':
+						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_continue']);
 						textbox.openBox();
 						add(textbox); 
+										
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
+						});
 					case 'Test Reuse Box':
 						busy = true;
 						testmetextbox.loadDialogueFiles(['dia_test']);
 						testmetextbox.openBox();
 					case 'Test CustomBoxes':
-						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
-						});
+						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_customboxes']);
 						textbox.openBox();
 						add(textbox); 
-					case 'Test Pitch':
-						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+								
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
 						});
+					case 'Test Pitch':
+						var textbox = new CtDialogueBox();
 						textbox.loadDialogueFiles(['dia_pitch']);
 						textbox.openBox();
 						add(textbox); 
+								
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
+						});
 					case 'Deltarune Recreation':
 						var textbox = new CtDialogueBox({
 							autoPreloadFont: true,
@@ -278,29 +279,31 @@ class CtDialogueTestState extends FlxState
 							portraitBoxOffsetLeft: 230,
 							portraitFieldWidthLeft: 800,
 							portraitOffsetLeft: new FlxPoint(-430, 115),
-							boxImgPath: "deltarune",
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							}
+							boxImgPath: "deltarune"
 						});
 						textbox.textbox.antialiasing = false;
 						textbox.loadDialogueFiles(['dia_dr']);
 						textbox.openBox();
 						add(textbox); 
+								
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
+						});
 					case 'Test Choicer':
 						var textbox = new CtDialogueBox({
-							onComplete: function():Void{
-								new FlxTimer().start(0.1, function(tmr):Void{				
-									busy = false; 
-								});
-							},
 							choicerCursorPath: "cursor"
 						});
 						textbox.loadDialogueFiles(['dia_choicer']);
 						textbox.openBox();
 						add(textbox); 
+										
+						textbox.onComplete.add(function():Void{
+							new FlxTimer().start(0.1, function(tmr):Void{				
+								busy = false; 
+							});
+						});
 					case 'Test Reuse Box Choicer':
 						busy = true;
 						testmetextbox.loadDialogueFiles(['dia_choicer']);

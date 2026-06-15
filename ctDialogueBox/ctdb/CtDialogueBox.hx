@@ -119,6 +119,26 @@ class CtDialogueBox extends FlxSpriteGroup{
      */
     public var open:Bool = false;
     
+    /**
+     * the function that should happen when the dialogue is finished.
+     */
+    public var onComplete = new FlxTypedSignal<Void->Void>();
+    
+    /**
+     * the function that should happen when you advance a dialogue line. this gives back the data for that line
+     */
+    public var onLineAdvance = new FlxTypedSignal<DialogueData->Void>();
+    
+    /**
+     * this is the function that process events on each dialogue line!!
+     */
+    public var onEvent = new FlxTypedSignal<String->Void>();
+    
+    /**
+     * this is the function that triggers when a choicer option is selected.
+     */
+    public var onChoicerSelected = new FlxTypedSignal<String->Void>();
+    
     public function new(?settings:CtDialogueBoxSettings = null):Void{
         super();
         
@@ -280,7 +300,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         clearSounds();
         
-        if(settings.onComplete != null) settings.onComplete();
+        onComplete.dispatch();
         
         visible = false;
     }
@@ -418,14 +438,12 @@ class CtDialogueBox extends FlxSpriteGroup{
         }
         
         // call advance function!!
-        if(settings.onLineAdvance != null) settings.onLineAdvance(dialogueData);
+        onLineAdvance.dispatch(dialogueData);
         
         //call events!!
-        if(settings.onEvent != null){
-            for(i in dialogueData.events){
-                settings.onEvent(i);
-            }   
-        }
+        for(event in dialogueData.events){
+            onEvent.dispatch(event);
+        }   
     }
     
     /**
@@ -525,9 +543,7 @@ class CtDialogueBox extends FlxSpriteGroup{
                 addDialogueFile(dialogueFile);
             }
             
-            if(settings.onChoicerSelected != null){
-                settings.onChoicerSelected(choicerOption.tag);
-            }    
+            onChoicerSelected.dispatch(choicerOption.tag);
             
             textbox.visible = true;
             nameBox.visible = true;

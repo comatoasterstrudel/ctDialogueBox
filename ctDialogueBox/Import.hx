@@ -16,7 +16,7 @@ import ctDialogueBox.textbox.TextboxLine;
 import ctDialogueBox.textbox.effects.*;
 import ctDialogueBox.textbox.effects.IEffect;
 import ctUtil.CtUtil;
-import ctUtil.extensions.CtSprite;
+import ctUtil.graphic.CtSprite;
 import ctUtil.menu.*;
 import flixel.FlxG;
 import flixel.FlxSprite;

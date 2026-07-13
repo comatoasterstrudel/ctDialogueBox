@@ -41,6 +41,12 @@ class ActorData
 	public var textSound:String = '';
 	
 	/**
+	 * the volume of the actors voice volume
+	 */
+	public var textSoundVolume:Float = 1;
+	
+	
+	/**
 	 * the suffix this character uses for their portraits. for example, if your portrait is called "coma_neutral", the suffix would be "coma". if blank, this character wont use portraits
 	 */
 	public var portraitPrefix:String = '';
@@ -86,5 +92,6 @@ class ActorData
 		customDialogueBoxImgPath = data.customDialogueBoxImgPath;
 		nameBoxTextColor = data.nameBoxTextColor == null ? (0) : FlxColor.fromRGB(data.nameBoxTextColor[0] ?? 255, data.nameBoxTextColor[1] ?? 255, data.nameBoxTextColor[2] ?? 255, 255);
 		customNameBoxImgPath = data.customNameBoxImgPath;
+		textSoundVolume = data.textSoundVolume == null ? 1 : data.textSoundVolume;
     }
 }

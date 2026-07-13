@@ -501,11 +501,12 @@ class CtDialogueBox extends FlxSpriteGroup{
                 if(textSounds.length < 1){
                     FlxG.log.warn('[CTDB] Can\'t find Text Sounds: "' + (sndPath + sndExtension) + '".');
                     currentSoundMode = None;
-                } else {
-                    if(dialogueData.diaPitch > 0) {
-                        for(textSnd in textSounds){
-                            textSnd.pitch = dialogueData.diaPitch;                            
-                        }
+                } else {                    
+                    for(textSnd in textSounds){
+                        if(dialogueData.diaPitch > 0) {
+                            textSnd.pitch = dialogueData.diaPitch;        
+                        }   
+                        textSnd.volume = actorData.textSoundVolume;                 
                     }
                 }
                 

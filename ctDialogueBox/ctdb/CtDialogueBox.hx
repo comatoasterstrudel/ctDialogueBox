@@ -491,11 +491,11 @@ class CtDialogueBox extends FlxSpriteGroup{
                     var counter:Int = 1;
                     
                     while(Assets.exists(sndPath + Std.string(counter) + sndExtension)){
-                        textSounds.push(FlxG.sound.load(sndPath + Std.string(counter) + sndExtension, 1));
+                        textSounds.push(FlxG.sound.load(sndPath + Std.string(counter) + sndExtension, actorData.textSoundVolume));
                         counter++;
                     }			
                 } else if (Assets.exists(sndPath + sndExtension)){
-                    textSounds.push(FlxG.sound.load(sndPath + sndExtension, 1));
+                    textSounds.push(FlxG.sound.load(sndPath + sndExtension, actorData.textSoundVolume));
                 }
                 
                 if(textSounds.length < 1){
@@ -506,7 +506,6 @@ class CtDialogueBox extends FlxSpriteGroup{
                         if(dialogueData.diaPitch > 0) {
                             textSnd.pitch = dialogueData.diaPitch;        
                         }   
-                        textSnd.volume = actorData.textSoundVolume;                 
                     }
                 }
                 

@@ -5,6 +5,7 @@
 	"nameBoxTextColor": [255, 197, 239],
 	"portraitColor": [255, 197, 239],
 	"textSound": "textBossComa",
+	"textSoundVolume": 1,
 	"portraitPrefix": "comaboss",
 	"portraitRight": true
 }

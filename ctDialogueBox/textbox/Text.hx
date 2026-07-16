@@ -22,6 +22,7 @@ class Text extends FlxSprite {
     public function clear()
     {
         this.offset.set(0,0);
+        this.angle = 0;
     }
 
     override public function update(elapsed:Float)

@@ -1,0 +1,24 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "lettuce text "
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "[[ROTATE]]does this work[[ENDROTATE]]"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "yay [[SHAKE]]AGHH[[ENDSHAKE]]"
+	}, 
+	{
+		"speed": 0.03,
+		"dialogue": " continue line test",
+		"continueLine": true
+	}, 
+	{
+		"speed": 0.03,
+		"dialogue": " OHHHH [[RAINBOW]]im homosexual[[ENDRAINBOW]]",
+		"continueLine": true
+	}
+]

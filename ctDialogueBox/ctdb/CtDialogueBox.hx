@@ -139,8 +139,25 @@ class CtDialogueBox extends FlxSpriteGroup{
      */
     public var onChoicerSelected = new FlxTypedSignal<String->Void>();
     
+    /**
+     * The list of effectdatas
+     */
+    public static var effects:Array<EffectData> = [];
+    
+    /**
+     * have the base text effects been added already?
+     */
+    public static var baseEffectsAdded:Bool = false;
+    
+    /**
+     * The strings containing the typable texts and the real ones
+     */
+    var textEffectReplacements:Array<Array<String>> = [];
+    
     public function new(?settings:CtDialogueBoxSettings = null):Void{
         super();
+
+        initEffects();
         
         visible = false;
 
@@ -365,12 +382,12 @@ class CtDialogueBox extends FlxSpriteGroup{
             lastText = currentText;
             currentText = lastText + dialogueData.dialogue;
             
-            textbox.prepareString(currentText);
+            textbox.prepareString(replaceTextEffects(currentText));
         } else {
             lastText = currentText;
             currentText = dialogueData.dialogue;
             
-            textbox.setText(currentText);            
+            textbox.setText(replaceTextEffects(currentText));            
         }
         
         //set the proper text speed
@@ -615,5 +632,81 @@ class CtDialogueBox extends FlxSpriteGroup{
 		}
         
         preloadedFonts.set(font + '_' + size, true);
+    }
+    
+    /**
+     * Call this to initialize all of the effects and stuff
+     */
+    function initEffects():Void{
+        if(!baseEffectsAdded){
+            addBaseEffects();    
+        }
+        
+        TextEffectArray.effectClasses = [];
+        
+        for(textEffect in effects){
+            if(!TextEffectArray.effectClasses.contains(textEffect.effectClass)){
+                TextEffectArray.effectClasses.push(textEffect.effectClass);
+            }
+        }
+        
+        for(i in 0...effects.length){
+            var effect = effects[i];
+            
+            var input1:String = effect.typableStartText;
+            var input2:String = effect.startText;
+            
+            var input3:String = effect.typableEndText;
+            var input4:String = effect.endText;
+            
+            var trueNum:Int = 0;
+            
+            for(trueNumGet in 0...TextEffectArray.effectClasses.length){
+                if(TextEffectArray.effectClasses[trueNumGet] == effect.effectClass){
+                    trueNum = trueNumGet;
+                    break;
+                }
+            }
+            
+            input2 = input2.replace("[NUM]", (trueNum < 10 ? "0" + Std.string(trueNum) : Std.string(trueNum)));
+            input4 = input4.replace("[NUM]", (trueNum < 10 ? "0" + Std.string(trueNum) : Std.string(trueNum)));
+
+            textEffectReplacements.push([input1, input2]);
+            textEffectReplacements.push([input3, input4]);
+        }
+    }
+    
+    /**
+     * Call this to add the text effects included in the orignal textbox
+     */
+    function addBaseEffects():Void{
+        baseEffectsAdded = true;
+        
+        addTextEffect({typableStartText: "[[RAINBOW]]", typableEndText: "[[ENDRAINBOW]]", startText: "@[NUM]331640A", endText: "@[NUM]0", effectClass: RainbowEffect});
+        addTextEffect({typableStartText: "[[ROTATE]]", typableEndText: "[[ENDROTATE]]", startText: "@[NUM]331640A", endText: "@[NUM]0", effectClass: RotatingEffect});
+        addTextEffect({typableStartText: "[[WAVE]]", typableEndText: "[[ENDWAVE]]", startText: "@[NUM]331640A", endText: "@[NUM]0", effectClass: WaveEffect});
+        addTextEffect({typableStartText: "[[SHAKE]]", typableEndText: "[[ENDSHAKE]]", startText: "@[NUM]331640A", endText: "@[NUM]0", effectClass: ShakeEffect});
+    }
+    
+    /**
+     * Call this to add a new text effect!!!!
+     * @param effect the effect to add
+     */
+    public static function addTextEffect(effect:EffectData):Void{
+        effects.push(effect);
+    }
+    
+    /**
+     * call this to replace the text effect text with the ones that will actually do something
+     * @param input the dialogue text
+     * @return text with proper effects
+     */
+    function replaceTextEffects(input:String):String
+    {
+        for(i in textEffectReplacements){
+            input = input.replace(i[0], i[1]);    
+        }
+        
+        return input;
     }
 }

@@ -5,6 +5,7 @@ import ctDialogueBox.ctdb.box.*;
 import ctDialogueBox.ctdb.choicer.*;
 import ctDialogueBox.ctdb.choicer.Choicer;
 import ctDialogueBox.ctdb.data.*;
+import ctDialogueBox.ctdb.effect.EffectData;
 import ctDialogueBox.ctdb.namebox.*;
 import ctDialogueBox.ctdb.portrait.*;
 import ctDialogueBox.ctdb.sound.*;

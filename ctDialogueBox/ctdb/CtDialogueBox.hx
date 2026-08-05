@@ -170,7 +170,8 @@ class CtDialogueBox extends FlxSpriteGroup{
         this.settings = settings;
                 
         dialogueBox = new FlxSprite();
-        
+        dialogueBox.antialiasing = settings.antialiasing;
+
         nameBox = new NameBox(settings, dialogueBox);
         
         dialoguePortrait = new DialoguePortrait(settings);
@@ -199,7 +200,9 @@ class CtDialogueBox extends FlxSpriteGroup{
 		}, settings);
         add(textbox);
         
-        loadDialogueBoxGraphic();        
+        loadDialogueBoxGraphic();       
+        
+        antialiasing = settings.antialiasing;
     }
     
     override function update(elapsed:Float):Void{

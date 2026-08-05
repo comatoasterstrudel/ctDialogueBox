@@ -66,6 +66,8 @@ class DialoguePortrait extends FlxSprite
                 setPosition(x + offsets.x, (y + offsets.y));
                 
                 onScreen = true;
+
+                antialiasing = settings.antialiasing;
             }
         } else {
             visible = false; 

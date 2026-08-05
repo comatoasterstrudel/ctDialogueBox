@@ -36,7 +36,7 @@ class Textbox extends FlxSpriteGroup {
 
     private static inline var hexadecimalCharacters = "0123456789abcdefABCDEF";
 
-    var ctSettings:CtDialogueBoxSettings;
+    public var ctSettings:CtDialogueBoxSettings;
     
     public function new(X:Float, Y:Float, settings:Settings, ctSettings:CtDialogueBoxSettings)
     {

@@ -38,6 +38,8 @@ class Choicer extends FlxSpriteGroup
         menuManager.disable();
         
         addCursor();
+
+        antialiasing = settings.antialiasing;
     }
     
     override function update(elapsed:Float):Void{
@@ -102,6 +104,7 @@ class Choicer extends FlxSpriteGroup
             var choicerOption = curOptions[i];
             
             var text = new FlxText(0, 0, 0, choicerOption.text);
+            text.antialiasing = settings.antialiasing;
             text.setFormat(settings.choicerFont, settings.choicerFontSize, settings.choicerNonSelectedColor, settings.choicerPosition == Left ? LEFT : (settings.choicerPosition == Right ? RIGHT : (CENTER)));
             add(text);
             
@@ -144,6 +147,7 @@ class Choicer extends FlxSpriteGroup
         
         if(Assets.exists(cursorPath)){
             cursor = new CtSprite().createFromImage(cursorPath);
+            cursor.antialiasing = settings.antialiasing;
             add(cursor);
             
             menuManager.addCursor(cursor, settings.choicerCursorSpacing, false);

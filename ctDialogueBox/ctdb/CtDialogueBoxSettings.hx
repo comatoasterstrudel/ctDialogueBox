@@ -1,13 +1,16 @@
 package ctDialogueBox.ctdb;
 
-import ctDialogueBox.ctdb.choicer.ChoicerPosition;
-
 @:structInit
 
 /**
 * the settings used to customize the dialogue box
 */
 class CtDialogueBoxSettings{
+    /**
+     * Should this box have antialiasing or not?
+     */
+    public var antialiasing:Bool;
+
     /**
      * The path to the font file you want to use. if left null, will use HaxeFlixel default font.
      * eg: assets/font/andy.ttf
@@ -281,6 +284,7 @@ class CtDialogueBoxSettings{
     public var choicerPressedAcceptFunction:Void->Bool;
     
     public function new(
+        antialiasing:Bool = null,
         font:String = null,
         fontSize:Int = null,
         autoPreloadFont:Bool = null,
@@ -332,6 +336,7 @@ class CtDialogueBoxSettings{
         choicerPressedAcceptFunction:Void->Bool = null,
     )
     {
+        this.antialiasing = antialiasing ?? true;
         this.font = font ?? FlxAssets.FONT_DEFAULT;
         this.fontSize = fontSize ?? 15;
         this.autoPreloadFont = autoPreloadFont ?? false;

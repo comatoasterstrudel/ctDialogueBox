@@ -44,6 +44,7 @@ class NameBox extends FlxSpriteGroup
         this.dialogueBox = dialogueBox;
         
         nameBoxSpr = new FlxSprite();
+        nameBoxSpr.antialiasing = settings.antialiasing;
         add(nameBoxSpr);
         
         loadNameBoxSprite();
@@ -53,6 +54,7 @@ class NameBox extends FlxSpriteGroup
 
             if(Assets.exists(nameBoxLeftEndPath)){     
                 nameBoxLeftEnd = new FlxSprite().loadGraphic(nameBoxLeftEndPath);
+                nameBoxLeftEnd.antialiasing = settings.antialiasing;
                 add(nameBoxLeftEnd);          
 			}
 			else
@@ -66,6 +68,7 @@ class NameBox extends FlxSpriteGroup
 
             if(Assets.exists(nameBoxRightEndPath)){     
                 nameBoxRightEnd = new FlxSprite().loadGraphic(nameBoxRightEndPath);
+                nameBoxRightEnd.antialiasing = settings.antialiasing;
                 add(nameBoxRightEnd);          
 			}
 			else
@@ -76,9 +79,12 @@ class NameBox extends FlxSpriteGroup
         
         nameText = new FlxText();
         nameText.setFormat(settings.nameBoxFont, settings.nameBoxFontSize, settings.nameBoxTextColor);
+        nameText.antialiasing = settings.antialiasing;
         add(nameText);
         
         visible = false;
+
+        antialiasing = settings.antialiasing;
     }
     
     /**

@@ -79,7 +79,7 @@ class NameBox extends FlxSpriteGroup
         
         nameText = new FlxText();
         nameText.setFormat(settings.nameBoxFont, settings.nameBoxFontSize, settings.nameBoxTextColor);
-        nameText.antialiasing = settings.antialiasing;
+        nameText.antialiasing = settings.textAntialiasing;
         add(nameText);
         
         visible = false;

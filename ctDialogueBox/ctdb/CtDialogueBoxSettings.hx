@@ -12,6 +12,11 @@ class CtDialogueBoxSettings{
     public var antialiasing:Bool;
 
     /**
+    * Should this text have antialiasing or not?
+    */
+    public var textAntialiasing:Bool;
+
+    /**
      * The path to the font file you want to use. if left null, will use HaxeFlixel default font.
      * eg: assets/font/andy.ttf
      */
@@ -285,6 +290,7 @@ class CtDialogueBoxSettings{
     
     public function new(
         antialiasing:Bool = null,
+        textAntialiasing:Bool = null,
         font:String = null,
         fontSize:Int = null,
         autoPreloadFont:Bool = null,
@@ -337,6 +343,7 @@ class CtDialogueBoxSettings{
     )
     {
         this.antialiasing = antialiasing ?? true;
+        this.textAntialiasing = textAntialiasing ?? true;
         this.font = font ?? FlxAssets.FONT_DEFAULT;
         this.fontSize = fontSize ?? 15;
         this.autoPreloadFont = autoPreloadFont ?? false;

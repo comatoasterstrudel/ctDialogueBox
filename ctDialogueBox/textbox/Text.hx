@@ -55,7 +55,7 @@ class Text extends FlxSprite {
             testBitmapText.destroy();
 		}
 
-        antialiasing = textbox.ctSettings.antialiasing;
+        antialiasing = textbox.ctSettings.textAntialiasing;
 				
 		//updateHitbox();
         //trace('Loaded character: ' + text); 

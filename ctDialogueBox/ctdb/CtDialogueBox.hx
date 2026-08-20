@@ -495,7 +495,7 @@ class CtDialogueBox extends FlxSpriteGroup{
                 var sndPath:String = settings.dialogueSoundPath + 'voiceLines/' + dialogueData.voiceLine + sndExtension;
                 
                 if(Assets.exists(sndPath)){
-                    voiceLineSound = FlxG.sound.load(sndPath, 1, false);
+                    voiceLineSound = CtSound.load(sndPath, 1, false);
                     FlxG.sound.list.add(voiceLineSound);
                     voiceLineSound.play();
                     
@@ -511,11 +511,11 @@ class CtDialogueBox extends FlxSpriteGroup{
                     var counter:Int = 1;
                     
                     while(Assets.exists(sndPath + Std.string(counter) + sndExtension)){
-                        textSounds.push(FlxG.sound.load(sndPath + Std.string(counter) + sndExtension, actorData.textSoundVolume));
+                        textSounds.push(CtSound.load(sndPath + Std.string(counter) + sndExtension, actorData.textSoundVolume));
                         counter++;
                     }			
                 } else if (Assets.exists(sndPath + sndExtension)){
-                    textSounds.push(FlxG.sound.load(sndPath + sndExtension, actorData.textSoundVolume));
+                    textSounds.push(CtSound.load(sndPath + sndExtension, actorData.textSoundVolume));
                 }
                 
                 if(textSounds.length < 1){

@@ -18,6 +18,7 @@ import ctDialogueBox.textbox.effects.*;
 import ctDialogueBox.textbox.effects.IEffect;
 import ctUtil.CtUtil;
 import ctUtil.graphic.*;
+import ctUtil.sound.*;
 import ctDialogueBox.ctdb.choicer.ChoicerPosition;
 import ctUtil.menu.*;
 import flixel.FlxG;

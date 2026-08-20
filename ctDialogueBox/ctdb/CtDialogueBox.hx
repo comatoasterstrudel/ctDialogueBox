@@ -495,7 +495,7 @@ class CtDialogueBox extends FlxSpriteGroup{
                 var sndPath:String = settings.dialogueSoundPath + 'voiceLines/' + dialogueData.voiceLine + sndExtension;
                 
                 if(Assets.exists(sndPath)){
-                    voiceLineSound = new FlxSound().loadEmbedded(sndPath, false, true);
+                    voiceLineSound = FlxG.sound.load(sndPath, 1, false);
                     FlxG.sound.list.add(voiceLineSound);
                     voiceLineSound.play();
                     

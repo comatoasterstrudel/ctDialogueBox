@@ -443,6 +443,11 @@ class CtDialogueBox extends FlxSpriteGroup{
         // reset the choicer
         choicerPlayed = false;
 
+        // set choicer color 
+        var selectedColor:FlxColor = (actorData.exists ? actorData.choicerSelectedTextColor : settings.choicerSelectedColor);
+        var unselectedColor:FlxColor = (actorData.exists ? actorData.choicerUnselectedTextColor : settings.choicerNonSelectedColor);
+        choicer.changeColors(selectedColor, unselectedColor);
+
         //start typing!!
         if(continuing){
             var previousLine:Int = textbox.currentLineIndex;

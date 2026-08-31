@@ -45,7 +45,6 @@ class ActorData
 	 */
 	public var textSoundVolume:Float = 1;
 	
-	
 	/**
 	 * the suffix this character uses for their portraits. for example, if your portrait is called "coma_neutral", the suffix would be "coma". if blank, this character wont use portraits
 	 */
@@ -70,7 +69,17 @@ class ActorData
 	 * the path to this characters custom name box sprite. if this is null they wont have one.
 	 */
 	public var customNameBoxImgPath:String;
-	
+
+	/**
+	 * The color choicer texts will become when this actor is being used
+	 */
+	public var choicerSelectedTextColor:FlxColor;
+
+	/**
+	 * 
+	 */
+	public var choicerUnselectedTextColor:FlxColor;
+
 	public function new(path:String){
 		if(!Assets.exists(path)){
 			if(!path.endsWith('actor_.json')) FlxG.log.warn('[CTDB] Can\'t find Actor File: "$path".');
@@ -93,5 +102,7 @@ class ActorData
 		nameBoxTextColor = data.nameBoxTextColor == null ? (0) : FlxColor.fromRGB(data.nameBoxTextColor[0] ?? 255, data.nameBoxTextColor[1] ?? 255, data.nameBoxTextColor[2] ?? 255, 255);
 		customNameBoxImgPath = data.customNameBoxImgPath;
 		textSoundVolume = data.textSoundVolume == null ? 1 : data.textSoundVolume;
+		choicerSelectedTextColor = (data.choicerSelectedTextColor == null) ? FlxColor.WHITE : FlxColor.fromRGB(data.choicerSelectedTextColor[0] ?? 255, data.choicerSelectedTextColor[1] ?? 255, data.choicerSelectedTextColor[2] ?? 255, 255);
+		choicerUnselectedTextColor = (data.choicerUnselectedTextColor == null) ? FlxColor.WHITE : FlxColor.fromRGB(data.choicerUnselectedTextColor[0] ?? 255, data.choicerUnselectedTextColor[1] ?? 255, data.choicerUnselectedTextColor[2] ?? 255, 255);
     }
 }

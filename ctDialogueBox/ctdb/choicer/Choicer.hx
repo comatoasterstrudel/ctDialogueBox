@@ -28,6 +28,9 @@ class Choicer extends FlxSpriteGroup
      */
     var dialogueBox:FlxSprite;
     
+    var selectedColor:FlxColor;
+    var unselectedColor:FlxColor;
+
     public function new(settings:CtDialogueBoxSettings, dialogueBox:FlxSprite){
         super();
         
@@ -40,6 +43,8 @@ class Choicer extends FlxSpriteGroup
         addCursor();
 
         antialiasing = settings.antialiasing;
+
+        changeColors(settings.choicerSelectedColor, settings.choicerNonSelectedColor);
     }
     
     override function update(elapsed:Float):Void{
@@ -105,7 +110,7 @@ class Choicer extends FlxSpriteGroup
             
             var text = new FlxText(0, 0, 0, choicerOption.text);
             text.antialiasing = settings.antialiasing;
-            text.setFormat(settings.choicerFont, settings.choicerFontSize, settings.choicerNonSelectedColor, settings.choicerPosition == Left ? LEFT : (settings.choicerPosition == Right ? RIGHT : (CENTER)));
+            text.setFormat(settings.choicerFont, settings.choicerFontSize, unselectedColor, settings.choicerPosition == Left ? LEFT : (settings.choicerPosition == Right ? RIGHT : (CENTER)));
             add(text);
             
             var cursorSpacing = (cursor == null ? 0 : (settings.choicerCursorSpacing + cursor.height));
@@ -122,10 +127,10 @@ class Choicer extends FlxSpriteGroup
             text.setPosition((text.x) + settings.choicerOffset.x, (dialogueBox.y + (settings.choicerSpacing * i)) + settings.choicerOffset.y);
             
             menuOptions[0].push({sprite: text, hoverFunction: function(s):Void{
-                s.color = settings.choicerSelectedColor;
+                s.color = selectedColor;
                 s.alpha = settings.choicerSelectedAlpha;
             }, nonHoverFunction: function(s):Void{
-                s.color = settings.choicerNonSelectedColor;
+                s.color = unselectedColor;
                 s.alpha = settings.choicerNonSelectedAlpha;
             }, clickFunction: function(s):Void{
                 readyToFinish = true;
@@ -155,4 +160,9 @@ class Choicer extends FlxSpriteGroup
             FlxG.log.warn('[CTDB] Can\'t find Choicer Cursor Image: "$cursorPath".');
         }
     }
+
+    public function changeColors(selected:FlxColor, unselected:FlxColor):Void{
+        this.selectedColor = selected;
+        this.unselectedColor = unselected;
+    }   
 } 

@@ -34,7 +34,7 @@ class Choicer extends FlxSpriteGroup
         this.settings = settings;
         this.dialogueBox = dialogueBox;
         
-        menuManager = new CtMenuManager(settings.choicerPressedUpFunction, settings.choicerPressedDownFunction, settings.choicerPressedAcceptFunction);
+        menuManager = new CtMenuManager(settings.choicerPressedDownFunction, settings.choicerPressedUpFunction, settings.choicerPressedAcceptFunction);
         menuManager.disable();
         
         addCursor();

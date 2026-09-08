@@ -10,6 +10,9 @@ import flixel.addons.ui.FlxUICheckBox;
 import lime.ui.FileDialog;
 import sys.io.File;
 import ctDialogueBox.editor.CtDialogueTester;
+import openfl.display.BitmapData;
+import openfl.geom.Rectangle;
+import openfl.geom.Point;
 
 class CtDialogueEditor extends FlxState
 {
@@ -319,6 +322,7 @@ class CtDialogueEditor extends FlxState
             var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json');
 
             portraitSprite.updatePortrait(dialogues[curDialogue], actordata);
+            trimSpr(portraitSprite);
             portraitSprite.setGraphicSize(250);
             portraitSprite.updateHitbox();
             portraitSprite.setPosition(bg.x + bg.width - portraitSprite.width - 20, FlxG.height - portraitSprite.height - 20);
@@ -328,6 +332,22 @@ class CtDialogueEditor extends FlxState
             
             CtUtil.centerSpriteOnSprite(portraitBg, portraitSprite, true, true);
         }
+    }
+
+    function trimSpr(sprite:FlxSprite):Void {
+        var bmp:BitmapData = sprite.pixels;
+        
+        var bounds:Rectangle = bmp.getColorBoundsRect(0xFF000000, 0x00000000, false);
+        
+        if (bounds.width == 0 || bounds.height == 0) return;
+        
+        var trimmedBmp = new BitmapData(Std.int(bounds.width), Std.int(bounds.height), true, 0x00000000);
+        
+        trimmedBmp.copyPixels(bmp, bounds, new Point(0, 0));
+        
+        sprite.pixels = trimmedBmp;
+        sprite.offset.set(bounds.x, bounds.y);
+        sprite.updateHitbox();
     }
 
     function saveChanges():Void{

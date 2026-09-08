@@ -44,7 +44,7 @@ class DialogueFile
 			portrait: "",
 			autoSkip: false,
 			continueLine: false,
-			diaPitch: 0,
+			diaPitch: 1,
 			voiceLine: '',
 			events: [],
 			choicerOptions: []
@@ -78,7 +78,7 @@ class DialogueFile
 				portrait: item.portrait ?? '',
 				autoSkip: item.autoSkip ?? false,
 				continueLine: item.continueLine ?? false,
-				diaPitch: item.diaPitch ?? 0.0,
+				diaPitch: item.diaPitch == null ? 1 : item.diaPitch,
 				voiceLine: item.voiceLine ?? '',
 				events: item.events ?? [],
 				choicerOptions: choicerOptions,

@@ -35,10 +35,7 @@ class CtDialogueTester extends FlxSubState
 
         box.playDialogue();
 
-        trace(startingNum);
-
         while(box.curLine < startingNum){
-            trace("??");
             box.advanceLine(1);
         }
 

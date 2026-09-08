@@ -504,7 +504,7 @@ class CtDialogueBox extends FlxSpriteGroup{
                     FlxG.sound.list.add(voiceLineSound);
                     voiceLineSound.play();
                     
-                    if(dialogueData.diaPitch > 0) voiceLineSound.pitch = dialogueData.diaPitch;
+                    voiceLineSound.pitch = dialogueData.diaPitch;
                 } else {
                     FlxG.log.warn('[CTDB] Can\'t find Voice Line: "$sndPath".');
                     currentSoundMode = None;
@@ -528,9 +528,7 @@ class CtDialogueBox extends FlxSpriteGroup{
                     currentSoundMode = None;
                 } else {                    
                     for(textSnd in textSounds){
-                        if(dialogueData.diaPitch > 0) {
-                            textSnd.pitch = dialogueData.diaPitch;        
-                        }   
+                        textSnd.pitch = dialogueData.diaPitch;  
                     }
                 }
                 

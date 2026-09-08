@@ -4,7 +4,9 @@ package ctDialogueBox.editor;
 #if ctDialogueEditor
 import flixel.addons.text.FlxTextInput;
 import flixel.ui.FlxButton;
+import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUIDropDownMenu;
+import flixel.addons.ui.FlxUICheckBox;
 import lime.ui.FileDialog;
 import sys.io.File;
 import ctDialogueBox.editor.CtDialogueTester;
@@ -17,6 +19,7 @@ class CtDialogueEditor extends FlxState
 
     var diaText:FlxTextInput;
     var dialogueTopText:FlxText;
+    var textBg:CtSprite;
 
     var button_loadFromJson:FlxButton;
     var button_export:FlxButton;
@@ -40,6 +43,22 @@ class CtDialogueEditor extends FlxState
     var dialogues:Array<DialogueData> = [];
     var curDialogue:Int = 0;
 
+    var fileText:FlxText;
+
+    var speedSelector:FlxUINumericStepper;
+    var speedText:FlxText;
+
+    var pitchSelector:FlxUINumericStepper;
+    var pitchText:FlxText;
+
+    var autoSkipBox:FlxUICheckBox;
+
+    var continueLineBox:FlxUICheckBox;
+
+    var voiceLineInput:FlxTextInput;
+    var voiceLineText:FlxText;
+    var voiceLineBg:CtSprite;
+
     public function new():Void{
         super();
 
@@ -56,10 +75,21 @@ class CtDialogueEditor extends FlxState
         bgColor = FlxColor.GRAY;
 
         diaText = new FlxTextInput(35, 35, 400, "[Dialogue Text]", 20);
+        diaText.fieldHeight = 400;
+
+        textBg = new CtSprite(diaText.x, diaText.y).createColorBlock(Std.int(diaText.width), 400, FlxColor.BLACK);
+        textBg.alpha = .3;
+        add(textBg);
+
         add(diaText);
 
         dialogueTopText = new FlxText(diaText.x, 2, 0, "Dialogue", 16);
         add(dialogueTopText);
+
+        fileText = new FlxText(diaText.x, 2, 0, "File: [", 16);
+        add(fileText);
+
+        updateFileText();
 
         button_loadFromJson = new FlxButton(FlxG.width - 200, 35, "Load Json", loadDialogueJson);
         add(button_loadFromJson);
@@ -141,6 +171,38 @@ class CtDialogueEditor extends FlxState
         portraitText = new FlxText(portraitselector.x, 0, 0, "Portrait", 16);
         add(portraitText);
 
+        speedSelector = new FlxUINumericStepper(diaText.x, diaText.y + diaText.height + 50, 0.002, 0.03, 0.0, 1.0, 3);
+        add(speedSelector);
+
+        speedText = new FlxText(speedSelector.x, speedSelector.y - 35, 0, "Speed", 16);
+        add(speedText);
+
+        pitchSelector = new FlxUINumericStepper(diaText.x + 100, diaText.y + diaText.height + 50, 0.1, 1, 0.1, 999, 1);
+        add(pitchSelector);
+
+        pitchText = new FlxText(pitchSelector.x, pitchSelector.y - 35, 0, "Sound Pitch", 16);
+        add(pitchText);
+
+        autoSkipBox = new FlxUICheckBox(diaText.x + 200, speedSelector.y, null, null, "Auto Skip");
+        add(autoSkipBox);
+
+        continueLineBox = new FlxUICheckBox(diaText.x + 300, speedSelector.y, null, null, "Continue Line");
+        add(continueLineBox);
+
+        voiceLineInput = new FlxTextInput(35, diaText.y + diaText.height + 200, 400, "[voice line]", 20);
+        voiceLineInput.fieldHeight = 50;
+
+        voiceLineBg = new CtSprite(voiceLineInput.x, voiceLineInput.y).createColorBlock(Std.int(voiceLineInput.width), 50, FlxColor.BLACK);
+        voiceLineBg.alpha = .3;
+        add(voiceLineBg);
+
+        add(voiceLineInput);
+
+        voiceLineText = new FlxText(voiceLineInput.x, voiceLineInput.y - 35, 0, "Voiceline", 16);
+        add(voiceLineText);
+
+        // done
+
         var data = DialogueFile.getBlankDialogueData();
         data.dialogue = "Welcome to the dialogue editor!";
 
@@ -172,6 +234,8 @@ class CtDialogueEditor extends FlxState
             
             curDialogue = 0;
             changeSelection(); 
+
+            updateFileText(path);
         });
 
         fileDialog.browse(lime.ui.FileDialogType.OPEN, "json", null, "Select a dialogue json");   
@@ -202,6 +266,16 @@ class CtDialogueEditor extends FlxState
         actorselector.selectedId = dialogueData.actor;
 
         updateAvailablePortraits();
+
+        speedSelector.value = dialogueData.speed;
+
+        pitchSelector.value = dialogueData.diaPitch;
+
+        autoSkipBox.checked = dialogueData.autoSkip;
+        
+        continueLineBox.checked = dialogueData.continueLine;
+
+        voiceLineInput.text = dialogueData.voiceLine;
     }
 
     function updateAvailablePortraits():Void{
@@ -245,11 +319,11 @@ class CtDialogueEditor extends FlxState
             var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json');
 
             portraitSprite.updatePortrait(dialogues[curDialogue], actordata);
-            portraitSprite.setGraphicSize(300);
+            portraitSprite.setGraphicSize(250);
             portraitSprite.updateHitbox();
-            portraitSprite.setPosition(bg.x + bg.width - portraitSprite.width - 40, FlxG.height - portraitSprite.height - 40);
+            portraitSprite.setPosition(bg.x + bg.width - portraitSprite.width - 20, FlxG.height - portraitSprite.height - 20);
 
-            portraitBg.createColorBlock(Std.int(portraitSprite.width + 20), Std.int(portraitSprite.height + 20), FlxColor.WHITE);
+            portraitBg.createColorBlock(Std.int(portraitSprite.width + 10), Std.int(portraitSprite.height + 10), FlxColor.WHITE);
             portraitBg.alpha = .5;
             
             CtUtil.centerSpriteOnSprite(portraitBg, portraitSprite, true, true);
@@ -261,6 +335,11 @@ class CtDialogueEditor extends FlxState
 
         dialogues[curDialogue].dialogue = diaText.text;
         dialogues[curDialogue].actor = actorselector.selectedId;
+        dialogues[curDialogue].speed = speedSelector.value;
+        dialogues[curDialogue].autoSkip = autoSkipBox.checked;
+        dialogues[curDialogue].continueLine = continueLineBox.checked;
+        dialogues[curDialogue].diaPitch = pitchSelector.value;
+        dialogues[curDialogue].voiceLine = voiceLineInput.text;
     }
 
     function exportJson():Void{
@@ -271,6 +350,7 @@ class CtDialogueEditor extends FlxState
 
         fileDialog.onSelect.add(function(path:String) {
             File.saveContent(path, data);
+            updateFileText(path);
         });
 
         fileDialog.browse(lime.ui.FileDialogType.SAVE, "json", null, "Select a dialogue json");   
@@ -282,6 +362,17 @@ class CtDialogueEditor extends FlxState
         file.loadFromText(Json.stringify(dialogues, null, "\t"));
         openSubState(new CtDialogueTester(file, startingNum));
     };
+
+    function updateFileText(text:String = "?"):Void{
+        fileText.scale.x = 1;
+        fileText.text = "File:\n" + text;
+        while(fileText.width > FlxG.width - bg.width - 10){
+            fileText.scale.x -= 0.01;
+            fileText.updateHitbox();
+        }
+        fileText.x = FlxG.width - fileText.width - 5;
+        fileText.y = FlxG.height - fileText.height - 5;
+    }
 }
 #end
 #end

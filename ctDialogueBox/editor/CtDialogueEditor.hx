@@ -13,6 +13,7 @@ import ctDialogueBox.editor.CtDialogueTester;
 import openfl.display.BitmapData;
 import openfl.geom.Rectangle;
 import openfl.geom.Point;
+using StringTools;
 
 class CtDialogueEditor extends FlxState
 {
@@ -46,6 +47,7 @@ class CtDialogueEditor extends FlxState
     var dialogues:Array<DialogueData> = [];
     var curDialogue:Int = 0;
 
+    var fileBg:CtSprite;
     var fileText:FlxText;
 
     var speedSelector:FlxUINumericStepper;
@@ -65,7 +67,7 @@ class CtDialogueEditor extends FlxState
     public function new():Void{
         super();
 
-        bg = new CtSprite().createColorBlock(720, FlxG.height, FlxColor.BLACK);
+        bg = new CtSprite().createColorBlock(820, FlxG.height, FlxColor.BLACK);
         bg.alpha = .4;
         add(bg);
 
@@ -89,7 +91,11 @@ class CtDialogueEditor extends FlxState
         dialogueTopText = new FlxText(diaText.x, 2, 0, "Dialogue", 16);
         add(dialogueTopText);
 
+        fileBg = new CtSprite();
+        add(fileBg);
+
         fileText = new FlxText(diaText.x, 2, 0, "File: [", 16);
+        fileText.alignment = RIGHT;
         add(fileText);
 
         updateFileText();
@@ -110,12 +116,12 @@ class CtDialogueEditor extends FlxState
         });
         add(button_testFromCurrentPos);
 
-        button_previous = new FlxButton(FlxG.width - 550, 35, "<---", function():Void{
+        button_previous = new FlxButton(FlxG.width - 450, 35, "<---", function():Void{
             changeSelection(true, -1);
         });
         add(button_previous);
 
-        button_next = new FlxButton(FlxG.width - 450, 35, "--->", function():Void{
+        button_next = new FlxButton(FlxG.width - 350, 35, "--->", function():Void{
             changeSelection(true, 1);
         });
         add(button_next);
@@ -186,10 +192,10 @@ class CtDialogueEditor extends FlxState
         pitchText = new FlxText(pitchSelector.x, pitchSelector.y - 35, 0, "Sound Pitch", 16);
         add(pitchText);
 
-        autoSkipBox = new FlxUICheckBox(diaText.x + 200, speedSelector.y, null, null, "Auto Skip");
+        autoSkipBox = new FlxUICheckBox(diaText.x + 250, speedSelector.y, null, null, "Auto Skip");
         add(autoSkipBox);
 
-        continueLineBox = new FlxUICheckBox(diaText.x + 325, speedSelector.y, null, null, "Continue Line");
+        continueLineBox = new FlxUICheckBox(autoSkipBox.x, speedSelector.y + 50, null, null, "Continue Line");
         add(continueLineBox);
 
         voiceLineInput = new FlxTextInput(35, diaText.y + diaText.height + 200, 400, "[voice line]", 20);
@@ -323,10 +329,10 @@ class CtDialogueEditor extends FlxState
 
             portraitSprite.updatePortrait(dialogues[curDialogue], actordata);
             trimSpr(portraitSprite);
-            portraitSprite.setGraphicSize(250);
+            portraitSprite.setGraphicSize(350);
             portraitSprite.updateHitbox();
             portraitSprite.setPosition(bg.x + bg.width - portraitSprite.width - 20, FlxG.height - portraitSprite.height - 20);
-
+            
             portraitBg.createColorBlock(Std.int(portraitSprite.width + 10), Std.int(portraitSprite.height + 10), FlxColor.WHITE);
             portraitBg.alpha = .5;
             
@@ -383,15 +389,28 @@ class CtDialogueEditor extends FlxState
         openSubState(new CtDialogueTester(file, startingNum));
     };
 
-    function updateFileText(text:String = "?"):Void{
+    function updateFileText(text:String = "\n?"):Void{
         fileText.scale.x = 1;
-        fileText.text = "File:\n" + text;
-        while(fileText.width > FlxG.width - bg.width - 10){
-            fileText.scale.x -= 0.01;
+        fileText.text = "[[GRAY]]File:[[GRAY]]\n" + text;
+
+        fileText.text = fileText.text.replace("\\", "\\" + "\n");
+
+        while(fileText.height > FlxG.height / 2){
+            fileText.scale.y -= 0.01;
             fileText.updateHitbox();
         }
+        fileText.updateHitbox();
+
         fileText.x = FlxG.width - fileText.width - 5;
         fileText.y = FlxG.height - fileText.height - 5;
+
+        fileText.applyMarkup(fileText.text, [
+            new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.GRAY), "[[GRAY]]")
+        ]);
+
+        fileBg.createColorBlock(Std.int(fileText.width + 10), Std.int(fileText.height + 10), FlxColor.WHITE);
+        fileBg.alpha = .5;
+        fileBg.setPosition(fileText.x - 5, fileText.y - 5);
     }
 }
 #end

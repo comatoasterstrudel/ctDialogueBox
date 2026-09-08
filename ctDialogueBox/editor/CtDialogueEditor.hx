@@ -186,7 +186,7 @@ class CtDialogueEditor extends FlxState
         autoSkipBox = new FlxUICheckBox(diaText.x + 200, speedSelector.y, null, null, "Auto Skip");
         add(autoSkipBox);
 
-        continueLineBox = new FlxUICheckBox(diaText.x + 300, speedSelector.y, null, null, "Continue Line");
+        continueLineBox = new FlxUICheckBox(diaText.x + 325, speedSelector.y, null, null, "Continue Line");
         add(continueLineBox);
 
         voiceLineInput = new FlxTextInput(35, diaText.y + diaText.height + 200, 400, "[voice line]", 20);

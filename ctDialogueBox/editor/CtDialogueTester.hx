@@ -33,8 +33,14 @@ class CtDialogueTester extends FlxSubState
 
         box.openBox();
 
-        box.curLine = startingNum;
         box.playDialogue();
+
+        trace(startingNum);
+
+        while(box.curLine < startingNum){
+            trace("??");
+            box.advanceLine(1);
+        }
 
         leave = new FlxButton(FlxG.width - 100, 30, "Leave", function():Void{
             close();

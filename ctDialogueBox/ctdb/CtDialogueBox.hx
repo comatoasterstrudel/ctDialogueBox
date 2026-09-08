@@ -341,7 +341,7 @@ class CtDialogueBox extends FlxSpriteGroup{
      * call this to advance the dialogue box!!
      * @param amount the amount of lines to jump forward
      */
-    function advanceLine(amount:Int):Void{
+    public function advanceLine(amount:Int):Void{
         if(amount > 0 && textbox.status == WRITING){
             textbox.skipLine();
             return;

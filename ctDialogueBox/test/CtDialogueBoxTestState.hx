@@ -16,6 +16,11 @@ class CtDialogueTestState extends FlxState
 	{
 		CtDialogueBox.preloadFont();
 		
+		#if ctDialogueEditor
+		FlxG.switchState(new CtDialogueEditor());
+		return;
+		#end
+
 		trace(menuOptions);
 
 		testmetextbox = new CtDialogueBox();

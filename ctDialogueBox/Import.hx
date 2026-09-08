@@ -39,4 +39,8 @@ import haxe.Json;
 import haxe.Utf8;
 import openfl.Assets;
 
+#if debug
+import ctDialogueBox.editor.*;
+#end
+
 using StringTools;

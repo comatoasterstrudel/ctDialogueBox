@@ -20,30 +20,39 @@ class DialogueFile
 	 */
 	public var path:String;
 	
-	public function new(path:String)
+	public function new(path:String = "n")
 	{
 		this.path = path;
 		
 		if(!Assets.exists(path)){
-			FlxG.log.warn('[CTDB] Can\'t find Dialogue File: "$path". Loading placeholder.');
+			if(path != "n") FlxG.log.warn('[CTDB] Can\'t find Dialogue File: "$path". Loading placeholder.');
 			
-			dialogueLines.push({
-				dialogue: "Placeholder Dialogue. Check " + path + "?",
-				actor: "",
-				speed: 0.03,
-				portrait: "",
-				autoSkip: false,
-				continueLine: false,
-				diaPitch: 0,
-				voiceLine: '',
-				events: [],
-				choicerOptions: []
-			});
-			
+			var data = getBlankDialogueData();
+			data.dialogue = "Placeholder Dialogue. Check " + path + "?";
+			dialogueLines.push(data);
 			return;
 		}
-		
-		data = Json.parse(Assets.getText(path));
+				
+		loadFromText(Assets.getText(path));
+	}
+
+	public static function getBlankDialogueData():DialogueData{
+		return {
+			dialogue: "",
+			actor: "",
+			speed: 0.03,
+			portrait: "",
+			autoSkip: false,
+			continueLine: false,
+			diaPitch: 0,
+			voiceLine: '',
+			events: [],
+			choicerOptions: []
+		}
+	}
+
+	public function loadFromText(txt:String):Void{
+		data = Json.parse(txt);
 		
 		dialogueLines = data.map(function(item)
 		{

@@ -42,7 +42,7 @@ class CtDialogueBox extends FlxSpriteGroup{
     /**
      * which line of the current dialogue file youre on
      */
-    var curLine:Int = 0;
+    public var curLine:Int = 0;
     
     /**
      * if this line is going to autoskip or not
@@ -594,6 +594,11 @@ class CtDialogueBox extends FlxSpriteGroup{
         var jsonPath:String = (settings.dialogueDataPath + 'content/' + dialogueName + '.json');
             
         var data = new DialogueFile(jsonPath);
+        if(data.dialogueLines == null) return;
+        dialogueFiles.push(data);
+    }
+
+    public function addDialogueFileDirectly(data:DialogueFile):Void{            
         if(data.dialogueLines == null) return;
         dialogueFiles.push(data);
     }

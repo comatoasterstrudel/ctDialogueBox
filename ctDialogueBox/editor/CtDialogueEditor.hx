@@ -30,6 +30,7 @@ class CtDialogueEditor extends FlxState
     var button_previous:FlxButton;
     var button_next:FlxButton;
     var button_new:FlxButton;
+    var button_copy:FlxButton;
     var button_delete:FlxButton;
     var button_test:FlxButton;
     var button_testFromCurrentPos:FlxButton;
@@ -133,12 +134,19 @@ class CtDialogueEditor extends FlxState
         });
         add(button_new);
 
-        button_new = new FlxButton(button_next.x, 80, "Delete Line", function():Void{
+        button_delete = new FlxButton(button_next.x, 80, "Delete Line", function():Void{
             if(dialogues.length <= 1){
                 return;
             }
             dialogues.remove(dialogues[curDialogue]);
             changeSelection(false, -1);
+        });
+        add(button_delete);
+
+        button_new = new FlxButton(button_previous.x, 140, "Copy Line", function():Void{
+            changeSelection(true);
+            dialogues.insert(curDialogue + 1, Reflect.copy(dialogues[curDialogue]));
+            changeSelection(false, 1);
         });
         add(button_new);
 

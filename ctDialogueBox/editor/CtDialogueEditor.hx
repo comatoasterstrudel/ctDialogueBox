@@ -82,7 +82,12 @@ class CtDialogueEditor extends FlxState
 
         diaText = new FlxTextInput(35, 35, 400, "[Dialogue Text]", 20);
         diaText.fieldHeight = 400;
-
+        diaText.onChange.add(function():Void{ // FCK YOU GOOGLE
+            diaText.text = diaText.text.replace("’", "'");
+            diaText.text = diaText.text.replace("”", "\"");
+            diaText.text = diaText.text.replace("“", "\"");
+            diaText.text = diaText.text.replace("…", "...");
+        });
         textBg = new CtSprite(diaText.x, diaText.y).createColorBlock(Std.int(diaText.width), 400, FlxColor.BLACK);
         textBg.alpha = .3;
         add(textBg);

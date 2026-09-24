@@ -2,7 +2,28 @@ package ctDialogueBox.test;
 
 class CtDialogueTestState extends FlxState
 {	
-	var menuOptions:Array<String> = ['Base Box', 'OCRPG Recreation', 'Text Effects', 'Actors', 'Test Default Settings Option', 'Text Field Width', 'Voice Lines', 'Text Sounds', 'Dialogue Portraits', 'Name Plate', 'Test Preloading', 'Test ContinueLine', 'Test Reuse Box', 'Test CustomBoxes', "Test Pitch", "Deltarune Recreation", "Test Choicer", "Test Reuse Box Choicer", "Test New Effect System"];
+	var menuOptions:Array<String> = [
+		'Base Box', 
+		'OCRPG Recreation', 
+		'Text Effects', 
+		'Actors', 
+		'Test Default Settings Option', 
+		'Text Field Width', 
+		'Voice Lines', 
+		'Text Sounds', 
+		'Dialogue Portraits', 
+		'Name Plate', 
+		'Test Preloading', 
+		'Test ContinueLine', 
+		'Test Reuse Box', 
+		'Test CustomBoxes', 
+		"Test Pitch", 
+		"Deltarune Recreation", 
+		"Test Choicer", 
+		"Test Reuse Box Choicer", 
+		"Test New Effect System",
+		"Test Confirm Sprite"
+	];
 
 	var texts:Array<FlxText> = [];
 
@@ -317,6 +338,19 @@ class CtDialogueTestState extends FlxState
 						busy = true;
 						testmetextbox.loadDialogueFiles(['dia_effects2']);
 						testmetextbox.openBox();
+					case "Test Confirm Sprite":
+						var textbox = new CtDialogueBox({
+							boxImgPath: "dialogueBox", 
+							textColor: FlxColor.WHITE, 
+							fontSize: 46, 
+							font: 'assets/fonts/andy.ttf',
+							textOffset: new FlxPoint(30, 30),
+							confirmImagePath: "confirmer"
+						});
+						textbox.textbox.antialiasing = false;
+						textbox.loadDialogueFiles(['dia_test']);
+						textbox.openBox();
+						add(textbox); 
 				}
 			});
 		}

@@ -30,6 +30,11 @@ class CtDialogueBox extends FlxSpriteGroup{
     public var choicer:Choicer;
     
     /**
+     * The sprite that appears when you can confirm the dialogue
+     */
+    public var confirm:ConfirmSprite;
+
+    /**
      * the array of the dialogue files to play here
      */
     var dialogueFiles:Array<DialogueFile> = [];
@@ -185,6 +190,9 @@ class CtDialogueBox extends FlxSpriteGroup{
         choicer = new Choicer(settings, dialogueBox);
         add(choicer);
         
+        confirm = new ConfirmSprite(this);
+        add(confirm);
+
         if(!preloadedFonts.get(settings.font + '_' + settings.fontSize)){
             if(settings.autoPreloadFont){
                 preloadFont(settings.font, settings.fontSize);
@@ -220,6 +228,8 @@ class CtDialogueBox extends FlxSpriteGroup{
         if(settings.pressedAcceptFunction() && !choicer.playing){
             advanceLine(1);
         }
+
+        confirm.updateSprite(textbox.status);
     }
     
     /**

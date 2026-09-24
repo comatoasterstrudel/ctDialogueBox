@@ -231,6 +231,16 @@ class CtDialogueBoxSettings{
     public var choicerCursorSpacing:Float;
     
     /**
+     * The image the confirm sprite will use
+     */
+    public var confirmImagePath:String;
+
+    /**
+     * The offset of the confirmSprite
+     */
+    public var confirmOffset:FlxPoint;
+
+    /**
      * a list of characters that wont play text sounds
      */
     public var excludedTextSoundCharacters:Array<String> = [];
@@ -330,6 +340,8 @@ class CtDialogueBoxSettings{
         choicerNonSelectedColor:FlxColor = null,
         choicerCursorPath:String = null,
         choicerCursorSpacing:Float = null,
+        confirmImagePath:String = null,
+        confirmOffset:FlxPoint = null,
         excludedTextSoundCharacters:Array<String> = null,
         sentencePauseLength:Float = null,
         dialogueDataPath:String = null,
@@ -383,6 +395,8 @@ class CtDialogueBoxSettings{
         this.choicerNonSelectedColor = choicerNonSelectedColor ?? FlxColor.BLACK;
         this.choicerCursorPath = choicerCursorPath ?? "";
         this.choicerCursorSpacing = choicerCursorSpacing ?? 15;
+        this.confirmImagePath = confirmImagePath ?? "";
+        this.confirmOffset = confirmOffset ?? FlxPoint.get();
         this.excludedTextSoundCharacters = excludedTextSoundCharacters ?? [];
         this.sentencePauseLength = sentencePauseLength ?? 0;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';

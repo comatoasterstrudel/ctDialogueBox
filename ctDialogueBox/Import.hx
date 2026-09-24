@@ -38,6 +38,8 @@ import flixel.util.FlxTimer;
 import haxe.Json;
 import haxe.Utf8;
 import openfl.Assets;
+import ctDialogueBox.textbox.Textbox.Status;
+import ctDialogueBox.ctdb.confirm.ConfirmSprite;
 
 #if debug
 import ctDialogueBox.editor.*;

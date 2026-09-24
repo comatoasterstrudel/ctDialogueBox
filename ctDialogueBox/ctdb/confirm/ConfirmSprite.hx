@@ -18,6 +18,8 @@ class ConfirmSprite extends CtSprite
         }
 
         visible = false;
+
+        antialiasing = box.settings.antialiasing;
     }
 
     public function updateSprite(status:Status){

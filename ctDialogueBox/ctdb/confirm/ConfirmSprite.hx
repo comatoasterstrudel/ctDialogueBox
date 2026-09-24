@@ -17,9 +17,9 @@ class ConfirmSprite extends CtSprite
             createFromImage(box.settings.dialogueImagePath + "confirm/" + box.settings.confirmImagePath + ".png");
         }
 
-        visible = false;
-
         antialiasing = box.settings.antialiasing;
+
+        updateSprite(WRITING);
     }
 
     public function updateSprite(status:Status){

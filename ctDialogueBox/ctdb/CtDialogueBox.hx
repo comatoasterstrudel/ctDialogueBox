@@ -472,6 +472,8 @@ class CtDialogueBox extends FlxSpriteGroup{
             textbox.bring();            
         }
         
+        confirm.updateSprite(WRITING);
+        
         // call advance function!!
         onLineAdvance.dispatch(dialogueData);
         

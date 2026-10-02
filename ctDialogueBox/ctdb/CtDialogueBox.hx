@@ -225,7 +225,7 @@ class CtDialogueBox extends FlxSpriteGroup{
             return;
         }
         
-        if(settings.pressedAcceptFunction() && !choicer.playing){
+        if((settings.pressedAcceptFunction() || settings.pressedSkipFunction()) && !choicer.playing){
             advanceLine(1);
         }
 

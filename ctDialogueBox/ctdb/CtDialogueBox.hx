@@ -159,6 +159,8 @@ class CtDialogueBox extends FlxSpriteGroup{
      */
     var textEffectReplacements:Array<Array<String>> = [];
     
+    var lastPositionModifier:FlxPoint;
+
     public function new(?settings:CtDialogueBoxSettings = null):Void{
         super();
 
@@ -291,8 +293,14 @@ class CtDialogueBox extends FlxSpriteGroup{
     /**
      * call this to position the box and text properly
      */
-    public function positionBox():Void{
-         dialogueBox.screenCenter();            
+    public function positionBox(?modifier:FlxPoint):Void{
+        if(modifier == null && lastPositionModifier != null){
+            modifier = lastPositionModifier;
+        } else if(modifier != null){
+            lastPositionModifier = modifier;
+        }
+
+        if(modifier == null) dialogueBox.screenCenter(); else dialogueBox.setPosition(modifier.x, modifier.y);            
 
         if(settings.boxPosition != null){
             dialogueBox.setPosition(dialogueBox.x + settings.boxPosition.x, dialogueBox.y + settings.boxPosition.y);
@@ -612,7 +620,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         if(data.dialogueLines == null) return;
         dialogueFiles.push(data);
     }
-    
+
     /**
      * the list of fonts that have been preloaded
      */

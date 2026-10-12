@@ -416,8 +416,8 @@ class CtDialogueBoxSettings{
         this.confirmImagePath = confirmImagePath ?? "";
         this.confirmOffset = confirmOffset ?? FlxPoint.get();
         this.soundOpenPath = soundOpenPath ?? "";
-        this.soundAdvancePath = soundOpenPath ?? "";
-        this.soundClosePath = soundOpenPath ?? "";
+        this.soundAdvancePath = soundAdvancePath ?? "";
+        this.soundClosePath = soundClosePath ?? "";
         this.excludedTextSoundCharacters = excludedTextSoundCharacters ?? [];
         this.sentencePauseLength = sentencePauseLength ?? 0;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';

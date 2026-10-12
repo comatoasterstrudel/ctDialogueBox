@@ -306,7 +306,7 @@ class CtDialogueEditor extends FlxState
         if(dialogues[curDialogue].actor != ""){
             var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json', box.settings);
 
-            portraits = actordata.portraitList;
+            portraits = portraits.concat(actordata.portraitList);
         }
 
         portraitselector.setData(FlxUIDropDownMenu.makeStrIdLabelArray(portraits));

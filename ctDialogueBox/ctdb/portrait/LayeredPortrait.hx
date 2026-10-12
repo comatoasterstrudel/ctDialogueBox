@@ -1,4 +1,4 @@
-package ctdb.portrait;
+package ctDialogueBox.ctdb.portrait;
 
 typedef LayeredPortrait = {
     var name:String;

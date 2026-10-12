@@ -22,7 +22,8 @@ class CtDialogueTestState extends FlxState
 		"Test Choicer", 
 		"Test Reuse Box Choicer", 
 		"Test New Effect System",
-		"Test Confirm Sprite"
+		"Test Confirm Sprite",
+		"Test Layered Portraits"
 	];
 
 	var texts:Array<FlxText> = [];
@@ -351,6 +352,10 @@ class CtDialogueTestState extends FlxState
 						textbox.loadDialogueFiles(['dia_test']);
 						textbox.openBox();
 						add(textbox); 
+					case "Test Layered Portraits":
+						busy = true;
+						testmetextbox.loadDialogueFiles(['dia_layeredportraits']);
+						testmetextbox.openBox();
 				}
 			});
 		}

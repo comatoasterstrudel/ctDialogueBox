@@ -192,7 +192,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         choicer = new Choicer(settings, dialogueBox);
         add(choicer);
         
-        confirm = new ConfirmSprite(this);
+        confirm = new ConfirmSprite(cast this);
         add(confirm);
 
         if(!preloadedFonts.get(settings.font + '_' + settings.fontSize)){
@@ -394,7 +394,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         var dialogueData = dialogueFiles[curDialogueFile].dialogueLines[curLine];
         
         var jsonPath:String = (settings.dialogueDataPath + 'actors/actor_' + dialogueData.actor + '.json');
-        var actorData = new ActorData(jsonPath);
+        var actorData = new ActorData(jsonPath, settings);
         
         //set continuing before anything else
         continuing = dialogueData.continueLine;

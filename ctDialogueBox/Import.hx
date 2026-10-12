@@ -40,6 +40,7 @@ import haxe.Utf8;
 import openfl.Assets;
 import ctDialogueBox.textbox.Textbox.Status;
 import ctDialogueBox.ctdb.confirm.ConfirmSprite;
+import ctdb.portrait.LayeredPortrait;
 
 #if debug
 import ctDialogueBox.editor.*;

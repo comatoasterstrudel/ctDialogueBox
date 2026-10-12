@@ -1,0 +1,36 @@
+{
+    "name": "layer",
+	"textColor": [0, 0, 255],
+	"nameBoxTextColor": [0, 0, 255],
+	"portraitPrefix": "layer",
+	"layeredPortraits": [
+		{
+			"name": "red_smile",
+			"layers": [
+				"guy_base_red",
+				"guy_face_smile"
+			] 
+		},
+		{
+			"name": "red_mad",
+			"layers": [
+				"guy_base_red",
+				"guy_face_mad"
+			]
+		},
+		{
+			"name": "blue_smile",
+			"layers": [
+				"guy_base_blue",
+				"guy_face_smile"
+			]
+		},
+		{
+			"name": "blue_mad",
+			"layers": [
+				"guy_base_blue",
+				"guy_face_mad"
+			]
+		}
+	]
+}

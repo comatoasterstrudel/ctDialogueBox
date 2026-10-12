@@ -304,20 +304,9 @@ class CtDialogueEditor extends FlxState
         var portraits:Array<String> = [""];
 
         if(dialogues[curDialogue].actor != ""){
-            var portraitList = CtUtil.findFilesInPath(box.settings.dialogueImagePath + 'dialoguePortraits/', [".png"], false);
+            var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json', box.settings);
 
-            for(portrait in portraitList){
-                var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json');
-
-                if(portrait.contains(actordata.portraitPrefix + "_") && actordata.portraitPrefix != "") {
-                    var real = portrait;
-
-                    real = real.replace(actordata.portraitPrefix + "_", "");
-                    real = real.replace(".png", "");
-
-                    portraits.push(real);
-                }
-            }
+            portraits = actordata.portraitList;
         }
 
         portraitselector.setData(FlxUIDropDownMenu.makeStrIdLabelArray(portraits));
@@ -338,7 +327,7 @@ class CtDialogueEditor extends FlxState
             portraitSprite.revive();
             portraitBg.revive();
 
-            var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json');
+            var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json', box.settings);
 
             portraitSprite.updatePortrait(dialogues[curDialogue], actordata);
             trimSpr(portraitSprite);

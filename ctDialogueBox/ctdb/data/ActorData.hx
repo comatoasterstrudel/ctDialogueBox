@@ -56,6 +56,11 @@ class ActorData
 	public var portraitRight:Bool = true;
 	
 	/**
+	 * The info for layered portraits.
+	 */
+	public var layeredPortraits:Array<LayeredPortrait> = [];
+
+	/**
 	 * the path to this characters custom dialogue box sprite box sprite. if this is null itll default to the normal sprite
 	 */
 	public var customDialogueBoxImgPath:String;
@@ -76,11 +81,16 @@ class ActorData
 	public var choicerSelectedTextColor:FlxColor;
 
 	/**
-	 * 
+	 * The color choicer texts will become when this actor is being used
 	 */
 	public var choicerUnselectedTextColor:FlxColor;
 
-	public function new(path:String){
+	/**
+	 * list of all available portraits
+	 */
+	public var portraitList:Array<String> = [];
+
+	public function new(path:String, settings:CtDialogueBoxSettings){
 		if(!Assets.exists(path)){
 			if(!path.endsWith('actor_.json')) FlxG.log.warn('[CTDB] Can\'t find Actor File: "$path".');
             
@@ -104,5 +114,45 @@ class ActorData
 		textSoundVolume = data.textSoundVolume == null ? 1 : data.textSoundVolume;
 		choicerSelectedTextColor = (data.choicerSelectedTextColor == null) ? FlxColor.WHITE : FlxColor.fromRGB(data.choicerSelectedTextColor[0] ?? 255, data.choicerSelectedTextColor[1] ?? 255, data.choicerSelectedTextColor[2] ?? 255, 255);
 		choicerUnselectedTextColor = (data.choicerUnselectedTextColor == null) ? FlxColor.WHITE : FlxColor.fromRGB(data.choicerUnselectedTextColor[0] ?? 255, data.choicerUnselectedTextColor[1] ?? 255, data.choicerUnselectedTextColor[2] ?? 255, 255);
+
+		if(data.layeredPortraits != null){
+			layeredPortraits = data.layeredPortraits.map(function(item)
+			{
+				return {
+					name: item.name,
+					layers: item.layers
+				};
+			});
+		}
+
+		portraitList = getAllPortraits(this, settings);
     }
+
+	public static function getAllPortraits(data:ActorData, settings:CtDialogueBoxSettings):Array<String>
+	{
+		var list:Array<String> = [];
+
+		//first, add layered portraits
+		for(layer in data.layeredPortraits){
+			if(!list.contains(layer.name)){
+				list.push(layer.name);
+			}
+		}
+
+		//add normal portraits
+		var portraitList = CtUtil.findFilesInPath(settings.dialogueImagePath + 'dialoguePortraits/', [".png"], false, false);
+
+		for(portrait in portraitList){
+			if(portrait.contains(data.portraitPrefix + "_") && data.portraitPrefix != "") {
+				var real = portrait;
+
+				real = real.replace(data.portraitPrefix + "_", "");
+				real = real.replace(".png", "");
+
+				if(!list.contains(real)) list.push(real);
+			}
+		}
+
+		return list;
+	}
 }

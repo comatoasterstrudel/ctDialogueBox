@@ -241,6 +241,21 @@ class CtDialogueBoxSettings{
     public var confirmOffset:FlxPoint;
 
     /**
+     * The path to the sound that will play when the dialogue box opens
+     */
+    public var soundOpenPath:String;
+
+    /**
+     * The path to the sound that will play when the dialogue line is advanced
+     */
+    public var soundAdvancePath:String;
+
+    /**
+     * The path to the sound that will play when the dialogue box is closed
+     */
+    public var soundClosePath:String;
+    
+    /**
      * a list of characters that wont play text sounds
      */
     public var excludedTextSoundCharacters:Array<String> = [];
@@ -342,6 +357,9 @@ class CtDialogueBoxSettings{
         choicerCursorSpacing:Float = null,
         confirmImagePath:String = null,
         confirmOffset:FlxPoint = null,
+        soundOpenPath:String = null,
+        soundAdvancePath:String = null,
+        soundClosePath:String = null,
         excludedTextSoundCharacters:Array<String> = null,
         sentencePauseLength:Float = null,
         dialogueDataPath:String = null,
@@ -397,6 +415,9 @@ class CtDialogueBoxSettings{
         this.choicerCursorSpacing = choicerCursorSpacing ?? 15;
         this.confirmImagePath = confirmImagePath ?? "";
         this.confirmOffset = confirmOffset ?? FlxPoint.get();
+        this.soundOpenPath = soundOpenPath ?? "";
+        this.soundAdvancePath = soundOpenPath ?? "";
+        this.soundClosePath = soundOpenPath ?? "";
         this.excludedTextSoundCharacters = excludedTextSoundCharacters ?? [];
         this.sentencePauseLength = sentencePauseLength ?? 0;
         this.dialogueDataPath = dialogueDataPath ?? 'assets/data/dialogue/';

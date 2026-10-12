@@ -326,6 +326,8 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         busy = false;
         playDialogue();
+
+        playUISound(settings.soundOpenPath);
     }
     
     /**
@@ -341,6 +343,8 @@ class CtDialogueBox extends FlxSpriteGroup{
         onComplete.dispatch();
         
         visible = false;
+
+        playUISound(settings.soundClosePath);
     }
     
     /**
@@ -431,6 +435,9 @@ class CtDialogueBox extends FlxSpriteGroup{
         clearSounds();
         setSounds(dialogueData, actorData);
         
+        // play advance sound if applicable
+        playUISound(settings.soundAdvancePath);
+
         //update the dialogue portrait
         dialoguePortrait.updatePortrait(dialogueData, actorData);
         
@@ -565,6 +572,20 @@ class CtDialogueBox extends FlxSpriteGroup{
                 });
             case None:
                 // do nothing
+        }
+    }
+
+    function playUISound(path:String):Void{
+        if(path == "") return;
+
+        var sndExtension:String = #if desktop '.ogg'; #end #if html5 '.mp3'; #end
+
+        var realPath = settings.dialogueSoundPath + "ui/" + path + sndExtension;
+
+        if(Assets.exists(realPath)){
+            CtSound.play(realPath);
+        } else {
+            FlxG.log.warn('[CTDB] Can\'t find UI sound: "' + (realPath) + '".');
         }
     }
     

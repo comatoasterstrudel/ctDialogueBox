@@ -3,8 +3,12 @@ package ctDialogueBox.ctdb.portrait;
 /**
  * this is the class that holds dialogue portraits!! yayy
  */
-class DialoguePortrait extends FlxSprite
+class DialoguePortrait extends FlxSpriteGroup
 {
+    var grp:FlxSpriteGroup;
+
+    public var mainPortrait:FlxSprite;
+
     /**
      * the sprite for the actual box
      */
@@ -23,6 +27,12 @@ class DialoguePortrait extends FlxSprite
     public function new(settings:CtDialogueBoxSettings){
         super();
         
+        mainPortrait = new FlxSprite();
+        add(mainPortrait);
+
+        grp = new FlxSpriteGroup();
+        add(grp);
+
         this.settings = settings;
         
         visible = false;
@@ -33,7 +43,7 @@ class DialoguePortrait extends FlxSprite
      * @param dialogueData the data for the current dialogue line
      * @param actorData the data for the current actor
      */
-    public function updatePortrait(dialogueData:DialogueData, actorData:ActorData):Void{  
+    public function updatePortrait(dialogueData:DialogueData, actorData:ActorData):Void{          
         var reposition:Bool = false;
 
         if(actorData.portraitList.contains(dialogueData.portrait)){
@@ -53,27 +63,33 @@ class DialoguePortrait extends FlxSprite
                 applyNormalPortrait(actorData, dialogueData.portrait);
             }
 
-            color = actorData.portraitColor;
+            var sprites = getFullSprList();
+
+            for(spr in sprites){
+                if(!spr.alive) continue;
+
+                spr.color = actorData.portraitColor;
                 
-            var offsets:FlxPoint;
-            
-            if(actorData.portraitRight){
-                offsets = settings.portraitOffsetRight;
-                curRight = true;
-            } else {
-                offsets = settings.portraitOffsetLeft;
-                curRight = false;
+                var offsets:FlxPoint;
+                
+                if(actorData.portraitRight){
+                    offsets = settings.portraitOffsetRight;
+                    curRight = true;
+                } else {
+                    offsets = settings.portraitOffsetLeft;
+                    curRight = false;
+                }
+                
+                spr.screenCenter();
+                if(settings.positionPortraitFromBottom) spr.y = (FlxG.height / 2) - (height);
+                
+                spr.setPosition(spr.x + offsets.x, (spr.y + offsets.y));
+
+                spr.antialiasing = settings.antialiasing;
             }
-            
-            screenCenter();
-            if(settings.positionPortraitFromBottom) y = (FlxG.height / 2) - (height);
-            
-            setPosition(x + offsets.x, (y + offsets.y));
             
             onScreen = true;
             visible = true;
-
-            antialiasing = settings.antialiasing;
         } else {
             onScreen = false;
             visible = false;
@@ -87,8 +103,8 @@ class DialoguePortrait extends FlxSprite
     function applyNormalPortrait(data:ActorData, portrait:String):Void{
         var portraitPath:String = (settings.dialogueImagePath + 'dialoguePortraits/' + data.portraitPrefix + '_' + portrait + '.png');
 
-        loadGraphic(portraitPath);
-        updateHitbox();
+        mainPortrait.loadGraphic(portraitPath);
+        mainPortrait.updateHitbox();
     }
 
     function applyLayeredPortrait(data:ActorData, portrait:String):Void{
@@ -104,6 +120,10 @@ class DialoguePortrait extends FlxSprite
             }
         }
 
+        for(member in grp.members){
+            member.kill();
+        }
+
         var addedLayers:Int = 0;
 
         for(i in 0...layeredPortrait.layers.length){
@@ -115,9 +135,18 @@ class DialoguePortrait extends FlxSprite
             }
 
             if(addedLayers == 0){ // load a graphic fully as a base
-                loadGraphic(fullPath);
+                mainPortrait.loadGraphic(fullPath);
+                mainPortrait.updateHitbox();
             } else {
-                stamp(new FlxSprite().loadGraphic(fullPath));
+                var trueY:Int = addedLayers - 1;
+
+                if(grp.members[trueY] == null){
+                    var newSpr = new FlxSprite();
+                    grp.add(newSpr);
+                }
+
+                grp.members[trueY].loadGraphic(fullPath);
+                grp.members[trueY].revive();
             }
             
             addedLayers ++;
@@ -125,7 +154,20 @@ class DialoguePortrait extends FlxSprite
 
         if(addedLayers <= 0){
             FlxG.log.error('[CTDB] Layered portrait ' + layeredPortrait.name + " doesnt have any valid layers!!");
-            makeGraphic(20, 20, FlxColor.PURPLE);
+            mainPortrait.makeGraphic(20, 20, FlxColor.PURPLE);
         }
+    }
+
+    public function getFullSprList():Array<FlxSprite>
+    {
+        var sprites:Array<FlxSprite> = [];
+
+        sprites.push(mainPortrait);
+
+        for(member in grp.members){
+            sprites.push(member);    
+        }
+
+        return sprites;
     }
 }

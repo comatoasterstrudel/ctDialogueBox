@@ -49,6 +49,7 @@ class CtDialogueEditor extends FlxState
     var portraitText:FlxText;
     var portraitBg:CtSprite;
     var portraitSprite:DialoguePortrait;
+    var portraitDisplay:FlxSprite;
 
     var curLineText:FlxText;
 
@@ -85,7 +86,12 @@ class CtDialogueEditor extends FlxState
         add(portraitBg);
 
         portraitSprite = new DialoguePortrait(box.settings);
+        portraitSprite.visible = false;
         add(portraitSprite);
+
+        portraitDisplay = new FlxSprite();
+        portraitDisplay.visible = false;
+        add(portraitDisplay);
 
         bgColor = FlxColor.GRAY;
 
@@ -410,24 +416,38 @@ class CtDialogueEditor extends FlxState
 
     function updatePortrait():Void{
         if(dialogues[curDialogue].portrait == ""){
+            portraitDisplay.kill();
             portraitSprite.kill();
             portraitBg.kill();
         } else {
+            portraitDisplay.revive();
             portraitSprite.revive();
             portraitBg.revive();
 
             var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json', box.settings);
 
             portraitSprite.updatePortrait(dialogues[curDialogue], actordata);
-            trimSpr(portraitSprite);
-            portraitSprite.setGraphicSize(350);
-            portraitSprite.updateHitbox();
-            portraitSprite.setPosition(bg.x + bg.width - portraitSprite.width - 20, FlxG.height - portraitSprite.height - 20);
+            portraitSprite.setPosition(0,0);
+            portraitSprite.visible = false;
+
+            portraitDisplay.makeGraphic(Std.int(portraitSprite.mainPortrait.width), Std.int(portraitSprite.mainPortrait.height), FlxColor.TRANSPARENT, true);
+            portraitDisplay.updateHitbox();
+            portraitDisplay.visible = true;
+            portraitDisplay.antialiasing = box.settings.antialiasing;
             
-            portraitBg.createColorBlock(Std.int(portraitSprite.width + 10), Std.int(portraitSprite.height + 10), FlxColor.WHITE);
+            for(thing in portraitSprite.getFullSprList()){
+                portraitDisplay.stamp(thing, 0, 0);
+            }
+
+            trimSpr(portraitDisplay);
+            portraitDisplay.setGraphicSize(350);
+            portraitDisplay.updateHitbox();
+            portraitDisplay.setPosition(bg.x + bg.width - portraitDisplay.width - 20, FlxG.height - portraitDisplay.height - 20);
+            
+            portraitBg.createColorBlock(Std.int(portraitDisplay.width + 10), Std.int(portraitDisplay.height + 10), FlxColor.WHITE);
             portraitBg.alpha = .5;
             
-            CtUtil.centerSpriteOnSprite(portraitBg, portraitSprite, true, true);
+            CtUtil.centerSpriteOnSprite(portraitBg, portraitDisplay, true, true);
         }
     }
 

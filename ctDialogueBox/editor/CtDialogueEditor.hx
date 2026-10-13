@@ -13,6 +13,12 @@ import ctDialogueBox.editor.CtDialogueTester;
 import openfl.display.BitmapData;
 import openfl.geom.Rectangle;
 import openfl.geom.Point;
+
+import haxe.ui.Toolkit;
+import haxe.ui.components.DropDown;
+import haxe.ui.events.UIEvent;
+import haxe.ui.backend.flixel.CursorHelper;
+
 using StringTools;
 
 class CtDialogueEditor extends FlxState
@@ -35,10 +41,10 @@ class CtDialogueEditor extends FlxState
     var button_test:FlxButton;
     var button_testFromCurrentPos:FlxButton;
 
-    var actorselector:FlxUIDropDownMenu;
+    var newactorselect:DropDown;
     var actorText:FlxText;
 
-    var portraitselector:FlxUIDropDownMenu;
+    var newportraitselect:DropDown;
     var portraitText:FlxText;
     var portraitBg:CtSprite;
     var portraitSprite:DialoguePortrait;
@@ -68,6 +74,8 @@ class CtDialogueEditor extends FlxState
     public function new():Void{
         super();
 
+        FlxG.mouse.useSystemCursor = true; 
+        
         bg = new CtSprite().createColorBlock(820, FlxG.height, FlxColor.BLACK);
         bg.alpha = .4;
         add(bg);
@@ -173,24 +181,51 @@ class CtDialogueEditor extends FlxState
             actors.push(real);
         }
 
-        actorselector = new FlxUIDropDownMenu(diaText.x + diaText.width + 10, 35, FlxUIDropDownMenu.makeStrIdLabelArray(actors), function(selectedId:String)
-        {
-            dialogues[curDialogue].actor = selectedId;
-            updateAvailablePortraits();
-        });
-        add(actorselector);
-        
-        actorText = new FlxText(actorselector.x, 2, 0, "Actor", 16);
-        add(actorText);
+        CursorHelper.useCustomCursors = false;
+        Toolkit.init();
 
-        portraitselector = new FlxUIDropDownMenu(actorselector.x + actorselector.width + 10, 35, FlxUIDropDownMenu.makeStrIdLabelArray(["", "haha"]), function(selectedId:String)
-        {
-            dialogues[curDialogue].portrait = selectedId;
-            updatePortrait();
-        });
-        add(portraitselector);
+        newactorselect = new DropDown();
+        newactorselect.text = "Actor";
+        newactorselect.x = diaText.x + diaText.width + 10;
+        newactorselect.y = 35;
+        newactorselect.width = 150;
+        newactorselect.dropdownHeight = 600;
+
+        for(actor in actors){
+            newactorselect.dataSource.add({text: actor});
+        }
+
+        newactorselect.onChange = function(e:UIEvent) {
+            if (newactorselect.selectedIndex != -1) {
+                dialogues[curDialogue].actor = newactorselect.selectedItem.text;
+                updateAvailablePortraits();
+            }
+        };
+
+        add(newactorselect); 
+
+        actorText = new FlxText(newactorselect.x, 2, 0, "Actor", 16);
+        add(actorText);
         
-        portraitText = new FlxText(portraitselector.x, 0, 0, "Portrait", 16);
+        newportraitselect = new DropDown();
+        newportraitselect.text = "Portrait";
+        newportraitselect.x = newactorselect.x + newactorselect.width + 10;
+        newportraitselect.y = 35;
+        newportraitselect.width = 150;
+        newportraitselect.dropdownHeight = 600;
+        
+        newportraitselect.dataSource.add({ text: ""});
+
+        newportraitselect.onChange = function(e:UIEvent) {
+            if (newportraitselect.selectedIndex != -1) {
+                dialogues[curDialogue].portrait = newportraitselect.selectedItem.text;
+                updatePortrait();
+            }
+        };
+
+        add(newportraitselect); 
+
+        portraitText = new FlxText(newportraitselect.x, 0, 0, "Portrait", 16);
         add(portraitText);
 
         speedSelector = new FlxUINumericStepper(diaText.x, diaText.y + diaText.height + 50, 0.002, 0.03, 0.0, 1.0, 3);
@@ -284,8 +319,17 @@ class CtDialogueEditor extends FlxState
     function updateWithDialogueData(dialogueData:DialogueData):Void{
         diaText.text = dialogueData.dialogue;
 
-        actorselector.selectedId = "";
-        actorselector.selectedId = dialogueData.actor;
+        newactorselect.selectedIndex = -1; // to force it to change
+        newactorselect.selectedIndex = 0;
+
+        for (i in 0...newactorselect.dataSource.size) {
+            var item = newactorselect.dataSource.get(i);
+            if (item.text == dialogueData.actor) {
+                newactorselect.selectedIndex = -1;
+                newactorselect.selectedIndex = i;
+                break;
+            }
+        }
 
         updateAvailablePortraits();
 
@@ -309,14 +353,23 @@ class CtDialogueEditor extends FlxState
             portraits = portraits.concat(actordata.portraitList);
         }
 
-        portraitselector.setData(FlxUIDropDownMenu.makeStrIdLabelArray(portraits));
+        newportraitselect.selectedIndex = -1; // to force it to change
+        newportraitselect.selectedIndex = 0;
 
-        portraitselector.selectedId = "";
-        portraitselector.selectedId = dialogues[curDialogue].portrait;
+        newportraitselect.dataSource.clear();
 
-        dialogues[curDialogue].portrait = portraitselector.selectedId;
+        for(portrait in portraits){
+            newportraitselect.dataSource.add({text: portrait});
+        }
 
-        updatePortrait();
+        for (i in 0...newportraitselect.dataSource.size) {
+            var item = newportraitselect.dataSource.get(i);
+            if (item.text == dialogues[curDialogue].portrait) {
+                newportraitselect.selectedIndex = -1;
+                newportraitselect.selectedIndex = i;
+                break;
+            }
+        }
     }
 
     function updatePortrait():Void{
@@ -362,7 +415,8 @@ class CtDialogueEditor extends FlxState
         if(dialogues[curDialogue] == null) return;
 
         dialogues[curDialogue].dialogue = diaText.text;
-        dialogues[curDialogue].actor = actorselector.selectedId;
+        dialogues[curDialogue].actor = newactorselect.selectedItem.text;
+        dialogues[curDialogue].portrait = newportraitselect.selectedItem.text;
         dialogues[curDialogue].speed = speedSelector.value;
         dialogues[curDialogue].autoSkip = autoSkipBox.checked;
         dialogues[curDialogue].continueLine = continueLineBox.checked;

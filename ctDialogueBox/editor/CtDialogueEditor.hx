@@ -195,11 +195,13 @@ class CtDialogueEditor extends FlxState
             newactorselect.dataSource.add({text: actor});
         }
 
+        newactorselect.syncComponentValidation();
+        newactorselect.validateNow(); 
+
+        newactorselect.selectedIndex = 0;
+
         newactorselect.onChange = function(e:UIEvent) {
-            if (newactorselect.selectedIndex != -1) {
-                dialogues[curDialogue].actor = newactorselect.selectedItem.text;
-                updateAvailablePortraits();
-            }
+            updateActor();
         };
 
         add(newactorselect); 
@@ -216,11 +218,13 @@ class CtDialogueEditor extends FlxState
         
         newportraitselect.dataSource.add({ text: ""});
 
+        newportraitselect.syncComponentValidation();
+        newportraitselect.validateNow(); 
+
+        newportraitselect.selectedIndex = 0;
+
         newportraitselect.onChange = function(e:UIEvent) {
-            if (newportraitselect.selectedIndex != -1) {
-                dialogues[curDialogue].portrait = newportraitselect.selectedItem.text;
-                updatePortrait();
-            }
+            updatePortraitText();
         };
 
         add(newportraitselect); 
@@ -266,10 +270,30 @@ class CtDialogueEditor extends FlxState
         dialogues = [data];
         curDialogue = 0;
         changeSelection(); 
+
+        black = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+        add(black);
     }
+
+    var black:FlxSprite;
+    var curload:Float = 0;
+    var loadtime:Float = .2;
 
     override function update(elapsed:Float):Void{
         super.update(elapsed);
+
+        if(curload < loadtime){
+            newactorselect.showDropDown(); // WHY
+            newportraitselect.showDropDown();
+
+            curload += elapsed;
+
+            if(curload >= loadtime){
+                newactorselect.hideDropDown();
+                newportraitselect.hideDropDown();
+                black.destroy();
+            }
+        }
     }
 
     function loadDialogueJson():Void{
@@ -330,6 +354,8 @@ class CtDialogueEditor extends FlxState
                 break;
             }
         }
+        
+        updateActor();
 
         updateAvailablePortraits();
 
@@ -353,14 +379,14 @@ class CtDialogueEditor extends FlxState
             portraits = portraits.concat(actordata.portraitList);
         }
 
-        newportraitselect.selectedIndex = -1; // to force it to change
-        newportraitselect.selectedIndex = 0;
-
         newportraitselect.dataSource.clear();
 
         for(portrait in portraits){
             newportraitselect.dataSource.add({text: portrait});
         }
+
+        newportraitselect.selectedIndex = -1; // to force it to change
+        newportraitselect.selectedIndex = 0;
 
         for (i in 0...newportraitselect.dataSource.size) {
             var item = newportraitselect.dataSource.get(i);
@@ -369,6 +395,15 @@ class CtDialogueEditor extends FlxState
                 newportraitselect.selectedIndex = i;
                 break;
             }
+        }
+
+        updatePortraitText();
+    }
+
+    function updatePortraitText():Void{
+        if (newportraitselect.selectedIndex != -1) {
+            dialogues[curDialogue].portrait = newportraitselect.dataSource.get(newportraitselect.selectedIndex).text;
+            updatePortrait();
         }
     }
 
@@ -395,6 +430,13 @@ class CtDialogueEditor extends FlxState
         }
     }
 
+    function updateActor():Void{        
+        if (newactorselect.selectedIndex != -1) {
+            dialogues[curDialogue].actor = newactorselect.dataSource.get(newactorselect.selectedIndex).text;
+            updateAvailablePortraits();
+        }
+    }
+
     function trimSpr(sprite:FlxSprite):Void {
         var bmp:BitmapData = sprite.pixels;
         
@@ -415,8 +457,8 @@ class CtDialogueEditor extends FlxState
         if(dialogues[curDialogue] == null) return;
 
         dialogues[curDialogue].dialogue = diaText.text;
-        dialogues[curDialogue].actor = newactorselect.selectedItem.text;
-        dialogues[curDialogue].portrait = newportraitselect.selectedItem.text;
+        dialogues[curDialogue].actor = newactorselect.dataSource.get(newactorselect.selectedIndex).text;
+        dialogues[curDialogue].portrait = newportraitselect.dataSource.get(newportraitselect.selectedIndex).text;
         dialogues[curDialogue].speed = speedSelector.value;
         dialogues[curDialogue].autoSkip = autoSkipBox.checked;
         dialogues[curDialogue].continueLine = continueLineBox.checked;

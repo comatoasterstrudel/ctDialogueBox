@@ -436,7 +436,7 @@ class CtDialogueEditor extends FlxState
             portraitDisplay.antialiasing = box.settings.antialiasing;
             
             for(thing in portraitSprite.getFullSprList()){
-                portraitDisplay.stamp(thing, 0, 0);
+                if(thing.alive) portraitDisplay.stamp(thing, 0, 0);
             }
 
             trimSpr(portraitDisplay);

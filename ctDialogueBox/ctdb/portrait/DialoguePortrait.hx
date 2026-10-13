@@ -81,7 +81,7 @@ class DialoguePortrait extends FlxSpriteGroup
                 }
                 
                 spr.screenCenter();
-                if(settings.positionPortraitFromBottom) spr.y = (FlxG.height / 2) - (height);
+                if(settings.positionPortraitFromBottom) spr.y = (FlxG.height / 2) - (spr.height);
                 
                 spr.setPosition(spr.x + offsets.x, (spr.y + offsets.y));
 
@@ -101,6 +101,10 @@ class DialoguePortrait extends FlxSpriteGroup
     }
 
     function applyNormalPortrait(data:ActorData, portrait:String):Void{
+        for(member in grp.members){
+            member.kill();
+        }
+
         var portraitPath:String = (settings.dialogueImagePath + 'dialoguePortraits/' + data.portraitPrefix + '_' + portrait + '.png');
 
         mainPortrait.loadGraphic(portraitPath);

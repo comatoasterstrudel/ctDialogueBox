@@ -21,6 +21,7 @@ import haxe.ui.backend.flixel.CursorHelper;
 
 using StringTools;
 
+// god the code for this sucks so bad 
 class CtDialogueEditor extends FlxState
 {
     var box = new CtDialogueBox();

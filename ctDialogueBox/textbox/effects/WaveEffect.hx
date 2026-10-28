@@ -7,17 +7,13 @@ import flixel.tweens.FlxTween;
 
 class WaveEffect implements IEffect
 {
+    private var active:Bool = false;
 
     public function new()
     {
+        //
     }
 
-    /**
-     *  @param easingKind - Bound between 0 and 2. Defaulting in linear if out bounds.
-     *  @param height - Bound between 0 and 255, converted into a max offset between 0 and 30px.
-     *  @param duration - Bound between 0 and 255, converted into a duration between 200ms and 5s.
-     *  @param nthCharacter - Unused
-     */
     public function reset(easingKind:Int, height:Int, speed:Int, nthCharacter:Int):Void
     {
         //
@@ -25,6 +21,7 @@ class WaveEffect implements IEffect
 
     public function update(elapsed:Float):Void
     {
+        //
     }
 
     public function apply(text:Text):Void
@@ -43,8 +40,4 @@ class WaveEffect implements IEffect
     {
         return active;
     }
-
-    private var tween:FlxTween;
-    private var offsetY:Float;
-    private var active:Bool = false;
 }

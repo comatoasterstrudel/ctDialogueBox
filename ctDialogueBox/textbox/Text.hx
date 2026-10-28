@@ -9,9 +9,10 @@ class Text extends FlxSprite {
 	public var embeddedFont:Bool = true;
     public var font:String = '';
      
-    public var loopingTween:FlxTween;
     public var loopPercent:Float;
-    
+    public var loopTimer:Float = 0;
+    public var loopOffset:Float = 0;
+
     public function new(X:Float = 0, Y:Float = 0, FieldWidth:Float = 0, ?text:String, Size:Int = 8, EmbeddedFont:Bool = true)
     {
         super();
@@ -20,8 +21,6 @@ class Text extends FlxSprite {
         {
             effects.push(Type.createInstance(effect, [])); 
         } 
-
-        startLoop();
     }
 
     public function clear()
@@ -30,8 +29,12 @@ class Text extends FlxSprite {
         this.angle = 0;
     }
 
-    override public function update(elapsed:Float)
-    {
+    override function update(elapsed:Float):Void{
+        loopTimer += (elapsed * 4);
+        loopTimer = loopTimer % (Math.PI * 2);
+
+        loopPercent = (Math.sin(loopTimer + loopOffset) + 1) / 2;
+
         updateEffects(elapsed);
     }
     
@@ -60,34 +63,10 @@ class Text extends FlxSprite {
 		resetLoop(curIndex);
 	}
 
-    public function startLoop():Void{
-        loopingTween = FlxTween.num(0, 1, .5, {ease: FlxEase.smootherStepInOut, type: PINGPONG}, function(amount):Void{
-            loopPercent = FlxMath.roundDecimal(amount, 2);
-        });
-    }
+    public function resetLoop(index:Int):Void{   
+        loopTimer = 0;
 
-    public function resetLoop(index:Int):Void{
-        startLoop();
-        
-        var deleteme:Int = index;
-
-        var fakePercent:Int = 0;
-
-        var truePercent:Float = 0;
-
-        var reversing:Bool = false;
-
-        while(deleteme > 0){
-            fakePercent += (reversing ? -1 : 1);
-            if(fakePercent >= 10) reversing = true; else if(fakePercent <= 0) reversing = false;
-            deleteme -= 1;
-        }
-
-        truePercent = fakePercent / 10;
-
-        //trace("TEXT: " + text + " INDEX: " + index + " PERCENT: " + truePercent);
-
-        loopingTween.percent = truePercent;
+        loopOffset = index * .5;
     }
 
     function updateEffects(elapsed:Float):Void{
@@ -113,14 +92,5 @@ class Text extends FlxSprite {
         }
 
         return fff;
-    }
-
-    override function destroy():Void{
-        if(loopingTween != null){
-            loopingTween.cancel();
-            loopingTween.destroy();
-        }
-
-        super.destroy();
     }
 }

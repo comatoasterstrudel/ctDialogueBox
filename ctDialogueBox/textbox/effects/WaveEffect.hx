@@ -29,7 +29,7 @@ class WaveEffect implements IEffect
 
     public function apply(text:Text):Void
     {
-        var amount:Float = text.height * .75;
+        var amount:Float = text.height * .45;
 
         text.offset.y = (amount * text.loopPercent) - amount / 2;
     }

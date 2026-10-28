@@ -8,6 +8,9 @@ class Text extends FlxSprite {
 	public var size:Int = 46;
 	public var embeddedFont:Bool = true;
     public var font:String = '';
+     
+    public var loopingTween:FlxTween;
+    public var loopPercent:Float;
     
     public function new(X:Float = 0, Y:Float = 0, FieldWidth:Float = 0, ?text:String, Size:Int = 8, EmbeddedFont:Bool = true)
     {
@@ -16,7 +19,9 @@ class Text extends FlxSprite {
         for (effect in TextEffectArray.effectClasses)
         {
             effects.push(Type.createInstance(effect, [])); 
-        }
+        } 
+
+        startLoop();
     }
 
     public function clear()
@@ -27,17 +32,10 @@ class Text extends FlxSprite {
 
     override public function update(elapsed:Float)
     {
-        for (effect in effects)
-        {
-            if (effect.isActive())
-            {
-                effect.update(elapsed);
-                effect.apply(this);
-            }
-        }
+        updateEffects(elapsed);
     }
     
-    public function loadLetter(textbox:Textbox):Void
+    public function loadLetter(textbox:Textbox, curIndex:Int):Void
 	{			
         var preloadPath:String = textbox.settings.font + '_' + textbox.settings.fontSize + '_' + text;
         
@@ -57,7 +55,72 @@ class Text extends FlxSprite {
 
         antialiasing = textbox.ctSettings.textAntialiasing;
 				
-		//updateHitbox();
-        //trace('Loaded character: ' + text); 
+        clear();
+
+		resetLoop(curIndex);
 	}
+
+    public function startLoop():Void{
+        loopingTween = FlxTween.num(0, 1, .5, {ease: FlxEase.smootherStepInOut, type: PINGPONG}, function(amount):Void{
+            loopPercent = FlxMath.roundDecimal(amount, 2);
+        });
+    }
+
+    public function resetLoop(index:Int):Void{
+        startLoop();
+        
+        var deleteme:Int = index;
+
+        var fakePercent:Int = 0;
+
+        var truePercent:Float = 0;
+
+        var reversing:Bool = false;
+
+        while(deleteme > 0){
+            fakePercent += (reversing ? -1 : 1);
+            if(fakePercent >= 10) reversing = true; else if(fakePercent <= 0) reversing = false;
+            deleteme -= 1;
+        }
+
+        truePercent = fakePercent / 10;
+
+        //trace("TEXT: " + text + " INDEX: " + index + " PERCENT: " + truePercent);
+
+        loopingTween.percent = truePercent;
+    }
+
+    function updateEffects(elapsed:Float):Void{
+        for (effect in effects)
+        {
+            if (effect.isActive())
+            {
+                effect.update(elapsed);
+                effect.apply(this);
+            }
+        }
+    }
+
+    function anyEffectsActive():Bool{
+        var fff:Bool = false;
+
+        for (effect in effects)
+        {
+            if (effect.isActive())
+            {
+                fff = true;
+            }
+        }
+
+        return fff;
+    }
+
+    override function destroy():Void{
+        if(loopingTween != null){
+            loopingTween.cancel();
+            loopingTween.destroy();
+        }
+
+        super.destroy();
+    }
 }

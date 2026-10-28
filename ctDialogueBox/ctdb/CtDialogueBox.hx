@@ -735,7 +735,6 @@ class CtDialogueBox extends FlxSpriteGroup{
         baseEffectsAdded = true;
         
         addTextEffect({typableStartText: "[[RAINBOW]]", typableEndText: "[[ENDRAINBOW]]", startText: "@[NUM]331640A", endText: "@[NUM]0", effectClass: RainbowEffect});
-        addTextEffect({typableStartText: "[[ROTATE]]", typableEndText: "[[ENDROTATE]]", startText: "@[NUM]331640A", endText: "@[NUM]0", effectClass: RotatingEffect});
         addTextEffect({typableStartText: "[[WAVE]]", typableEndText: "[[ENDWAVE]]", startText: "@[NUM]331640A", endText: "@[NUM]0", effectClass: WaveEffect});
         addTextEffect({typableStartText: "[[SHAKE]]", typableEndText: "[[ENDSHAKE]]", startText: "@[NUM]331640A", endText: "@[NUM]0", effectClass: ShakeEffect});
     }

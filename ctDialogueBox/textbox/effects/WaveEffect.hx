@@ -20,38 +20,7 @@ class WaveEffect implements IEffect
      */
     public function reset(easingKind:Int, height:Int, speed:Int, nthCharacter:Int):Void
     {
-        var selectedEase:EaseFunction;
-        switch (easingKind)
-        {
-            case 0:
-            selectedEase = FlxEase.linear;
-
-            case 1:
-            selectedEase = FlxEase.cubeOut;
-
-            case 2:
-            selectedEase = FlxEase.bounceOut;
-
-            // Add more if you feel like so.
-            default:
-            selectedEase = FlxEase.linear;
-        }
-
-        var mappedHeight:Float = height/255. * 30;
-        var mappedDuration:Float = (speed*(10-0.2))/255. + 0.2;
-
-        offsetY = -mappedHeight;
-
-        tween = FlxTween.tween
-        (
-            this,
-            {offsetY: mappedHeight},
-            mappedDuration,
-            {
-                type: FlxTweenType.PINGPONG,
-                ease: selectedEase
-            }
-        );
+        //
     }
 
     public function update(elapsed:Float):Void
@@ -60,7 +29,9 @@ class WaveEffect implements IEffect
 
     public function apply(text:Text):Void
     {
-        text.offset.y = offsetY;
+        var amount:Float = text.height * .75;
+
+        text.offset.y = (amount * text.loopPercent) - amount / 2;
     }
 
     public function setActive(active:Bool):Void

@@ -41,6 +41,9 @@ import openfl.Assets;
 import ctDialogueBox.textbox.Textbox.Status;
 import ctDialogueBox.ctdb.confirm.ConfirmSprite;
 import ctDialogueBox.ctdb.portrait.LayeredPortrait;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.math.FlxMath;
 
 #if debug
 import ctDialogueBox.editor.*;

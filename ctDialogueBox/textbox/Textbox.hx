@@ -400,7 +400,7 @@ class Textbox extends FlxSpriteGroup {
         newCharacter.font = settings.font;
         newCharacter.size = settings.fontSize;
         newCharacter.text = characterToAdd;
-        newCharacter.loadLetter(this);
+        newCharacter.loadLetter(this, currentCharacterIndex);
         newCharacter.color = settings.color;
         newCharacter.y = currentLineIndex * newCharacter.height;
         newCharacter.x = lines[currentLineIndex].textWidth;

@@ -1,0 +1,26 @@
+[
+	{
+		"speed": 0.03,
+		"dialogue": "hello",
+		"actor": "layer",
+		"portrait": "red_smile"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "grrrrrr",
+		"actor": "layer",
+		"portrait": "red_mad"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "lowk turns blue",
+		"actor": "layer",
+		"portrait": "blue_smile"
+	},
+	{
+		"speed": 0.03,
+		"dialogue": "GRRRR",
+		"actor": "layer",
+		"portrait": "blue_mad"
+	}
+]

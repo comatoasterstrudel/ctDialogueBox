@@ -60,6 +60,10 @@ class ActorData
 	 */
 	public var layeredPortraits:Array<LayeredPortrait> = [];
 
+	public var autoLayerBases:Array<AutoLayerBase> = [];
+
+	public var autoLayerFaces:Array<AutoLayerFaceList> = [];
+
 	/**
 	 * the path to this characters custom dialogue box sprite box sprite. if this is null itll default to the normal sprite
 	 */
@@ -125,19 +129,61 @@ class ActorData
 			});
 		}
 
+		if(data.layerBases != null){
+			autoLayerBases = data.layerBases.map(function(item)
+			{
+				return {
+					tag: item.tag,
+					prefix: item.prefix,
+					layers: item.layers
+				};
+			});
+		}
+
+		if(data.layerFaces != null){
+			autoLayerFaces = data.layerFaces.map(function(item)
+			{
+				var faces:Array<AutoLayerFace> = [];
+
+				if(data.layerFaces.faces != null){
+					faces = data.layerFaces.faces.map(function(item)
+					{
+						return {
+							name: data.layerFaces.faces.name,
+							layer: data.layerFaces.faces.layer
+						};
+					});
+				}
+
+				return {
+					tag: item.tag,
+					faces: item.faces
+				};
+			});
+		}
+
+		if(autoLayerBases.length > 0 && autoLayerFaces.length > 0){
+			var results = combineAutoLayeredPortraits(this);
+
+			for(portrait in results){
+				var duplicate:Bool = false;
+
+				for(layeredportrait in layeredPortraits){
+					if(layeredportrait.name == portrait.id) duplicate = true;
+				}
+
+				if(duplicate) continue;
+
+				layeredPortraits.push({name: portrait.id, layers: portrait.layers});
+			}
+		}
+
 		portraitList = getAllPortraits(this, settings);
     }
 
 	public static function getAllPortraits(data:ActorData, settings:CtDialogueBoxSettings):Array<String>
 	{
 		var list:Array<String> = [];
-
-		//first, add layered portraits
-		for(layer in data.layeredPortraits){
-			if(!list.contains(layer.name)){
-				list.push(layer.name);
-			}
-		}
 
 		//add normal portraits
 		var portraitList = CtUtil.findFilesInPath(settings.dialogueImagePath + 'dialoguePortraits/', [".png"], false, false);
@@ -153,6 +199,110 @@ class ActorData
 			}
 		}
 
+		//add layered portraits
+		for(layer in data.layeredPortraits){
+			if(!list.contains(layer.name)){
+				list.push(layer.name);
+			}
+		}
+
 		return list;
 	}
+
+	/**
+     * i hate this
+     */
+    public static function combineAutoLayeredPortraits(data:ActorData):Array<AutoCombinedFace>
+    {
+		var baseList:Array<AutoLayerBase> = data.autoLayerBases;
+		var faceList:Array<AutoLayerFaceList> = data.autoLayerFaces;
+
+        var finalPortraits:Array<AutoCombinedFace> = [];
+
+        for (base in baseList)
+        {
+            var processingQueue:Array<AutoCombinedFace> = [{
+                id: base.prefix,
+                layers: base.layers.copy()
+            }];
+
+            var hasPlaceholders = true;
+
+            while (hasPlaceholders)
+            {
+                hasPlaceholders = false;
+                var nextQueue:Array<AutoCombinedFace> = [];
+
+                for (currentPortrait in processingQueue)
+                {
+                    var placeholderIndex:Int = -1;
+                    var detectedTag:String = "";
+
+                    for (i in 0...currentPortrait.layers.length)
+                    {
+                        var l = currentPortrait.layers[i];
+                        if (l.indexOf("[[FACE_") == 0 && l.lastIndexOf("]]") == l.length - 2)
+                        {
+                            placeholderIndex = i;
+                            detectedTag = l.substring(7, l.length - 2);
+                            hasPlaceholders = true;
+                            break;
+                        }
+                    }
+
+                    if (hasPlaceholders)
+                    {
+                        var matchingFaceGroup:AutoLayerFaceList = null;
+                        for (faceGroup in faceList)
+                        {
+                            if (faceGroup.tag == detectedTag)
+                            {
+                                matchingFaceGroup = faceGroup;
+                                break;
+                            }
+                        }
+
+                        if (matchingFaceGroup != null)
+                        {
+                            for (face in matchingFaceGroup.faces)
+                            {
+                                var newLayers = currentPortrait.layers.copy();
+                                newLayers[placeholderIndex] = face.layer;
+
+                                var newId = currentPortrait.id;
+                                if (newId == null || newId == "")
+                                {
+                                    newId = face.name;
+                                }
+                                else 
+                                {
+                                    newId += "_" + face.name;
+                                }
+
+                                nextQueue.push({ id: newId, layers: newLayers });
+                            }
+                        }
+                        else 
+                        {
+                            hasPlaceholders = false;
+                            nextQueue.push(currentPortrait);
+                        }
+                    }
+                    else
+                    {
+                        nextQueue.push(currentPortrait);
+                    }
+                }
+
+                processingQueue = nextQueue;
+            }
+
+            for (p in processingQueue)
+            {
+                finalPortraits.push(p);
+            }
+        }
+
+        return finalPortraits;
+    }
 }

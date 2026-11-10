@@ -23,7 +23,8 @@ class CtDialogueTestState extends FlxState
 		"Test Reuse Box Choicer", 
 		"Test New Effect System",
 		"Test Confirm Sprite",
-		"Test Layered Portraits"
+		"Test Layered Portraits",
+		"Test Robin"
 	];
 
 	var texts:Array<FlxText> = [];
@@ -356,6 +357,9 @@ class CtDialogueTestState extends FlxState
 						busy = true;
 						testmetextbox.loadDialogueFiles(['dia_layeredportraits']);
 						testmetextbox.openBox();
+					case "Test Robin":
+						var robin = new ActorData(testmetextbox.settings.dialogueDataPath + 'actors/actor_robin.json', testmetextbox.settings);
+						trace(robin.portraitList);
 				}
 			});
 		}

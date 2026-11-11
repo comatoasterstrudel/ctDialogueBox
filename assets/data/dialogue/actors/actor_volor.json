@@ -1,0 +1,51 @@
+{
+	"name": "volor",
+	"layerBases": [
+		{
+			"tag": "normal",
+			"prefix": "",
+			"layers": [
+				"robin_base_normal",
+				"[[FACE_normal]]",
+				"[[FACE_volor]]" 
+			]
+		},
+		{
+			"tag": "normal",
+			"prefix": "work",
+			"layers": [
+				"robin_base_work",
+				"[[FACE_normal]]",
+				"[[FACE_volor]]" 
+			]
+		}
+	],
+	"layerFaces": [
+		{
+			"tag": "normal",
+			"faces": [
+				{
+					"name": "neutral",
+					"layer": "robin_face_neutral"
+				},
+				{
+					"name": "scared",
+					"layer": "robin_face_scared"
+				}
+			]
+		},
+		{
+			"tag": "volor",
+			"faces": [
+				{
+					"name": "1",
+					"layer": "volor_face_1"
+				},
+				{
+					"name": "2",
+					"layer": "volor_face_2"
+				}
+			]
+		}
+	]
+}

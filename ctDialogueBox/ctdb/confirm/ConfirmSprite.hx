@@ -19,17 +19,17 @@ class ConfirmSprite extends CtSprite
 
         antialiasing = box.settings.antialiasing;
 
-        updateSprite(WRITING);
+        kill();
     }
 
     public function updateSprite(status:Status){
         if(!itsActive) return;
 
         if(status == DONE && !box.choicer.playing){
-            visible = true;
+            revive();
             setPosition(box.dialogueBox.x + box.dialogueBox.width - width - (box.settings.confirmOffset.x), box.dialogueBox.y + box.dialogueBox.height - height - (box.settings.confirmOffset.y));
         } else {
-            visible = false;
+            kill();
         }
     }
 }

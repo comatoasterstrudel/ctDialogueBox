@@ -192,6 +192,7 @@ class CtDialogueEditor extends FlxState
         Toolkit.init();
 
         newactorselect = new DropDown();
+        newactorselect.dropdownHeight = 100;
         newactorselect.text = "Actor";
         newactorselect.x = diaText.x + diaText.width + 10;
         newactorselect.y = 35;
@@ -217,6 +218,7 @@ class CtDialogueEditor extends FlxState
         add(actorText);
         
         newportraitselect = new DropDown();
+        newportraitselect.dropdownHeight = 100;
         newportraitselect.text = "Portrait";
         newportraitselect.x = newactorselect.x + newactorselect.width + 10;
         newportraitselect.y = 35;

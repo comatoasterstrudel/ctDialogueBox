@@ -1,0 +1,38 @@
+{
+	"name": "robin",
+	"portraitPrefix": "robin",
+	"layerBases": [
+		{
+			"tag": "normal",
+			"prefix": "",
+			"layers": [
+				"robin_base_normal",
+				"[[FACE_normal]]" 
+			]
+		},
+		{
+			"tag": "work",
+			"prefix": "work",
+			"layers": [
+				"robin_base_work",
+				"[[FACE_normal]]"
+			]
+		},
+		{
+			"tag": "hat",
+			"prefix": "hat",
+			"layers": [
+				"robin_hat",
+				"robin_base_normal",
+				"[[FACE_normal]]"
+			]
+		}
+	],
+	"layerFaces": [
+		{
+			"tag": "normal",
+			"prefix": "robin_face_",
+			"faces": []
+		}
+	]
+}

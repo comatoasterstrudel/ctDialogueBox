@@ -143,21 +143,39 @@ class ActorData
 		if(data.layerFaces != null){
 			autoLayerFaces = data.layerFaces.map(function(item)
 			{
+				var prefix:String = item.prefix ?? "";
+
 				var faces:Array<AutoLayerFace> = [];
 
-				if(data.layerFaces.faces != null){
-					faces = data.layerFaces.faces.map(function(item)
-					{
-						return {
-							name: data.layerFaces.faces.name,
-							layer: data.layerFaces.faces.layer
-						};
-					});
+				if(item.faces != null){
+					faces = item.faces;
+				}
+
+				if(prefix != ""){ // add auto faces
+					for(file in CtUtil.findFilesInPath(settings.dialogueImagePath + 'dialoguePortraits/layers/', [".png"], false, false)){
+						if(file.startsWith(prefix)){
+							var name = file;
+							name = name.replace(prefix, "");
+							name = name.replace(".png", "");
+							
+							var dupe:Bool = false;
+
+							for(face in faces){
+								if(face.name == name) dupe = true;
+							}
+
+							if(dupe) continue;
+
+							trace(name);
+							faces.push({name: name, layer: file.replace(".png", "")});
+						}
+					}
 				}
 
 				return {
 					tag: item.tag,
-					faces: item.faces
+					prefix: prefix,
+					faces: faces
 				};
 			});
 		}

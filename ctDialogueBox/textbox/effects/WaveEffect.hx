@@ -7,6 +7,8 @@ import flixel.tweens.FlxTween;
 
 class WaveEffect implements IEffect
 {
+    public static var effect:Float = 1;
+
     private var active:Bool = false;
 
     public function new()
@@ -26,7 +28,7 @@ class WaveEffect implements IEffect
 
     public function apply(text:Text):Void
     {
-        var amount:Float = text.height * .45;
+        var amount:Float = (text.height * .45) * effect;
 
         text.offset.y = (amount * text.loopPercent) - amount / 2;
     }

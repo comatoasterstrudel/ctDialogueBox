@@ -166,7 +166,6 @@ class ActorData
 
 							if(dupe) continue;
 
-							trace(name);
 							faces.push({name: name, layer: file.replace(".png", "")});
 						}
 					}

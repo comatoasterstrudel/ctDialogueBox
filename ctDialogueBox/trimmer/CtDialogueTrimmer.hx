@@ -119,9 +119,9 @@ class CtDialogueTrimmer
 
             File.saveContent(folder + CtUtil.getStringPastCharacter(offsetFileName, "/"), Json.stringify(trimdata, null, "\t"));
         }
-    }
 
-    trace("[CTDBTRIMMER] Finished trimming! Results are located at \"" + folder + "\"");
+        trace("[CTDBTRIMMER] Finished trimming! Results are located at \"" + folder + "\"");
+    }
 }
 #end
 #end

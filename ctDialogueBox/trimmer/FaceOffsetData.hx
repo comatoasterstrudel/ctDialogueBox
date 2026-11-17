@@ -1,4 +1,4 @@
-package trimmer;
+package ctDialogueBox.trimmer;
 
 class FaceOffsetData extends CtJsonLoader
 {

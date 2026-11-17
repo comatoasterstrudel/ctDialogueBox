@@ -45,6 +45,7 @@ import ctDialogueBox.ctdb.portrait.LayeredPortrait;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.math.FlxMath;
+import ctUtil.json.CtJsonRegistry;
 
 #if debug
 import ctDialogueBox.editor.*;

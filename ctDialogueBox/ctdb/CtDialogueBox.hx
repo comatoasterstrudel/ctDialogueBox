@@ -1,8 +1,5 @@
 package ctDialogueBox.ctdb;
 
-import trimmer.FaceOffsetData;
-import ctUtil.json.CtJsonRegistry;
-
 /**
  * this is the actual dialogue box object!! 9/8/25
  */

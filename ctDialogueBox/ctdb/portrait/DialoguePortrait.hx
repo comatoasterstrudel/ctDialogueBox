@@ -1,5 +1,7 @@
 package ctDialogueBox.ctdb.portrait;
 
+import trimmer.FaceOffsetData;
+
 /**
  * this is the class that holds dialogue portraits!! yayy
  */
@@ -65,27 +67,32 @@ class DialoguePortrait extends FlxSpriteGroup
 
             var sprites = getFullSprList();
 
-            for(spr in sprites){
+            for(i in 0...sprites.length){
+                var spr = sprites[i];
                 if(!spr.alive) continue;
 
                 spr.color = actorData.portraitColor;
                 
-                var offsets:FlxPoint;
+                if(i == 0){
+                    var offsets:FlxPoint;
                 
-                if(actorData.portraitRight){
-                    offsets = settings.portraitOffsetRight;
-                    curRight = true;
-                } else {
-                    offsets = settings.portraitOffsetLeft;
-                    curRight = false;
-                }
-                
-                spr.screenCenter();
-                if(settings.positionPortraitFromBottom) spr.y = (FlxG.height / 2) - (spr.height);
-                
-                spr.setPosition(spr.x + offsets.x, (spr.y + offsets.y));
+                    if(actorData.portraitRight){
+                        offsets = settings.portraitOffsetRight;
+                        curRight = true;
+                    } else {
+                        offsets = settings.portraitOffsetLeft;
+                        curRight = false;
+                    }
+                    
+                    spr.screenCenter();
+                    if(settings.positionPortraitFromBottom) spr.y = (FlxG.height / 2) - (spr.height);
+                    
+                    spr.setPosition(spr.x + offsets.x, (spr.y + offsets.y));
 
-                spr.antialiasing = settings.antialiasing;
+                    spr.antialiasing = settings.antialiasing;
+                } else {
+                    spr.setPosition(sprites[0].x, sprites[0].y);
+                }
             }
             
             onScreen = true;
@@ -151,6 +158,15 @@ class DialoguePortrait extends FlxSpriteGroup
 
                 grp.members[trueY].loadGraphic(fullPath);
                 grp.members[trueY].revive();
+
+                var offsetpath = fullPath.replace(".png", "_offsets.json");
+                if(CtDialogueBox.registry.getRegistry(FaceOffsetData).exists(offsetpath)){
+                    var offsets:FaceOffsetData = CtDialogueBox.registry.get(FaceOffsetData, offsetpath);
+
+                    grp.members[trueY].offset.set(-offsets.offset.x, -offsets.offset.y);
+                } else {
+                    grp.members[trueY].offset.set(0, 0);
+                }
             }
             
             addedLayers ++;

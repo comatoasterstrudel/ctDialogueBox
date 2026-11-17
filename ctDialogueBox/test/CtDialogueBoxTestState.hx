@@ -25,6 +25,9 @@ class CtDialogueTestState extends FlxState
 		"Test Confirm Sprite",
 		"Test Layered Portraits",
 		"Test Robin"
+		#if ctDialogueTrimmer
+		, "Trimmer"
+		#end
 	];
 
 	var texts:Array<FlxText> = [];
@@ -359,6 +362,10 @@ class CtDialogueTestState extends FlxState
 					case "Test Robin":
 						var robin = CtDialogueBox.registry.get(ActorData, "robin");
 						trace(robin.portraitList);
+					case "Trimmer":
+						#if ctDialogueTrimmer
+						CtDialogueTrimmer.trimDialogueFaces();
+						#end
 				}
 			});
 		}

@@ -48,6 +48,7 @@ import flixel.math.FlxMath;
 
 #if debug
 import ctDialogueBox.editor.*;
+import ctDialogueBox.trimmer.*;
 #end
 
 using StringTools;

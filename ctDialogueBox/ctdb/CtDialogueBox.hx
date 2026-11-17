@@ -1,5 +1,6 @@
 package ctDialogueBox.ctdb;
 
+import trimmer.FaceOffsetData;
 import ctUtil.json.CtJsonRegistry;
 
 /**
@@ -787,5 +788,6 @@ class CtDialogueBox extends FlxSpriteGroup{
         registry = new CtJsonRegistry();
         registry.addRegistry(ActorData, ActorData.getListOfActors());
         registry.addRegistry(DialogueFile, DialogueFile.getListOfDialogue());
+        registry.addRegistry(FaceOffsetData, FaceOffsetData.getAllFaceOffsets());
     }
 }

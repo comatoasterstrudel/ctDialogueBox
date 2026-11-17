@@ -427,10 +427,10 @@ class CtDialogueEditor extends FlxState
             portraitDisplay.antialiasing = box.settings.antialiasing;
             
             for(thing in portraitSprite.getFullSprList()){
-                if(thing.alive) portraitDisplay.stamp(thing, 0, 0);
+                if(thing.alive) portraitDisplay.stamp(thing, -Std.int(thing.offset.x), -Std.int(thing.offset.y));
             }
 
-            trimSpr(portraitDisplay);
+            CtUtil.trimSprite(portraitDisplay);
             portraitDisplay.setGraphicSize(350);
             portraitDisplay.updateHitbox();
             portraitDisplay.setPosition(bg.x + bg.width - portraitDisplay.width - 20, FlxG.height - portraitDisplay.height - 20);
@@ -447,22 +447,6 @@ class CtDialogueEditor extends FlxState
             dialogues[curDialogue].actor = newactorselect.dataSource.get(newactorselect.selectedIndex).text;
             updateAvailablePortraits();
         }
-    }
-
-    function trimSpr(sprite:FlxSprite):Void {
-        var bmp:BitmapData = sprite.pixels;
-        
-        var bounds:Rectangle = bmp.getColorBoundsRect(0xFF000000, 0x00000000, false);
-        
-        if (bounds.width == 0 || bounds.height == 0) return;
-        
-        var trimmedBmp = new BitmapData(Std.int(bounds.width), Std.int(bounds.height), true, 0x00000000);
-        
-        trimmedBmp.copyPixels(bmp, bounds, new Point(0, 0));
-        
-        sprite.pixels = trimmedBmp;
-        sprite.offset.set(bounds.x, bounds.y);
-        sprite.updateHitbox();
     }
 
     function saveChanges():Void{

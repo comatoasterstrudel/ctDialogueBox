@@ -1,7 +1,5 @@
 package ctDialogueBox.ctdb.portrait;
 
-import trimmer.FaceOffsetData;
-
 /**
  * this is the class that holds dialogue portraits!! yayy
  */

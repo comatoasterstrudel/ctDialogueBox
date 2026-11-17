@@ -175,18 +175,7 @@ class CtDialogueEditor extends FlxState
         curLineText.setPosition(button_new.x + button_new.width / 2 - curLineText.width / 2, button_new.y + 100);
         add(curLineText);
 
-        var actorList = CtUtil.findFilesInPath(box.settings.dialogueDataPath + 'actors/', [".json"], false);
-
-        var actors:Array<String> = [];
-
-        actors.push("");
-
-        for(actor in actorList){
-            var real = actor;
-            real = real.replace("actor_", "");
-            real = real.replace(".json", "");
-            actors.push(real);
-        }
+        var actors = ActorData.getListOfActors();
 
         CursorHelper.useCustomCursors = false;
         Toolkit.init();
@@ -383,7 +372,7 @@ class CtDialogueEditor extends FlxState
         var portraits:Array<String> = [""];
 
         if(dialogues[curDialogue].actor != ""){
-            var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json', box.settings);
+            var actordata = CtDialogueBox.registry.get(ActorData, dialogues[curDialogue].actor);
 
             portraits = portraits.concat(actordata.portraitList);
         }
@@ -426,7 +415,7 @@ class CtDialogueEditor extends FlxState
             portraitSprite.revive();
             portraitBg.revive();
 
-            var actordata = new ActorData(box.settings.dialogueDataPath + 'actors/actor_' + dialogues[curDialogue].actor + '.json', box.settings);
+            var actordata = CtDialogueBox.registry.get(ActorData, dialogues[curDialogue].actor);
 
             portraitSprite.updatePortrait(dialogues[curDialogue], actordata);
             portraitSprite.setPosition(0,0);

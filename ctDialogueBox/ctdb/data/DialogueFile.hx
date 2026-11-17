@@ -3,13 +3,8 @@ package ctDialogueBox.ctdb.data;
 /**
  * a class that holds all the data from a dialogue json file.
  */
-class DialogueFile
+class DialogueFile extends CtJsonLoader
 {
-	/**
-	 * the raw data from the json file
-	 */
-	var data:Dynamic;
-
 	/**
 	 * the list of data for each line of dialogue
 	 */
@@ -21,19 +16,21 @@ class DialogueFile
 	public var path:String;
 	
 	public function new(path:String = "n")
-	{
+	{		
 		this.path = path;
 		
-		if(!Assets.exists(path)){
+		super(path, null, true);
+
+		if(data == null){
 			if(path != "n") FlxG.log.warn('[CTDB] Can\'t find Dialogue File: "$path". Loading placeholder.');
 			
-			var data = getBlankDialogueData();
-			data.dialogue = "Placeholder Dialogue. Check " + path + "?";
-			dialogueLines.push(data);
+			var ddata = getBlankDialogueData();
+			ddata.dialogue = "Placeholder Dialogue. Check " + path + "?";
+			dialogueLines.push(ddata);
 			return;
 		}
 				
-		loadFromText(Assets.getText(path));
+		loadFromData(data);
 	}
 
 	public static function getBlankDialogueData():DialogueData{
@@ -52,8 +49,12 @@ class DialogueFile
 	}
 
 	public function loadFromText(txt:String):Void{
-		data = Json.parse(txt);
-		
+		loadFromData(Json.parse(txt));
+				
+        //it works
+	}
+
+	public function loadFromData(data:Dynamic):Void{		
 		dialogueLines = data.map(function(item)
 		{
 			var choicerOptions:Array<ChoicerOptionData> = []; // my bad this is sort of jank
@@ -84,7 +85,12 @@ class DialogueFile
 				choicerOptions: choicerOptions,
 			};
 		});
-				
-        //it works
 	}
+
+	public static function getListOfDialogue(?settings:CtDialogueBoxSettings):Array<String>{
+        if(settings == null) settings = CtDialogueBox.defaultSettings;
+
+        var list = CtUtil.findFilesInPath(settings.dialogueDataPath + 'content/', [".json"], true, true);
+		return list;
+    }
 }

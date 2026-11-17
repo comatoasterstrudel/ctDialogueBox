@@ -19,6 +19,7 @@ import ctDialogueBox.textbox.effects.IEffect;
 import ctUtil.CtUtil;
 import ctUtil.graphic.*;
 import ctUtil.sound.*;
+import ctUtil.json.CtJsonLoader;
 import ctDialogueBox.ctdb.choicer.ChoicerPosition;
 import ctUtil.menu.*;
 import flixel.FlxG;

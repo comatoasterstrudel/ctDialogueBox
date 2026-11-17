@@ -37,14 +37,13 @@ class CtDialogueTestState extends FlxState
 
 	override public function create()
 	{
+		CtDialogueBox.init();
 		CtDialogueBox.preloadFont();
-		
+				
 		#if ctDialogueEditor
 		FlxG.switchState(new CtDialogueEditor());
 		return;
 		#end
-
-		trace(menuOptions);
 
 		testmetextbox = new CtDialogueBox();
 		add(testmetextbox);
@@ -358,7 +357,7 @@ class CtDialogueTestState extends FlxState
 						testmetextbox.loadDialogueFiles(['dia_layeredportraits']);
 						testmetextbox.openBox();
 					case "Test Robin":
-						var robin = new ActorData(testmetextbox.settings.dialogueDataPath + 'actors/actor_robin.json', testmetextbox.settings);
+						var robin = CtDialogueBox.registry.get(ActorData, "robin");
 						trace(robin.portraitList);
 				}
 			});

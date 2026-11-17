@@ -1,5 +1,7 @@
 package ctDialogueBox.ctdb;
 
+import ctUtil.json.CtJsonRegistry;
+
 /**
  * this is the actual dialogue box object!! 9/8/25
  */
@@ -161,8 +163,14 @@ class CtDialogueBox extends FlxSpriteGroup{
     
     var lastPositionModifier:FlxPoint;
 
+    public static var initiated:Bool  = false;
+    
+    public static var registry:CtJsonRegistry;
+
     public function new(?settings:CtDialogueBoxSettings = null):Void{
         super();
+
+        if(CtDialogueBox.initiated) init();
 
         initEffects();
         
@@ -393,8 +401,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         
         var dialogueData = dialogueFiles[curDialogueFile].dialogueLines[curLine];
         
-        var jsonPath:String = (settings.dialogueDataPath + 'actors/actor_' + dialogueData.actor + '.json');
-        var actorData = new ActorData(jsonPath, settings);
+        var actorData = CtDialogueBox.registry.get(ActorData, dialogueData.actor);
         
         //set continuing before anything else
         continuing = dialogueData.continueLine;
@@ -632,7 +639,14 @@ class CtDialogueBox extends FlxSpriteGroup{
     public function addDialogueFile(dialogueName:String):Void{
         var jsonPath:String = (settings.dialogueDataPath + 'content/' + dialogueName + '.json');
             
-        var data = new DialogueFile(jsonPath);
+        var data:DialogueFile = null;
+
+        if(registry.getRegistry(DialogueFile).exists(jsonPath)){
+            data = registry.get(DialogueFile, jsonPath);
+        } else {
+            data = new DialogueFile(jsonPath);
+        }
+
         if(data.dialogueLines == null) return;
         dialogueFiles.push(data);
     }
@@ -759,5 +773,19 @@ class CtDialogueBox extends FlxSpriteGroup{
         }
         
         return input;
+    }
+
+    public static function init(?settings:CtDialogueBoxSettings):Void{
+        if(initiated) return;
+
+        initiated = true;
+
+        if(settings == null) settings = new CtDialogueBoxSettings();
+
+        CtDialogueBox.defaultSettings = settings;
+
+        registry = new CtJsonRegistry();
+        registry.addRegistry(ActorData, ActorData.getListOfActors());
+        registry.addRegistry(DialogueFile, DialogueFile.getListOfDialogue());
     }
 }

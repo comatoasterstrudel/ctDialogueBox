@@ -3,13 +3,8 @@ package ctDialogueBox.ctdb.data;
 /**
  * data for the actors during dialogue.
  */
-class ActorData
+class ActorData extends CtJsonLoader
 {
-    /**
-	 * the raw data from the json file
-	 */
-	var data:Dynamic;
-
     /**
      * if this is false, the actor will not exist! easy peasy!
      */
@@ -94,16 +89,17 @@ class ActorData
 	 */
 	public var portraitList:Array<String> = [];
 
-	public function new(path:String, settings:CtDialogueBoxSettings){
-		if(!Assets.exists(path)){
+	public function new(actor:String, ?settings:CtDialogueBoxSettings){
+		if(settings == null) settings = CtDialogueBox.defaultSettings;
+		var path = (settings.dialogueDataPath + 'actors/actor_' + actor + '.json');
+
+		super(path, null, true);
+
+		if(data == null){
 			if(!path.endsWith('actor_.json')) FlxG.log.warn('[CTDB] Can\'t find Actor File: "$path".');
-            
-            exists = false;
-            
+			exists = false;
 			return;
 		}
-        
-		data = Json.parse(Assets.getText(path));
 
 		name = data.name ?? '';
         vanityName = data.vanityName ?? '';
@@ -321,5 +317,24 @@ class ActorData
         }
 
         return finalPortraits;
+    }
+
+	public static function getListOfActors(?settings:CtDialogueBoxSettings):Array<String>{
+        if(settings == null) settings = CtDialogueBox.defaultSettings;
+
+        var actorList = CtUtil.findFilesInPath(settings.dialogueDataPath + 'actors/', [".json"], false);
+
+        var actors:Array<String> = [];
+
+        actors.push("");
+
+        for(actor in actorList){
+            var real = actor;
+            real = real.replace("actor_", "");
+            real = real.replace(".json", "");
+            actors.push(real);
+        }
+
+        return actors;
     }
 }

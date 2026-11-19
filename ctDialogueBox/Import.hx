@@ -49,7 +49,8 @@ import ctUtil.json.CtJsonRegistry;
 
 #if debug
 import ctDialogueBox.editor.*;
-import ctDialogueBox.trimmer.*;
 #end
+
+import ctDialogueBox.trimmer.*;
 
 using StringTools;

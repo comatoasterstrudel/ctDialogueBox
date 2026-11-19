@@ -307,7 +307,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         }
 
         if(modifier == null) dialogueBox.screenCenter(); else dialogueBox.setPosition(modifier.x, modifier.y);            
-        if(modifier != null){
+        if(actorData != null){
             dialogueBox.x += actorData.boxOffsetX;
             dialogueBox.y += actorData.boxOffsetY;    
         }

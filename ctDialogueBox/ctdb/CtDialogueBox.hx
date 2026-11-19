@@ -256,7 +256,7 @@ class CtDialogueBox extends FlxSpriteGroup{
             curDialogueBoxGraphicType = Default;
             
             if(curDialogueBoxGraphicType == lastCurDialogueBoxGraphicType) {
-                positionBox();      
+                positionBox(actorData);      
                 return;
             }
             
@@ -277,7 +277,7 @@ class CtDialogueBox extends FlxSpriteGroup{
             var boxPath:String = (settings.dialogueImagePath + 'dialogueBox/' + boxName + '.png');
             
             if(curDialogueBoxGraphicType == lastCurDialogueBoxGraphicType && curDialogueBoxImgPath == boxPath) {
-                positionBox();      
+                positionBox(actorData);      
                 return;
             }
             
@@ -293,13 +293,13 @@ class CtDialogueBox extends FlxSpriteGroup{
             }
         }
         
-        positionBox();      
+        positionBox(actorData);      
     }
     
     /**
      * call this to position the box and text properly
      */
-    public function positionBox(?modifier:FlxPoint):Void{
+    public function positionBox(?actorData:ActorData, ?modifier:FlxPoint):Void{
         if(modifier == null && lastPositionModifier != null){
             modifier = lastPositionModifier;
         } else if(modifier != null){
@@ -307,6 +307,10 @@ class CtDialogueBox extends FlxSpriteGroup{
         }
 
         if(modifier == null) dialogueBox.screenCenter(); else dialogueBox.setPosition(modifier.x, modifier.y);            
+        if(modifier != null){
+            dialogueBox.x += actorData.boxOffsetX;
+            dialogueBox.y += actorData.boxOffsetY;    
+        }
 
         if(settings.boxPosition != null){
             dialogueBox.setPosition(dialogueBox.x + settings.boxPosition.x, dialogueBox.y + settings.boxPosition.y);
@@ -315,7 +319,7 @@ class CtDialogueBox extends FlxSpriteGroup{
         if(textbox != null){
             textbox.x = dialogueBox.x + settings.textOffset.x;
             textbox.y = dialogueBox.y + settings.textOffset.y;
-            textbox.settings.textFieldWidth = settings.textFieldWidth == 0 ? dialogueBox.width : settings.textFieldWidth;
+            textbox.settings.textFieldWidth = (settings.textFieldWidth == 0 ? dialogueBox.width : settings.textFieldWidth) += (actorData == null ? 0 : actorData.widthOffset);
         }   
     }
     

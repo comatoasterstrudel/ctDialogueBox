@@ -89,6 +89,12 @@ class ActorData extends CtJsonLoader
 	 */
 	public var portraitList:Array<String> = [];
 
+	public var widthOffset:Int; // how much the text widht gets offset
+
+	public var boxOffsetX:Int;
+
+	public var boxOffsetY:Int;
+
 	public function new(actor:String, ?settings:CtDialogueBoxSettings){
 		if(settings == null) settings = CtDialogueBox.defaultSettings;
 		var path = (settings.dialogueDataPath + 'actors/actor_' + actor + '.json');
@@ -114,6 +120,9 @@ class ActorData extends CtJsonLoader
 		textSoundVolume = data.textSoundVolume == null ? 1 : data.textSoundVolume;
 		choicerSelectedTextColor = (data.choicerSelectedTextColor == null) ? FlxColor.WHITE : FlxColor.fromRGB(data.choicerSelectedTextColor[0] ?? 255, data.choicerSelectedTextColor[1] ?? 255, data.choicerSelectedTextColor[2] ?? 255, 255);
 		choicerUnselectedTextColor = (data.choicerUnselectedTextColor == null) ? FlxColor.WHITE : FlxColor.fromRGB(data.choicerUnselectedTextColor[0] ?? 255, data.choicerUnselectedTextColor[1] ?? 255, data.choicerUnselectedTextColor[2] ?? 255, 255);
+		widthOffset = data.widthOffset == null ? 0 : data.widthOffset;
+		boxOffsetX = data.boxOffsetX == null ? 0 : data.boxOffsetX;
+		boxOffsetY = data.boxOffsetY == null ? 0 : data.boxOffsetY;
 
 		if(data.layeredPortraits != null){
 			layeredPortraits = data.layeredPortraits.map(function(item)
